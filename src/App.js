@@ -10,9 +10,17 @@ class App extends Component {
       test: []
     }
   }
+
+  componentDidMount() {
+    console.log('App mounted yo')
+  }
+
   render() {
+    console.log('App rendered boi')
     return (
+      <main>
       <Route path='/tester' exact render={(routerProps) => <Tester {...routerProps}{...this.state}/>} />
+      </main>
     );
   }
 }

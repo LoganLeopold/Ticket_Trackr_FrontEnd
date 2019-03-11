@@ -10,21 +10,25 @@ class Tester extends Component {
     }
   
     componentDidMount() {
-      axios.get('localhost:8000/api/test')
+      console.log('tester mounted')
+      axios.get('http://localhost:8000/api/test')
       .then( list => {
         this.setState({
-          tests: list 
+          tests: list.data 
         })
       })
-      console.log(this.state.tests)
+      
     }
     
     render() {
+      console.log('Tester rendered')
       return (
           
           <div>
             "Hello Tester"
-            {/* <h1>{this.state.tests[0].name}</h1> */}
+            {this.state.tests.map( testObject => {
+              return (<h1>{testObject.name}</h1>)
+            })}
           </div>
               );
     }
