@@ -16,7 +16,9 @@ class App extends Component {
       originPlace: "",
       destinationPlace: "",
       airports: [],
+      searchResults: []
     };
+    this.componentDidMount = this.componentDidMount.bind(this)
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -24,7 +26,7 @@ class App extends Component {
     // axios.get("https://api.flightstats.com/flex/airports/rest/v1/json/active?")
     axios.get('http://localhost:8000/airports')
     .then( list => {
-      console.log(list)
+      console.log(list.data)
       this.setState({  
         airports: list.data 
       })
@@ -38,76 +40,89 @@ class App extends Component {
     this.setState({
       [name]: value
     });
+    if (this.state[name] && this.state[name].length > 1) {
+      this.findSuggestion(name)
+    }
   }
 
   render() {
     console.log("App rendered boi");
     return (
       <div>
-        <main>
-          <form action="">
-            <div className="inputBox">
-              <label>Travel Tier</label>
-              <input
-                type="text"
-                name="cabinClass"
-                defaultValue={this.state.cabinClass}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="inputBox">
-              <label>Passenger Count</label>
-              <input
-                type="text"
-                name="adults"
-                defaultValue={this.state.adults}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="inputBox">
-              <label>Departure Date</label>
-              <input
-                type="text"
-                name="outboundDate"
-                defaultValue={this.state.outboundDate}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="inputBox">
-              <label>Return Date</label>
-              <input
-                type="text"
-                name="inboundDate"
-                defaultValue={this.state.inboundDate}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="inputBox">
-              <label>Departure Airport</label>
-              <input
-                type="text"
-                name="originPlace"
-                defaultValue={this.state.originPlace}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="inputBox">
-              <label>Arrival Airport</label>
-              <input
-                type="text"
-                name="destinationPlace"
-                defaultValue={this.state.destinationPlace}
-                onChange={this.handleChange}
-              />
-            </div>
-            <button onClick={this.handleClick}>
-              May Need A Submit Eventually
-            </button>
-          </form>
-        </main>
+        <Search name={[city, faa, name]} handleChange={this.handleChange}/>
       </div>
     );
   }
 }
 
 export default App;
+
+
+
+
+
+
+
+// <div>
+//         <main>
+//           <form action="">
+//             <div className="inputBox">
+//               <label>Travel Tier</label>
+//               <input
+//                 type="text"
+//                 name="cabinClass"
+//                 defaultValue={this.state.cabinClass}
+//                 onChange={this.handleChange}
+//               />
+//             </div>
+//             <div className="inputBox">
+//               <label>Passenger Count</label>
+//               <input
+//                 type="text"
+//                 name="adults"
+//                 defaultValue={this.state.adults}
+//                 onChange={this.handleChange}
+//               />
+//             </div>
+//             <div className="inputBox">
+//               <label>Departure Date</label>
+//               <input
+//                 type="text"
+//                 name="outboundDate"
+//                 defaultValue={this.state.outboundDate}
+//                 onChange={this.handleChange}
+//               />
+//             </div>
+//             <div className="inputBox">
+//               <label>Return Date</label>
+//               <input
+//                 type="text"
+//                 name="inboundDate"
+//                 defaultValue={this.state.inboundDate}
+//                 onChange={this.handleChange}
+//               />
+//             </div>
+//             <div className="inputBox">
+//               <label>Departure Airport</label>
+//               <input
+//                 type="text"
+//                 name="originPlace"
+//                 defaultValue={this.state.originPlace}
+//                 onChange={this.handleChange}
+//               />
+//             </div>
+//             <div className="inputBox">
+//               <label>Arrival Airport</label>
+//               <input
+//                 type="text"
+//                 name="destinationPlace"
+//                 defaultValue={this.state.destinationPlace}
+//                 onChange={this.handleChange}
+//               />
+//             </div>
+//             <button onClick={this.handleClick}>
+//               May Need A Submit Eventually
+//             </button>
+//           </form>
+//         </main>
+//       </div>
