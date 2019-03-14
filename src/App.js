@@ -35,7 +35,7 @@ class App extends Component {
           return airport['faa'], airport['city'], airport['name']
         })
         this.setState({
-          destinationNames: destinationNamesArr
+          destinationNames: destinationNamesArr.sort()
         })
       });
     });

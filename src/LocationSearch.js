@@ -11,9 +11,18 @@ class LocationSearch extends Component {
     this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
-  findSuggestion() {
+  findSuggestion(search) {
     let searchField = this.props.name;
-    let airportList = this.props.airports.filter((airport) => {
+    
+    this.props.destinationNames.filter ( (name) => {
+      newSet = []
+      if (name.charAt(0) === this.state.search) {
+        newSet.push(name)
+      }
+    })
+
+
+    let airportList = this.props.airports.filter((airport, i, arr) => {
       searchField.forEach(field => { 
         if (airport[field] !== undefined) {
         return airport[field].includes(this.state.search);
