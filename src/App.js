@@ -24,10 +24,10 @@ class App extends Component {
     // axios.get("https://api.flightstats.com/flex/airports/rest/v1/json/active?")
     axios.get('http://localhost:8000/airports')
     .then( list => {
-      console.log(list.json())
-      // this.setState({  
-      //   airports: list 
-      // })
+      console.log(list)
+      this.setState({  
+        airports: list.data 
+      })
     })
     
   }
