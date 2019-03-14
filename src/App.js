@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import axios from 'axios'
+import axios from "axios";
 import { Link, Route } from "react-router-dom";
 import Tester from "./Tester";
+import FlightSearch from "./FlightSearch";
 import "./App.css";
-
+import LocationSearch from "./LocationSearch";
 
 class App extends Component {
   constructor() {
@@ -16,52 +17,63 @@ class App extends Component {
       originPlace: "",
       destinationPlace: "",
       airports: [],
-      searchResults: []
+      searchResults: [],
+      destinationNames: []
     };
-    this.componentDidMount = this.componentDidMount.bind(this)
+    this.componentDidMount = this.componentDidMount.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    // axios.get("https://api.flightstats.com/flex/airports/rest/v1/json/active?")
-    axios.get('http://localhost:8000/airports')
-    .then( list => {
-      console.log(list.data)
-      this.setState({  
-        airports: list.data 
-      })
-    })
-    
+    axios.get("http://localhost:8000/airports").then(list => {
+      this.setState((prevState) => { return {
+        airports: list.data.airports
+      }},
+      () =>
+      {
+        let destinationNamesArr = this.state.airports.map( (airport, i, arr) => {
+          return airport['faa'], airport['city'], airport['name']
+        })
+        this.setState({
+          destinationNames: destinationNamesArr
+        })
+      });
+    });
   }
 
-  handleChange(e) {
-    const name = e.target.name;
-    const value = e.target.value;
+  handleChange(e, name, value) {
     this.setState({
       [name]: value
+    // this.setState((prevState, props) => {
+    //   return {[name]: prevState[counter] + props.value};
+    // })
     });
-    if (this.state[name] && this.state[name].length > 1) {
-      this.findSuggestion(name)
-    }
   }
 
   render() {
     console.log("App rendered boi");
     return (
       <div>
-        <Search name={[city, faa, name]} handleChange={this.handleChange}/>
+        <LocationSearch
+          {...this.props}
+          {...this.state}
+          name={["city", "faa", "name"]}
+          field="originPlace"
+          handleChange={this.handleChange}
+        />
+        <LocationSearch
+          {...this.props}
+          {...this.state}
+          name={["city", "faa", "name"]}
+          field="destinationPlace"
+          handleChange={this.handleChange}
+        />
       </div>
     );
   }
 }
 
 export default App;
-
-
-
-
-
-
 
 // <div>
 //         <main>
