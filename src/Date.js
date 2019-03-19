@@ -12,11 +12,17 @@ class DateP extends React.Component {
       };
       this.handleDate = this.handleDate.bind(this);
     }
-   
-    handleDate(date) {
-      this.setState({
-        startDate: date
-      });
+   // ________event was "date"
+    handleDate(event) {
+
+        this.setState((prevState) => {
+            return {startDate: event.target.value},
+            (date) => {this.props.handleChange(event, this.props.fieldName, event.target.value)}
+        })
+
+    //   this.setState({
+    //     startDate: date
+    //   });
     }
    
     render() {

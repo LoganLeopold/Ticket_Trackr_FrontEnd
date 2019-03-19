@@ -47,9 +47,7 @@ class FlightForm extends Component {
     //https://kapeli.com/cheat_sheets/Axios.docset/Contents/Resources/Documents/index helped me realize I don't need a weird format and then I just reverted to the same update state change stuff and got 'er done!
   }
 
-  handleChange(e) {
-    const name = e.target.name
-    const value = e.target.value
+  handleChange(e, name, value) {
     this.setState({
       [name]: value
     //   this.setState((prevState, props) => {
@@ -67,7 +65,7 @@ class FlightForm extends Component {
             <div className="inputBox ddate">
               <label>Departure Date</label>
               <DateP
-                className="departDate"
+                fieldName="departDate"
                 handleChange={this.handleChange}
                 {...this.state}
               />
@@ -75,7 +73,7 @@ class FlightForm extends Component {
             <div className="inputBox rdate">
               <label>Return Date</label>
               <DateP
-                className="returnDate"
+                fieldName="returnDate"
                 handleChange={this.handleChange}
                 {...this.state}
               />

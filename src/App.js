@@ -36,7 +36,7 @@ class App extends Component {
     console.log("App rendered boi");
     return (
       <div>
-        <FlightForm />
+        <FlightForm {...this.props}{...this.state}/>
       </div>
     );
   }
