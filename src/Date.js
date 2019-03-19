@@ -20,6 +20,7 @@ class DateP extends React.Component {
     }
    
     render() {
+        console.log("Date rendered boi")
       return (
         <DatePicker
           selected={this.state.startDate}

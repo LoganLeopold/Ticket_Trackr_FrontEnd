@@ -21,6 +21,7 @@ body {
   min-height: 100%;
   justify-content: center;
   background: lightblue;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   /* align-items: center; */
   
 }

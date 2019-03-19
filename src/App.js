@@ -5,124 +5,38 @@ import Tester from "./Tester";
 import FlightSearch from "./FlightSearch";
 import "./App.css";
 import LocationSearch from "./LocationSearch";
-import DateP from "./Date"
+import DateP from "./Date";
+import FlightForm from "./FlightForm";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      cabinClass: "",
-      adults: "",
-      outboundDate: "",
-      inboundDate: "",
-      originPlace: "",
-      destinationPlace: "",
-      airports: [],
-      searchResults: [],
-      destinationNames: []
+      airports: []
     };
-    this.componentDidMount = this.componentDidMount.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-  }
-  
-  componentDidMount() {
-    console.log('App mounted boi')
-   
-    //   () =>
-    //   {
-    //     let destinationNamesArr = this.state.airports.map( (airport, i, arr) => {
-    //       return airport['faa'], airport['city'], airport['name']
-    //     })
-    //     this.setState({
-    //       destinationNames: destinationNamesArr.sort()
-    //     })
-    //   });
-    // });
-    // this.setState({
-    //   airports: ['Hello']
-    // })
+    this.componentDidMount = this.componentDidMount.bind(this)
   }
 
-  componentDidUpdate () {
+  componentDidMount() {
+    console.log("App mounted boi");
     const config = {
       headers: {
-        accept: 'text/html',
+        accept: "text/html"
       }
     };
-    axios.get('https://tickettrackr.herokuapp.com/airports/search/', config)
-    .then( list => {
-      console.log(list)
-      this.setState({  
-        airports: list.data 
-      })
-    })
-  }
-
-  handleClick(event) {
-    event.preventDefault();
-    axios
-      .post("http://localhost:8000/airports/skyscancollect", {
-        cabinClass: this.state.cabinClass,
-        adults: this.state.adults,
-        outboundDate: this.state.outboundDate,
-        inboundDate: this.state.inboundDate,
-        originPlace: this.state.originPlace,
-        destinationPlace: this.state.destinationPlace
-      })
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(function(response) {
-        console.log(response);
+    axios.get("http://localhost:8000/airports/search", config).then(list => {
+      this.setState({
+        airports: list.data
       });
-    //https://kapeli.com/cheat_sheets/Axios.docset/Contents/Resources/Documents/index helped me realize I don't need a weird format and then I just reverted to the same update state change stuff and got 'er done!
-  }
-
-  handleChange(e, name, value) {
-    this.setState({
-      [name]: value
-      // this.setState((prevState, props) => {
-      //   return {[name]: prevState[counter] + props.value};
-      // })
     });
   }
+
 
   render() {
     console.log("App rendered boi");
     return (
-      <div className='App'>
-        <main>
-          <form action="">
-            <div className="inputBox ddate">
-              <label>Departure Date</label>
-              <DateP className='departDate' handleChange={this.handleChange}{...this.state}/>
-            </div>
-            <div className="inputBox rdate">
-              <label>Return Date</label>
-              <DateP className='returnDate' handleChange={this.handleChange}{...this.state}/>
-            </div>
-            <div className="inputBox dport">
-              <label>Departure Airport</label>
-              <input
-                type="text"
-                name="originPlace"
-                defaultValue={this.state.originPlace}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="inputBox aport">
-              <label>Arrival Airport</label>
-              <input
-                type="text"
-                name="destinationPlace"
-                defaultValue={this.state.destinationPlace}
-                onChange={this.handleChange}
-              />
-            </div>         
-          </form>
-        </main>
-        <Route path='/search' render={(routerProps) => <LocationSearch handleChange={this.handleChange} {...routerProps}{...this.state}/>} />
+      <div>
+        <FlightForm />
       </div>
     );
   }
@@ -149,8 +63,8 @@ export default App;
 </div> */
 }
 
-
-   {/* <div className="inputBox">
+{
+  /* <div className="inputBox">
               <label>Travel Tier</label>
               <input
                 type="text"
@@ -167,4 +81,5 @@ export default App;
                 defaultValue={this.state.adults}
                 onChange={this.handleChange}
               />
-            </div> */} 
+            </div> */
+}
