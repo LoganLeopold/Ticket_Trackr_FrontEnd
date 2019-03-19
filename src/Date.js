@@ -10,19 +10,15 @@ class DateP extends React.Component {
       this.state = {
         startDate: new Date()
       };
-      this.handleDate = this.handleDate.bind(this);
+      this.handleChange = this.handleChange.bind(this);
     }
    // ________event was "date"
-    handleDate(event) {
+    handleChange(date) {
 
-        this.setState((prevState) => {
-            return {startDate: event.target.value},
-            (date) => {this.props.handleChange(event, this.props.fieldName, event.target.value)}
-        })
-
-    //   this.setState({
-    //     startDate: date
-    //   });
+        this.setState({
+            startDate: date
+        }, () => this.props.handleChange(this.props.fieldName, this.state.startDate)   
+        )
     }
    
     render() {
@@ -30,7 +26,7 @@ class DateP extends React.Component {
       return (
         <DatePicker
           selected={this.state.startDate}
-          onChange={this.handleDate}
+          onChange={this.handleChange}
         />
       );
     }
