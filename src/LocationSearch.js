@@ -13,15 +13,6 @@ class LocationSearch extends Component {
 
   findSuggestion(search) {
     let searchField = this.props.name;
-    
-    this.props.destinationNames.filter ( (name) => {
-      newSet = []
-      if (name.charAt(0) === this.state.search) {
-        newSet.push(name)
-      }
-    })
-
-
     let airportList = this.props.airports.filter((airport, i, arr) => {
       searchField.forEach(field => { 
         if (airport[field] !== undefined) {
@@ -41,19 +32,45 @@ class LocationSearch extends Component {
         return { search: value };
       },
       () => {
-        this.props.handleChange(e, this.props.field, this.state.search);
-      }
-    );
-    if (this.state.search && this.state.search.length >= 3) {
-      this.findSuggestion(this.state.search);
-    }
-  }
+        this.props.handleChange(e, this.props.field, this.state.search); 
+        // console.log(this.state.searchResults.length)
+        // if (this.state.searchResults.length === 0) {
+        //         let newSet = this.props.destinationNames.filter ( (name, i, arr) => {
+        //           return name.charAt(0) === this.state.search
+        //           } );
+        //         this.setState({
+        //             searchResults: newSet
+        //         });
+        //     } else if (this.state.searchResults.length > 0) {
+        //         let newSet = this.state.searchResults.filter( (name, i, arr) => {
+        //           return name.charAt(this.state.searchResults.length) === this.state.search.charAt(this.state.searchResults.lenth) 
+        //           } );
+        //         this.setState({
+        //             searchResults: newSet
+        //         });
+        //      } 
+          })
+        }
+  
+
+
+
+        // I need to change what goes to searchResults based on the "search" state. 
+        // On handleChange, search state changes. 
+//       If the first letter of a name matches the state, I want to send that result to         searchResults. 
+//      If state changes again I need to adjust searchResults:
+//            if the user backspaces, I need to clear searchResults
+//          if the user increases the length of of the state then I want to filter searchResults with the new letter. 
+//      As state changes, continue this process. 
+
+
+  
 
   render() {
     return (
       <div>
         <form action="">
-          <div className="inputBox">
+          <div className="inputBox locationSearch">
             <label>{this.props.field}</label>
             <input
               type="text"
