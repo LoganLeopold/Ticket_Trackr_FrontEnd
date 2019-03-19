@@ -1,4 +1,3 @@
-
 html {
   box-sizing: border-box;
   margin: 0px;
@@ -22,15 +21,8 @@ body {
   min-height: 100%;
   justify-content: center;
   background: lightblue;
-  align-items: center;
+  /* align-items: center; */
   
-}
-
-main {
-  margin: 0;
-  min-width: 100%;
-  min-height: 100%;
-  justify-content: center;
 }
 
 .App {
@@ -40,23 +32,51 @@ main {
   text-align: center;
   background: lightblue;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  display: grid;
-  grid-template-rows: 3;
-  grid-template-columns: 3;
 }
 
+main {
+  margin: 0;
+  min-width: 100%;
+  min-height: 100%;
+  justify-content: center;
+  
+}
 
+form {
+  display: grid;
+  grid-template-rows: 2fr;
+  grid-template-columns: 2fr;
+}
 
 .inputBox {
   margin: 4vh;
   background: lightblue;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ddate {
+  grid-column-start: 1;
+  grid-column-end: span 1;
+  grid-row-start: 1;
+  grid-row-end: span 1;
+}
+
+.rdate {
+  grid-column-start: 2;
+  grid-column-end: span 1;
+  grid-row-start: 1;
+  grid-row-end: span 1;
+}
+
+.dport {
+  grid-column-start: 1;
+  grid-column-end: span 1;
+  grid-row-start: 2;
+  grid-row-end: span 1;
+}
+
+.aport {
+  grid-column-start: 2;
+  grid-column-end: span 1;
+  grid-row-start: 2;
+  grid-row-end: span 1;
 }

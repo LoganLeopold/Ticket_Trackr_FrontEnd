@@ -5,6 +5,7 @@ import Tester from "./Tester";
 import FlightSearch from "./FlightSearch";
 import "./App.css";
 import LocationSearch from "./LocationSearch";
+import DateP from "./Date"
 
 class App extends Component {
   constructor() {
@@ -24,22 +25,34 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
-
+  
   componentDidMount() {
-    axios.get("https://tickettrackr.herokuapp.com/airports/search/").then(list => {
-      this.setState((prevState) => { return {
-        airports: list.data.airports
-      }},
-      () =>
-      {
-        let destinationNamesArr = this.state.airports.map( (airport, i, arr) => {
-          return airport['faa'], airport['city'], airport['name']
-        })
-        this.setState({
-          destinationNames: destinationNamesArr.sort()
-        })
-      });
-    });
+    // axios.get("https://api.flightstats.com/flex/airports/rest/v1/json/active?")
+    const config = {
+      headers: {
+        accept: 'text/html',
+      }
+    };
+    axios.get('http://localhost:8000/airports/search', config)
+    .then( list => {
+      console.log(list)
+      this.setState({  
+        airports: list.data 
+      })
+    })
+    //   () =>
+    //   {
+    //     let destinationNamesArr = this.state.airports.map( (airport, i, arr) => {
+    //       return airport['faa'], airport['city'], airport['name']
+    //     })
+    //     this.setState({
+    //       destinationNames: destinationNamesArr.sort()
+    //     })
+    //   });
+    // });
+    // this.setState({
+    //   airports: ['Hello']
+    // })
   }
 
   handleClick(event) {
@@ -95,25 +108,15 @@ class App extends Component {
                 onChange={this.handleChange}
               />
             </div> */}
-            <div className="inputBox">
+            <div className="inputBox ddate">
               <label>Departure Date</label>
-              <input
-                type="text"
-                name="outboundDate"
-                defaultValue={this.state.outboundDate}
-                onChange={this.handleChange}
-              />
+              <DateP className='departDate' {...this.state}/>
             </div>
-            <div className="inputBox">
+            <div className="inputBox rdate">
               <label>Return Date</label>
-              <input
-                type="text"
-                name="inboundDate"
-                defaultValue={this.state.inboundDate}
-                onChange={this.handleChange}
-              />
+              <DateP className='returnDate' {...this.state}/>
             </div>
-            <div className="inputBox">
+            <div className="inputBox dport">
               <label>Departure Airport</label>
               <input
                 type="text"
@@ -122,7 +125,7 @@ class App extends Component {
                 onChange={this.handleChange}
               />
             </div>
-            <div className="inputBox">
+            <div className="inputBox aport">
               <label>Arrival Airport</label>
               <input
                 type="text"
@@ -131,9 +134,9 @@ class App extends Component {
                 onChange={this.handleChange}
               />
             </div>
-            <button onClick={this.handleClick}>
+            {/* <button onClick={this.handleClick}>
               May Need A Submit Eventually
-            </button>
+            </button> */}
           </form>
         </main>
         <Route path='/search' render={(routerProps) => <LocationSearch handleChange={this.handleChange} {...routerProps}{...this.state}/>} />
