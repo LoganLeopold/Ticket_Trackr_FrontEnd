@@ -33,7 +33,7 @@ class App extends Component {
         accept: 'text/html',
       }
     };
-    axios.get('http://localhost:8000/airports/search', config)
+    axios.get('https://tickettrackr.herokuapp.com/airports/search/', config)
     .then( list => {
       console.log(list)
       this.setState({  
