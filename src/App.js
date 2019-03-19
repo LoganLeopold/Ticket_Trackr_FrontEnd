@@ -27,19 +27,8 @@ class App extends Component {
   }
   
   componentDidMount() {
-    // axios.get("https://api.flightstats.com/flex/airports/rest/v1/json/active?")
-    const config = {
-      headers: {
-        accept: 'text/html',
-      }
-    };
-    axios.get('https://tickettrackr.herokuapp.com/airports/search/', config)
-    .then( list => {
-      console.log(list)
-      this.setState({  
-        airports: list.data 
-      })
-    })
+    console.log('App mounted boi')
+   
     //   () =>
     //   {
     //     let destinationNamesArr = this.state.airports.map( (airport, i, arr) => {
@@ -53,6 +42,21 @@ class App extends Component {
     // this.setState({
     //   airports: ['Hello']
     // })
+  }
+
+  componentDidUpdate () {
+    const config = {
+      headers: {
+        accept: 'text/html',
+      }
+    };
+    axios.get('https://tickettrackr.herokuapp.com/airports/search/', config)
+    .then( list => {
+      console.log(list)
+      this.setState({  
+        airports: list.data 
+      })
+    })
   }
 
   handleClick(event) {
@@ -90,31 +94,13 @@ class App extends Component {
       <div className='App'>
         <main>
           <form action="">
-            {/* <div className="inputBox">
-              <label>Travel Tier</label>
-              <input
-                type="text"
-                name="cabinClass"
-                defaultValue={this.state.cabinClass}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="inputBox">
-              <label>Passenger Count</label>
-              <input
-                type="text"
-                name="adults"
-                defaultValue={this.state.adults}
-                onChange={this.handleChange}
-              />
-            </div> */}
             <div className="inputBox ddate">
               <label>Departure Date</label>
-              <DateP className='departDate' {...this.state}/>
+              <DateP className='departDate' handleChange={this.handleChange}{...this.state}/>
             </div>
             <div className="inputBox rdate">
               <label>Return Date</label>
-              <DateP className='returnDate' {...this.state}/>
+              <DateP className='returnDate' handleChange={this.handleChange}{...this.state}/>
             </div>
             <div className="inputBox dport">
               <label>Departure Airport</label>
@@ -133,10 +119,7 @@ class App extends Component {
                 defaultValue={this.state.destinationPlace}
                 onChange={this.handleChange}
               />
-            </div>
-            {/* <button onClick={this.handleClick}>
-              May Need A Submit Eventually
-            </button> */}
+            </div>         
           </form>
         </main>
         <Route path='/search' render={(routerProps) => <LocationSearch handleChange={this.handleChange} {...routerProps}{...this.state}/>} />
@@ -165,3 +148,23 @@ export default App;
 />
 </div> */
 }
+
+
+   {/* <div className="inputBox">
+              <label>Travel Tier</label>
+              <input
+                type="text"
+                name="cabinClass"
+                defaultValue={this.state.cabinClass}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="inputBox">
+              <label>Passenger Count</label>
+              <input
+                type="text"
+                name="adults"
+                defaultValue={this.state.adults}
+                onChange={this.handleChange}
+              />
+            </div> */} 

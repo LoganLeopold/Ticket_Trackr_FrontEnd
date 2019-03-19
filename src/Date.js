@@ -10,10 +10,10 @@ class DateP extends React.Component {
       this.state = {
         startDate: new Date()
       };
-      this.handleChange = this.handleChange.bind(this);
+      this.handleDate = this.handleDate.bind(this);
     }
    
-    handleChange(date) {
+    handleDate(date) {
       this.setState({
         startDate: date
       });
@@ -23,7 +23,7 @@ class DateP extends React.Component {
       return (
         <DatePicker
           selected={this.state.startDate}
-          onChange={this.handleChange}
+          onChange={this.handleDate}
         />
       );
     }
