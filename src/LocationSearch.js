@@ -33,22 +33,21 @@ class LocationSearch extends Component {
       },
       () => {
         this.props.handleChange(e, this.props.field, this.state.search); 
-        // console.log(this.state.searchResults.length)
-        // if (this.state.searchResults.length === 0) {
-        //         let newSet = this.props.destinationNames.filter ( (name, i, arr) => {
-        //           return name.charAt(0) === this.state.search
-        //           } );
-        //         this.setState({
-        //             searchResults: newSet
-        //         });
-        //     } else if (this.state.searchResults.length > 0) {
-        //         let newSet = this.state.searchResults.filter( (name, i, arr) => {
-        //           return name.charAt(this.state.searchResults.length) === this.state.search.charAt(this.state.searchResults.lenth) 
-        //           } );
-        //         this.setState({
-        //             searchResults: newSet
-        //         });
-        //      } 
+        if (this.state.searchResults.length === 0) {
+                let newSet = this.props.destinationNames.filter ( (name, i, arr) => {
+                  return name.charAt(0) === this.state.search
+                  } );
+                this.setState({
+                    searchResults: newSet
+                });
+            } else if (this.state.searchResults.length > 0) {
+                let newSet = this.state.searchResults.filter( (name, i, arr) => {
+                  return name.charAt(this.state.searchResults.length) === this.state.search.charAt(this.state.searchResults.lenth) 
+                  } );
+                this.setState({
+                    searchResults: newSet
+                });
+             } 
           })
         }
   

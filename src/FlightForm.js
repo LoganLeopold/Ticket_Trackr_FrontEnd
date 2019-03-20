@@ -15,8 +15,9 @@ class FlightForm extends Component {
       inboundDate: "",
       originPlace: "",
       destinationPlace: "",
-      searchResults: [],
-      destinationNames: []
+      country: "US",
+      currency: "USD",
+      locale: "en-US"
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -24,7 +25,7 @@ class FlightForm extends Component {
   }
 
   componentDidMount() {
-   console.log("FlightForm mounted boi")
+    console.log("FlightForm mounted boi");
   }
 
   handleClick(event) {
@@ -36,10 +37,15 @@ class FlightForm extends Component {
         outboundDate: this.state.outboundDate,
         inboundDate: this.state.inboundDate,
         originPlace: this.state.originPlace,
-        destinationPlace: this.state.destinationPlace
+        destinationPlace: this.state.destinationPlace,
+        country: this.state.country,
+        currency: "USD",
+        locale: "en-US"
       })
       .then(function(response) {
         console.log(response);
+        // location = response.headers['Location'].split('/')
+        // key = location[len(location) - 1]
       })
       .catch(function(response) {
         console.log(response);
@@ -47,21 +53,52 @@ class FlightForm extends Component {
     //https://kapeli.com/cheat_sheets/Axios.docset/Contents/Resources/Documents/index helped me realize I don't need a weird format and then I just reverted to the same update state change stuff and got 'er done!
   }
 
+//   handleValueChange(event) {
+//       this.setState({
+//         value: 
+//       })
+//   }
+
   handleChange(name, value) {
     this.setState({
       [name]: value
-    //   this.setState((prevState, props) => {
-    //     return {[name]: prevState[counter] + props.value};
-    //   })
+      //   this.setState((prevState, props) => {
+      //     return {[name]: prevState[counter] + props.value};
+      //   })
     });
   }
 
   render() {
-    console.log("FlightForm rendered boi")
+    console.log("FlightForm rendered boi");
     return (
       <div className="flightForm">
         <main>
           <form action="">
+            <div className="inputBox">
+              <label>Travel Tier</label>
+              <select
+                type="text"
+                name="cabinClass"             value={this.state.cabinClass}
+                onChange={this.handleValueChange}
+              >
+                <option value='economy'> Economy </option>
+                <option value='premiumeconomy'> PremiumEconomy </option>
+                <option value='business'> Business </option>
+                <option value='first'> First </option>
+              </select>
+            </div>
+            <div className="inputBox">
+              <label>Passenger Count</label>
+              <select
+                type="text"
+                name="adults"
+                onChange={this.handleChange}
+              >
+                <option value='1'> 1 </option>
+                <option value='2'> 2 </option>
+                <option value='3'> 3 </option>
+              </select>
+            </div>
             <div className="inputBox ddate">
               <label>Departure Date</label>
               <DateP

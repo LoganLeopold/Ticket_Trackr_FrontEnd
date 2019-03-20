@@ -63,23 +63,5 @@ export default App;
 </div> */
 }
 
-{
-  /* <div className="inputBox">
-              <label>Travel Tier</label>
-              <input
-                type="text"
-                name="cabinClass"
-                defaultValue={this.state.cabinClass}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="inputBox">
-              <label>Passenger Count</label>
-              <input
-                type="text"
-                name="adults"
-                defaultValue={this.state.adults}
-                onChange={this.handleChange}
-              />
-            </div> */
-}
+ 
+

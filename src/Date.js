@@ -13,13 +13,22 @@ class DateP extends React.Component {
       this.handleChange = this.handleChange.bind(this);
     }
    // ________event was "date"
-    handleChange(date) {
 
-        this.setState({
-            startDate: date
-        }, () => this.props.handleChange(this.props.fieldName, this.state.startDate)   
-        )
-    }
+   handleChange = (date) => {
+    this.setState({
+      startDate: date
+    }, () => {
+      this.props.handleChange(this.props.fieldName, this.state.startDate)   
+    })
+}
+
+    // handleChange(date) {
+
+    //     this.setState((prevState) => {
+    //        return {startDate: date}
+    //       }, () => 
+    //     )
+    // }
    
     render() {
         console.log("Date rendered boi")
