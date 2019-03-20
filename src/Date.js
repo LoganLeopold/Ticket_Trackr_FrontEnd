@@ -12,7 +12,7 @@ class DateP extends React.Component {
       };
       this.handleChange = this.handleChange.bind(this);
     }
-   // ________event was "date"
+ 
 
    handleChange = (date) => {
     this.setState({

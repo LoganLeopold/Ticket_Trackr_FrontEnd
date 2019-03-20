@@ -22,6 +22,7 @@ class FlightForm extends Component {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleValueChange = this.handleValueChange.bind(this)
   }
 
   componentDidMount() {
@@ -53,18 +54,19 @@ class FlightForm extends Component {
     //https://kapeli.com/cheat_sheets/Axios.docset/Contents/Resources/Documents/index helped me realize I don't need a weird format and then I just reverted to the same update state change stuff and got 'er done!
   }
 
-//   handleValueChange(event) {
-//       this.setState({
-//         value: 
-//       })
-//   }
+  handleValueChange = (event) => {
+      this.setState({
+        value: event.target.value
+      }, () => {
+          this.setState({
+              cabinClass: this.state.value,
+          })
+      })
+  }
 
   handleChange(name, value) {
     this.setState({
       [name]: value
-      //   this.setState((prevState, props) => {
-      //     return {[name]: prevState[counter] + props.value};
-      //   })
     });
   }
 
@@ -92,7 +94,8 @@ class FlightForm extends Component {
               <select
                 type="text"
                 name="adults"
-                onChange={this.handleChange}
+                value={this.state.adults}
+                onChange={this.handleValueChange}
               >
                 <option value='1'> 1 </option>
                 <option value='2'> 2 </option>
