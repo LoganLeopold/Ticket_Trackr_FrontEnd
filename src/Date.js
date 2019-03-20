@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+
+var moment = require('moment');
+
+
+
 
 // 
 class DateP extends React.Component {
@@ -9,7 +13,7 @@ class DateP extends React.Component {
       super(props);
       this.state = {
         startDate: new Date()
-      };
+      }
       this.handleChange = this.handleChange.bind(this);
     }
  
