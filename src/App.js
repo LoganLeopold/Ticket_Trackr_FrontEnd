@@ -12,23 +12,43 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      airports: []
+      airports: [],
+      markets: []
     };
     this.componentDidMount = this.componentDidMount.bind(this)
   }
 
   componentDidMount() {
     console.log("App mounted boi");
-    const config = {
+    const configAir = {
       headers: {
         accept: "text/html"
       }
     };
-    axios.get("http://localhost:8000/airports/search", config).then(list => {
+
+    const configMarkets = {
+      headers: {
+        'X-RapidAPI-Key': "2598ac1afamshdac98da0b5326d1p1a89a8jsndbb4a4b83763",
+        'Content-Type': "application/x-www-form-urlencoded",
+      }
+    }
+
+    axios.get("http://localhost:8000/airports/search", configAir)
+      .then(list => {
       this.setState({
         airports: list.data
       });
     });
+
+    axios.get("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/reference/v1.0/countries/en-US", configMarkets)
+    .then( (res) => {
+      this.setState({
+        markets: res.data.Countries
+      })
+      console.log(this.state.markets)
+    })
+
+    
   }
 
 

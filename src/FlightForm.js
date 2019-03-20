@@ -22,7 +22,7 @@ class FlightForm extends Component {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.handleValueChange = this.handleValueChange.bind(this)
+    this.handleValueChange = this.handleValueChange.bind(this);
   }
 
   componentDidMount() {
@@ -54,15 +54,20 @@ class FlightForm extends Component {
     //https://kapeli.com/cheat_sheets/Axios.docset/Contents/Resources/Documents/index helped me realize I don't need a weird format and then I just reverted to the same update state change stuff and got 'er done!
   }
 
-  handleValueChange = (event) => {
-      this.setState({
+  handleValueChange = event => {
+    const name = event.target.name;
+    console.log(name);
+    this.setState(
+      {
         value: event.target.value
-      }, () => {
-          this.setState({
-              cabinClass: this.state.value,
-          })
-      })
-  }
+      },
+      () => {
+        this.setState({
+          [name]: this.state.value
+        });
+      }
+    );
+  };
 
   handleChange(name, value) {
     this.setState({
@@ -72,21 +77,45 @@ class FlightForm extends Component {
 
   render() {
     console.log("FlightForm rendered boi");
+    
+    const iterateNames = this.props.markets.sort((a,b) => {
+        if (a.Name > b.Name) {return 1}
+        else if (a.Name < b.Name) {return -1}
+        else return 0
+    })
+    console.log(iterateNames)
+
     return (
       <div className="flightForm">
         <main>
           <form action="">
             <div className="inputBox">
+              <label>Origin Country</label>
+              <select
+                type="text"
+                name="country"
+                value={this.state.country}
+                onChange={this.handleValueChange}
+              >
+                {               
+                    iterateNames.map( (country) => {
+                          return (<option key={country.Code} value={country.Name}>{country.Name}</option>)
+                      })
+                }
+              </select>
+            </div>
+            <div className="inputBox">
               <label>Travel Tier</label>
               <select
                 type="text"
-                name="cabinClass"             value={this.state.cabinClass}
+                name="cabinClass"
+                value={this.state.cabinClass}
                 onChange={this.handleValueChange}
               >
-                <option value='economy'> Economy </option>
-                <option value='premiumeconomy'> PremiumEconomy </option>
-                <option value='business'> Business </option>
-                <option value='first'> First </option>
+                <option value="economy"> Economy </option>
+                <option value="premiumeconomy"> PremiumEconomy </option>
+                <option value="business"> Business </option>
+                <option value="first"> First </option>
               </select>
             </div>
             <div className="inputBox">
@@ -97,9 +126,9 @@ class FlightForm extends Component {
                 value={this.state.adults}
                 onChange={this.handleValueChange}
               >
-                <option value='1'> 1 </option>
-                <option value='2'> 2 </option>
-                <option value='3'> 3 </option>
+                <option value="1"> 1 </option>
+                <option value="2"> 2 </option>
+                <option value="3"> 3 </option>
               </select>
             </div>
             <div className="inputBox ddate">
