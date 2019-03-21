@@ -56,6 +56,7 @@ class App extends Component {
     return (
       <div>
         <h1>Ticket Trackr</h1>
+        <h3>Give it a go by putting US airport codes in before "-sky" in the airport inputes and changing the dates before you press "FIND ROUTES."</h3>
         <FlightForm {...this.props}{...this.state}/>
       </div>
     );
