@@ -35,6 +35,25 @@ class FlightForm extends Component {
   handleClick(event) {
     event.preventDefault();
 
+    function LivePrice(response) {
+      let liveConfig = {
+        headers: {
+          "X-RapidAPI-Key": "2598ac1afamshdac98da0b5326d1p1a89a8jsndbb4a4b83763"
+        }
+      };
+      let session = response.headers.location.split("/").pop(-1);
+      console.log(session);
+      axios
+        .get(
+          `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/uk2/v1.0/${session}/?sortType=price&sortOrder=asc&pageIndex=0`,
+          liveConfig
+        )
+        .then(response => {
+          console.log(response);
+          return response;
+        });
+    }
+
     var postConfig = {
       headers: {
         "X-RapidAPI-Key": "2598ac1afamshdac98da0b5326d1p1a89a8jsndbb4a4b83763",
@@ -59,29 +78,25 @@ class FlightForm extends Component {
         postConfig
       )
       .then(function(response) {
-        console.log(response)
-        return response
+        console.log(response);
+        return response;
       })
-      .then((response)=> {
-        let liveConfig = {
-            headers: {
-              "X-RapidAPI-Key":
-                "2598ac1afamshdac98da0b5326d1p1a89a8jsndbb4a4b83763"
-            }
-          };
-          let session = response.headers.location.split("/").pop(-1);
-          console.log(session);
-          axios.get(
-            `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/uk2/v1.0/${session}/?sortType=price&sortOrder=asc&pageIndex=0`,
-            liveConfig
-          )
-          .then((res) => {
-              console.log(res.data.Itineraries);
-              this.setState({
-                  livePrice: res.data.Itineraries[0].PricingOptions[0].Price
-              })
-            });
+      .then(response => {
+        while (response.data.Status === "UpdatesPending") {
+          let resp = LivePrice(response);
+          console.log(resp)
+          if (resp.data.Itineraries.length > 0) {
+              console.log(resp.data)
+            return resp.data;
+          }
+        }
       })
+    //   .then((data)=>{
+    //       console.log(data)
+    //       this.setState({
+    //           livePrices: data.Itineraries[0].PricingOptions[0].Price})
+    //   })
+
       .catch(function(response) {
         console.log(response);
       });
@@ -123,7 +138,7 @@ class FlightForm extends Component {
       <div className="flightForm">
         <main>
           <form action="">
-            <div className="inputBox">
+            <div className="inputBox country">
               <label>Origin Country</label>
               <select
                 type="text"
@@ -140,7 +155,7 @@ class FlightForm extends Component {
                 })}
               </select>
             </div>
-            <div className="inputBox">
+            <div className="inputBox tier">
               <label>Travel Tier</label>
               <select
                 type="text"
@@ -154,7 +169,7 @@ class FlightForm extends Component {
                 <option value="first"> First </option>
               </select>
             </div>
-            <div className="inputBox">
+            <div className="inputBox passengers">
               <label>Passenger Count</label>
               <select
                 type="text"
@@ -205,7 +220,7 @@ class FlightForm extends Component {
               FIND ROUTES
             </button>
           </form>
-          <h1>{this.state.livePrice}</h1>
+          <h1 className="formSubmit">{this.state.livePrice}</h1>
         </main>
       </div>
     );

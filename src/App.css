@@ -40,12 +40,15 @@ main {
   min-width: 100%;
   min-height: 100%;
   justify-content: center;
-  
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center; 
 }
 
 form {
   display: grid;
-  grid-template-rows: 2fr;
+  grid-template-rows: 4fr;
   grid-template-columns: 2fr;
 }
 
@@ -81,3 +84,38 @@ form {
   grid-row-start: 2;
   grid-row-end: span 1;
 }
+
+.country {
+  grid-column-start: 1;
+  grid-column-end: span 1;
+  grid-row-start: 3;
+  grid-row-end: span 1;
+}
+
+.tier {
+  grid-column-start: 2;
+  grid-column-end: span 1;
+  grid-row-start: 3;
+  grid-row-end: span 1;
+}
+
+.passengers {
+  grid-column-start: 1;
+  grid-column-end: span 1;
+  grid-row-start: 4;
+  grid-row-end: span 1;
+}
+
+.formSubmit {
+  grid-column-start: 2;
+  grid-column-end: span 1;
+  grid-row-start: 4;
+  grid-row-end: span 1;
+}
+
+h1 {
+  margin: 7vh;
+  color: red;
+  font-size: 7vh;
+}
+
