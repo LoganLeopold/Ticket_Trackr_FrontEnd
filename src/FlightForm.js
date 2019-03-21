@@ -35,25 +35,6 @@ class FlightForm extends Component {
   handleClick(event) {
     event.preventDefault();
 
-    function LivePrice(response) {
-      let liveConfig = {
-        headers: {
-          "X-RapidAPI-Key": "2598ac1afamshdac98da0b5326d1p1a89a8jsndbb4a4b83763"
-        }
-      };
-      let session = response.headers.location.split("/").pop(-1);
-      console.log(session);
-      axios
-        .get(
-          `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/uk2/v1.0/${session}/?sortType=price&sortOrder=asc&pageIndex=0`,
-          liveConfig
-        )
-        .then(response => {
-          console.log(response);
-          return response;
-        });
-    }
-
     var postConfig = {
       headers: {
         "X-RapidAPI-Key": "2598ac1afamshdac98da0b5326d1p1a89a8jsndbb4a4b83763",
@@ -81,27 +62,52 @@ class FlightForm extends Component {
         console.log(response);
         return response;
       })
-      .then(response => {
-        while (response.data.Status === "UpdatesPending") {
-          let resp = LivePrice(response);
-          console.log(resp)
-          if (resp.data.Itineraries.length > 0) {
-              console.log(resp.data)
-            return resp.data;
+      .then((response) => {
+        let liveConfig = {
+          headers: {
+            "X-RapidAPI-Key":
+              "2598ac1afamshdac98da0b5326d1p1a89a8jsndbb4a4b83763"
           }
+        };
+        let session = response.headers.location.split("/").pop(-1);
+        console.log(session);
+        function poll() {
+          const res = axios.get(
+            `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/uk2/v1.0/${session}/?sortType=price&sortOrder=asc&pageIndex=0`,
+            liveConfig);
+          return res
         }
+        poll().then((res) => {
+          console.log(res);
+          if(res.data.Itineraries.length > 0) {
+              this.setState({
+                      livePrice: res.data.Itineraries[0].PricingOptions[0].Price
+                    });
+        };
+       
       })
-    //   .then((data)=>{
-    //       console.log(data)
-    //       this.setState({
-    //           livePrices: data.Itineraries[0].PricingOptions[0].Price})
-    //   })
-
       .catch(function(response) {
         console.log(response);
       });
+      }
     //https://kapeli.com/cheat_sheets/Axios.docset/Contents/Resources/Documents/index helped me realize I don't need a weird format and then I just reverted to the same update state change stuff and got 'er done!
-  }
+    }
+
+   // ;
+        // }
+        // poll(response)
+        //   .then(res => {
+        //     while (res.data.Status === "UpdatesPending") {
+        //       poll(response);
+        //     }
+        //   })
+        //   .then(res => {
+        //     if (res.data.statusText === "OK") {
+        //       this.setState({
+        //         livePrice: res.data.Itineraries[0].PricingOptions[0].Price
+        //       });
+        //     }
+        //   });
 
   handleValueChange = event => {
     const name = event.target.name;
