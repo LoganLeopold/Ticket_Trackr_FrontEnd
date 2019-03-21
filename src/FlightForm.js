@@ -59,55 +59,40 @@ class FlightForm extends Component {
         postConfig
       )
       .then(function(response) {
-        console.log(response);
-        return response;
+        console.log(response)
+        return response
       })
-      .then((response) => {
+      .then((response)=> {
         let liveConfig = {
-          headers: {
-            "X-RapidAPI-Key":
-              "2598ac1afamshdac98da0b5326d1p1a89a8jsndbb4a4b83763"
-          }
-        };
-        let session = response.headers.location.split("/").pop(-1);
-        console.log(session);
-        function poll() {
-          const res = axios.get(
+            headers: {
+              "X-RapidAPI-Key":
+                "2598ac1afamshdac98da0b5326d1p1a89a8jsndbb4a4b83763"
+            }
+          };
+          let session = response.headers.location.split("/").pop(-1);
+          console.log(session);
+          axios.get(
             `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/uk2/v1.0/${session}/?sortType=price&sortOrder=asc&pageIndex=0`,
-            liveConfig);
-          return res
-        }
-        poll().then((res) => {
-          console.log(res);
-          if(res.data.Itineraries.length > 0) {
+            liveConfig
+          )
+          //I think somewhere here I can put simple if statements --within-- a function call for the request that recall the request until there are results. 
+          .then((res) => {
+              console.log(res.data.Itineraries);
+              if (res.data.Itineraries.length === 0) {
+                  alert("Sorry - no results. Try making the origin date closer to the return and make sure it is before the return date.")
+              }
+              if (res.data.Itineraries.length > 0) {
               this.setState({
-                      livePrice: res.data.Itineraries[0].PricingOptions[0].Price
-                    });
-        };
-       
+                  livePrice: res.data.Itineraries[0].PricingOptions[0].Price
+              })
+            }
+            });
       })
       .catch(function(response) {
         console.log(response);
       });
-      }
     //https://kapeli.com/cheat_sheets/Axios.docset/Contents/Resources/Documents/index helped me realize I don't need a weird format and then I just reverted to the same update state change stuff and got 'er done!
-    }
-
-   // ;
-        // }
-        // poll(response)
-        //   .then(res => {
-        //     while (res.data.Status === "UpdatesPending") {
-        //       poll(response);
-        //     }
-        //   })
-        //   .then(res => {
-        //     if (res.data.statusText === "OK") {
-        //       this.setState({
-        //         livePrice: res.data.Itineraries[0].PricingOptions[0].Price
-        //       });
-        //     }
-        //   });
+  }
 
   handleValueChange = event => {
     const name = event.target.name;
@@ -226,7 +211,7 @@ class FlightForm extends Component {
               FIND ROUTES
             </button>
           </form>
-          <h1 className="formSubmit">{this.state.livePrice}</h1>
+          <h1 className='formSubmit'>{this.state.livePrice}</h1>
         </main>
       </div>
     );

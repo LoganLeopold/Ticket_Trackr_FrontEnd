@@ -55,6 +55,7 @@ class App extends Component {
     console.log("App rendered boi");
     return (
       <div>
+        <h1>Ticket Trackr</h1>
         <FlightForm {...this.props}{...this.state}/>
       </div>
     );
