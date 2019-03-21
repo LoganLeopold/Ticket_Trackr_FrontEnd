@@ -4,21 +4,23 @@ import { Link, Route } from "react-router-dom";
 import FlightSearch from "./FlightSearch";
 import LocationSearch from "./LocationSearch";
 import DateP from "./Date";
-var querystring = require('querystring');
+var querystring = require("querystring");
+var moment = require("moment");
 
 class FlightForm extends Component {
   constructor() {
     super();
     this.state = {
-      cabinClass: "",
-      adults: "",
+      cabinClass: "economy",
+      adults: "1",
       outboundDate: "",
       inboundDate: "",
       originPlace: "LHR-sky",
       destinationPlace: "SFO-sky",
       country: "US",
       currency: "USD",
-      locale: "en-US"
+      locale: "en-US",
+      livePrice: "----"
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -33,30 +35,52 @@ class FlightForm extends Component {
   handleClick(event) {
     event.preventDefault();
 
-    var postConfig = { headers: {
-            "X-RapidAPI-Key": "2598ac1afamshdac98da0b5326d1p1a89a8jsndbb4a4b83763",
-            "Content-Type": "application/x-www-form-urlencoded",
-          }
-    }
-    
+    var postConfig = {
+      headers: {
+        "X-RapidAPI-Key": "2598ac1afamshdac98da0b5326d1p1a89a8jsndbb4a4b83763",
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    };
 
     axios
-      .post("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/v1.0", querystring.stringify({
-        country: this.state.country,
-        currency: this.state.currency,
-        locale: this.state.locale,
-        cabinClass: this.state.cabinClass,
-        adults: this.state.adults,
-        outboundDate: "2019-04-04",
-        // moment(this.state.outboundDate).format('YYYY-MM-DD'),
-        inboundDate: "2019-04-15",
-        // moment(this.state.inboundDate).format('YYYY-MM-DD'),
-        originPlace: this.state.originPlace,
-        destinationPlace: this.state.destinationPlace,
-        
-      }), postConfig)
+      .post(
+        "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/v1.0",
+        querystring.stringify({
+          country: this.state.country,
+          currency: this.state.currency,
+          locale: this.state.locale,
+          cabinClass: this.state.cabinClass,
+          adults: this.state.adults,
+          outboundDate: moment(this.state.outboundDate).format("YYYY-MM-DD"),
+          inboundDate: moment(this.state.inboundDate).format("YYYY-MM-DD"),
+          originPlace: this.state.originPlace,
+          destinationPlace: this.state.destinationPlace
+        }),
+        postConfig
+      )
       .then(function(response) {
-        console.log(response.headers.location);
+        console.log(response)
+        return response
+      })
+      .then((response)=> {
+        let liveConfig = {
+            headers: {
+              "X-RapidAPI-Key":
+                "2598ac1afamshdac98da0b5326d1p1a89a8jsndbb4a4b83763"
+            }
+          };
+          let session = response.headers.location.split("/").pop(-1);
+          console.log(session);
+          axios.get(
+            `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/uk2/v1.0/${session}/?sortType=price&sortOrder=asc&pageIndex=0`,
+            liveConfig
+          )
+          .then((res) => {
+              console.log(res.data.Itineraries);
+              this.setState({
+                  livePrice: res.data.Itineraries[0].PricingOptions[0].Price
+              })
+            });
       })
       .catch(function(response) {
         console.log(response);
@@ -86,12 +110,14 @@ class FlightForm extends Component {
 
   render() {
     console.log("FlightForm rendered boi");
-    
-    const iterateNames = this.props.markets.sort((a,b) => {
-        if (a.Name > b.Name) {return 1}
-        else if (a.Name < b.Name) {return -1}
-        else return 0
-    })
+
+    const iterateNames = this.props.markets.sort((a, b) => {
+      if (a.Name > b.Name) {
+        return 1;
+      } else if (a.Name < b.Name) {
+        return -1;
+      } else return 0;
+    });
 
     return (
       <div className="flightForm">
@@ -105,11 +131,13 @@ class FlightForm extends Component {
                 value={this.state.country}
                 onChange={this.handleValueChange}
               >
-                {               
-                    iterateNames.map( (country) => {
-                          return (<option key={country.Code} value={country.Code}>{country.Name}</option>)
-                      })
-                }
+                {iterateNames.map(country => {
+                  return (
+                    <option key={country.Code} value={country.Code}>
+                      {country.Name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <div className="inputBox">
@@ -173,9 +201,11 @@ class FlightForm extends Component {
                 onChange={this.handleChange}
               />
             </div>
-            <button type="submit" onClick={this.handleClick}>FIND ROUTES
+            <button type="submit" onClick={this.handleClick}>
+              FIND ROUTES
             </button>
           </form>
+          <h1>{this.state.livePrice}</h1>
         </main>
       </div>
     );

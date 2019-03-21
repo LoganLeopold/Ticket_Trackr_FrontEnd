@@ -45,7 +45,6 @@ class App extends Component {
       this.setState({
         markets: res.data.Countries
       })
-      console.log(this.state.markets)
     })
 
     
