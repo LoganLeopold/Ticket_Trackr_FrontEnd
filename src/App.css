@@ -22,7 +22,7 @@ body {
   justify-content: center;
   background: lightblue;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  /* align-items: center; */
+  text-align: center;
   
 }
 
@@ -106,16 +106,37 @@ form {
   grid-row-end: span 1;
 }
 
-.formSubmit {
+.subButton {
   grid-column-start: 2;
   grid-column-end: span 1;
   grid-row-start: 4;
   grid-row-end: span 1;
+  justify-items: center;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+button {
+  border-style: none;
+  background: white;
+  font-size: 2vh;
+  font-weight: 700;
+  color: black;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  max-width: 20vh;
+  max-height: 8vh;
 }
 
 h1 {
-  margin: 7vh;
+  margin: 1vh;
   color: red;
-  font-size: 7vh;
+  font-size: 5vh;
+}
+
+h2 {
+  margin: 1vh;
+  color: red;
+  font-size: 3vh;
 }
 

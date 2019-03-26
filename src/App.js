@@ -33,12 +33,6 @@ class App extends Component {
       }
     }
 
-    axios.get("http://localhost:8000/airports/search", configAir)
-      .then(list => {
-      this.setState({
-        airports: list.data
-      });
-    });
 
     axios.get("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/reference/v1.0/countries/en-US", configMarkets)
     .then( (res) => {
@@ -46,6 +40,26 @@ class App extends Component {
         markets: res.data.Countries
       })
     })
+    .catch(function(response) {
+      console.log(response);
+    })
+    .then(
+
+      () => {
+        axios.get("http://localhost:8000/airports/search", configAir)
+        .then(list => {
+        this.setState({
+          airports: list.data
+        })
+      })
+    .catch(function(response) {
+      console.log(response);
+    })
+      }
+
+    );
+
+    
 
     
   }
@@ -56,7 +70,6 @@ class App extends Component {
     return (
       <div>
         <h1>Ticket Trackr</h1>
-        <h3>Give it a go by putting US airport codes in before "-sky" in the airport inputes and changing the dates before you press "FIND ROUTES."</h3>
         <FlightForm {...this.props}{...this.state}/>
       </div>
     );

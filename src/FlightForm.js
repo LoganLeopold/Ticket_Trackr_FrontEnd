@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Link, Route } from "react-router-dom";
-import FlightSearch from "./FlightSearch";
-import LocationSearch from "./LocationSearch";
+// import { Link, Route } from "react-router-dom";
+// import FlightSearch from "./FlightSearch";
+// import LocationSearch from "./LocationSearch";
 import DateP from "./Date";
 var querystring = require("querystring");
 var moment = require("moment");
@@ -15,21 +15,74 @@ class FlightForm extends Component {
       adults: "1",
       outboundDate: "",
       inboundDate: "",
-      originPlace: "LHR-sky",
-      destinationPlace: "SFO-sky",
+      originPlace: "LHR",
+      destinationPlace: "SFO",
       country: "US",
       currency: "USD",
       locale: "en-US",
-      livePrice: "----"
+      livePrice: "Find Live Prices",
+      status: ""
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleValueChange = this.handleValueChange.bind(this);
+    this.pollPrices = this.pollPrices.bind(this);
   }
 
   componentDidMount() {
     console.log("FlightForm mounted boi");
+  }
+
+  pollPrices(interval, timeout, key, config) {
+    this.setState({
+      status: "Searching..."
+    });
+    console.log("Poll fired");
+    let start = Date.now();
+    function startPoll() {
+      return axios
+        .get(
+          `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/uk2/v1.0/${key}/?sortType=price&sortOrder=asc&pageIndex=0`,
+          config
+        )
+        .then(res => {
+          function delay(t) {
+            return new Promise(function(resolve) {
+              setTimeout(resolve, t);
+            });
+          }
+
+          console.log(res);
+          if (res.data.Status === "UpdatesPending") {
+            if (
+              timeout !== 0 &&
+              Date.now() - start > timeout &&
+              res.data.Itineraries !== undefined
+            ) {
+              return res;
+            } else if (
+              timeout !== 0 &&
+              Date.now() - start > timeout &&
+              res.data.Itineraries === undefined
+            ) {
+              return new Error("timeout error on pollPrices");
+            } else {
+              return delay(interval).then(startPoll);
+            }
+          } else if (res.data.Status === "UpdatesComplete") {
+            if (res.data.Itineraries.length > 0) {
+              return res;
+            } else if (res.data.Itineraries <= 0) {
+              alert("You ain't got no routes bruh");
+            }
+          }
+
+          console.log(res);
+        });
+    }
+
+    return startPoll();
   }
 
   handleClick(event) {
@@ -53,45 +106,45 @@ class FlightForm extends Component {
           adults: this.state.adults,
           outboundDate: moment(this.state.outboundDate).format("YYYY-MM-DD"),
           inboundDate: moment(this.state.inboundDate).format("YYYY-MM-DD"),
-          originPlace: this.state.originPlace,
-          destinationPlace: this.state.destinationPlace
+          originPlace: this.state.originPlace + "-sky",
+          destinationPlace: this.state.destinationPlace + "-sky"
         }),
         postConfig
       )
-      .then(function(response) {
-        console.log(response)
-        return response
-      })
-      .then((response)=> {
-        let liveConfig = {
-            headers: {
-              "X-RapidAPI-Key":
-                "2598ac1afamshdac98da0b5326d1p1a89a8jsndbb4a4b83763"
-            }
-          };
-          let session = response.headers.location.split("/").pop(-1);
-          console.log(session);
-          axios.get(
-            `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/uk2/v1.0/${session}/?sortType=price&sortOrder=asc&pageIndex=0`,
-            liveConfig
-          )
-          //I think somewhere here I can put simple if statements --within-- a function call for the request that recall the request until there are results. 
-          .then((res) => {
-              console.log(res.data.Itineraries);
-              if (res.data.Itineraries.length === 0) {
-                  alert("Sorry - no results. Try making the origin date closer to the return and make sure it is before the return date.")
-              }
-              if (res.data.Itineraries.length > 0) {
-              this.setState({
-                  livePrice: res.data.Itineraries[0].PricingOptions[0].Price
-              })
-            }
-            });
-      })
       .catch(function(response) {
         console.log(response);
+        return response;
+      })
+      .then(response => {
+        let liveConfig = {
+          headers: {
+            "X-RapidAPI-Key":
+              "2598ac1afamshdac98da0b5326d1p1a89a8jsndbb4a4b83763"
+          }
+        };
+        let session = response.headers.location.split("/").pop(-1);
+
+        this.pollPrices(500, 35000, session, liveConfig)
+          .then(res => {
+            console.log(res);
+            if (res.data.Itineraries.length > 0) {
+              this.setState({
+                livePrice: res.data.Itineraries[0].PricingOptions[0].Price,
+                status: "Price:"
+              });
+            } else {
+              this.setState({
+                status: ""
+              });
+            }
+          })
+          .catch(function(response) {
+            alert(
+              "There was an error finding itineraries. If you are attempting to look for same-day flights there may be none available."
+            );
+            console.log(response);
+          });
       });
-    //https://kapeli.com/cheat_sheets/Axios.docset/Contents/Resources/Documents/index helped me realize I don't need a weird format and then I just reverted to the same update state change stuff and got 'er done!
   }
 
   handleValueChange = event => {
@@ -190,7 +243,7 @@ class FlightForm extends Component {
               />
             </div>
             <div className="inputBox dport">
-              <label>Departure Airport</label>
+              <label>Departure Airport Code</label>
               <input
                 type="text"
                 name="originPlace"
@@ -199,7 +252,7 @@ class FlightForm extends Component {
               />
             </div>
             <div className="inputBox aport">
-              <label>Arrival Airport</label>
+              <label>Arrival Airport Code</label>
               <input
                 type="text"
                 name="destinationPlace"
@@ -207,11 +260,14 @@ class FlightForm extends Component {
                 onChange={this.handleChange}
               />
             </div>
-            <button type="submit" onClick={this.handleClick}>
-              FIND ROUTES
-            </button>
+            <div className='subButton'>
+              <button type="submit" onClick={this.handleClick}>
+                FIND ROUTES
+              </button>
+            </div>
           </form>
-          <h1 className='formSubmit'>{this.state.livePrice}</h1>
+          <h2>{this.state.status}</h2>
+          <h2 className="formSubmit">{this.state.livePrice}</h2>
         </main>
       </div>
     );
