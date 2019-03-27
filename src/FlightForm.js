@@ -3,6 +3,7 @@ import axios from "axios";
 // import { Link, Route } from "react-router-dom";
 // import FlightSearch from "./FlightSearch";
 // import LocationSearch from "./LocationSearch";
+import { Row, Container, Col } from "reactstrap";
 import DateP from "./Date";
 var querystring = require("querystring");
 var moment = require("moment");
@@ -180,95 +181,106 @@ class FlightForm extends Component {
 
     return (
       <div className="flightForm">
-        <main>
-          <form action="">
-            <div className="inputBox country">
-              <label>Origin Country</label>
-              <select
-                type="text"
-                name="country"
-                value={this.state.country}
-                onChange={this.handleValueChange}
-              >
-                {iterateNames.map(country => {
-                  return (
-                    <option key={country.Code} value={country.Code}>
-                      {country.Name}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div className="inputBox tier">
-              <label>Travel Tier</label>
-              <select
-                type="text"
-                name="cabinClass"
-                value={this.state.cabinClass}
-                onChange={this.handleValueChange}
-              >
-                <option value="economy"> Economy </option>
-                <option value="premiumeconomy"> PremiumEconomy </option>
-                <option value="business"> Business </option>
-                <option value="first"> First </option>
-              </select>
-            </div>
-            <div className="inputBox passengers">
-              <label>Passenger Count</label>
-              <select
-                type="text"
-                name="adults"
-                value={this.state.adults}
-                onChange={this.handleValueChange}
-              >
-                <option value="1"> 1 </option>
-                <option value="2"> 2 </option>
-                <option value="3"> 3 </option>
-              </select>
-            </div>
-            <div className="inputBox ddate">
-              <label>Departure Date</label>
-              <DateP
-                fieldName="outboundDate"
-                handleChange={this.handleChange}
-                {...this.state}
-              />
-            </div>
-            <div className="inputBox rdate">
-              <label>Return Date</label>
-              <DateP
-                fieldName="inboundDate"
-                handleChange={this.handleChange}
-                {...this.state}
-              />
-            </div>
-            <div className="inputBox dport">
-              <label>Departure Airport Code</label>
-              <input
-                type="text"
-                name="originPlace"
-                defaultValue={this.state.originPlace}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="inputBox aport">
-              <label>Arrival Airport Code</label>
-              <input
-                type="text"
-                name="destinationPlace"
-                defaultValue={this.state.destinationPlace}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className='subButton'>
-              <button type="submit" onClick={this.handleClick}>
-                FIND ROUTES
-              </button>
-            </div>
-          </form>
-          <h2>{this.state.status}</h2>
-          <h2 className="formSubmit">{this.state.livePrice}</h2>
-        </main>
+        <form action="">
+          <Container>
+            <Row>
+              <Col sm={12} md={5} lg={5} xl={5} className="inputBox dport">               
+                <label>Departure Airport Code</label>                
+                <input
+                  type="text"
+                  name="originPlace"
+                  defaultValue={this.state.originPlace}
+                  onChange={this.handleChange}
+                />
+              </Col>
+              <Col sm={12} md={5} lg={5} xl={5} className="inputBox aport">
+                <label>Arrival Airport Code</label>
+                <input
+                  type="text"
+                  name="destinationPlace"
+                  defaultValue={this.state.destinationPlace}
+                  onChange={this.handleChange}
+                />               
+              </Col>
+              <Col sm={12} md={2} lg={2} xl={2} className="inputBox passengers">
+                {/* <Row>
+                    <Col sm={12} md={6} lg={6} xl={6}> */}
+                <label>Passenger Count</label>
+                <select
+                  type="text"
+                  name="adults"
+                  value={this.state.adults}
+                  onChange={this.handleValueChange}
+                >
+                  <option value="1"> 1 </option>
+                  <option value="2"> 2 </option>
+                  <option value="3"> 3 </option>
+                </select>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={12} md={6} lg={3} xl={3} className="inputBox ddate">
+                <label>Departure Date</label>               
+                <DateP
+                  fieldName="outboundDate"
+                  handleChange={this.handleChange}
+                  {...this.state}
+                />
+              </Col>
+              <Col sm={12} md={6} lg={3} xl={3} className="inputBox rdate">
+                <label>Return Date</label>
+                <DateP
+                  fieldName="inboundDate"
+                  handleChange={this.handleChange}
+                  {...this.state}
+                />
+              </Col>
+              <Col sm={12} md={6} lg={3} xl={3} className="inputBox country">
+                <label>Origin Country</label>
+                <select
+                  type="text"
+                  name="country"
+                  value={this.state.country}
+                  onChange={this.handleValueChange}
+                >
+                  {iterateNames.map(country => {
+                    return (
+                      <option key={country.Code} value={country.Code}>
+                        {country.Name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </Col>
+              <Col sm={12} md={6} lg={3} xl={3} className="inputBox tier">
+                <label>Travel Tier</label>
+                <select
+                  type="text"
+                  name="cabinClass"
+                  value={this.state.cabinClass}
+                  onChange={this.handleValueChange}
+                >
+                  <option value="economy"> Economy </option>
+                  <option value="premiumeconomy"> PremiumEconomy </option>
+                  <option value="business"> Business </option>
+                  <option value="first"> First </option>
+                </select>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col>
+                <div className="subButton">
+                  <button type="submit" onClick={this.handleClick}>
+                    FIND ROUTES
+                  </button>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </form>
+        <h2>{this.state.status}</h2>
+        <h2 className="formSubmit">{this.state.livePrice}</h2>
       </div>
     );
   }

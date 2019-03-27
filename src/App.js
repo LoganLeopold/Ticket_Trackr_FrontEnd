@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link, Route } from "react-router-dom";
-import Tester from "./Tester";
-import FlightSearch from "./FlightSearch";
+import {Row, Container, Column} from 'reactstrap'
 import "./App.css";
-import LocationSearch from "./LocationSearch";
-import DateP from "./Date";
 import FlightForm from "./FlightForm";
 
 class App extends Component {
@@ -56,19 +53,13 @@ class App extends Component {
       console.log(response);
     })
       }
-
     );
-
-    
-
-    
   }
-
 
   render() {
     console.log("App rendered boi");
     return (
-      <div>
+      <div className="App">
         <h1>Ticket Trackr</h1>
         <FlightForm {...this.props}{...this.state}/>
       </div>
