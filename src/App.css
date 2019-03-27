@@ -16,10 +16,9 @@ body {
   height: 100%;
   justify-content: center;
   align-content: center;
-  background: lightblue;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  background: #FFD23F;
+  font-family: 'Poppins', sans-serif;
   text-align: center;
-  
 }
 
 #root {
@@ -37,9 +36,19 @@ body {
   min-width: 100%;
   min-height: 100%;
   text-align: center;
-  background: lightblue;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  background: #FFD23F;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
 }
+
+header {
+  margin: 1vh;
+  color: #3c991d;
+  font-size: 7vh;
+  background: #3BCEAC;
+  font-family: 'Poppins', sans-serif;
+}
+
 
 .flightform {
   margin: 0;
@@ -68,39 +77,48 @@ form {
 
 .inputBox {
   margin: 4vh 0;
-  background: lightblue;
+  background: #3BCEAC;
   display: flex;
   flex-direction: column;
+  justify-items: center;
+  align-items: center;
+ 
+  /* box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3); */
 }
 
 button {
   border-style: none;
-  background: white;
-  font-size: 3.5vh;
+  background: #3BCEAC;
+  font-size: 5vh;
   font-weight: 700;
-  color: black;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  width: 20vh;
-  height: 8vh;  
+  color: #3c991d;
+  font-family: 'Poppins', sans-serif;
+  width: auto;
+  height: auto; 
+  margin: 4vh 0; 
+  padding: 1vh;
+
 }
 
 h1 {
   margin: 1vh;
-  color: red;
+  color: #3c991d;
   font-size: 5vh;
+  background: #3BCEAC;
 }
 
 h2 {
   margin: 1vh;
-  color: red;
-  font-size: 3.5vh;
+  color: #3c991d;
+  background: #3BCEAC;
+  font-size: 5vh;
+  height: auto;
 }
 
 label {
-  background: white;
-  height: 100;
-  width: 100%;
+  background: transparent;
   font-size: 3.5vh;
+  color: #3c991d;
 }
 
 input {
@@ -112,4 +130,8 @@ input {
 
 .react-datepicker-wrapper .react-datepicker__input-container input {
   width: 100%;
+}
+
+.row {
+  display: flex;
 }

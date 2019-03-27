@@ -21,7 +21,7 @@ class FlightForm extends Component {
       country: "US",
       currency: "USD",
       locale: "en-US",
-      livePrice: "Find Live Prices",
+      livePrice: "",
       status: ""
     };
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -75,7 +75,9 @@ class FlightForm extends Component {
             if (res.data.Itineraries.length > 0) {
               return res;
             } else if (res.data.Itineraries <= 0) {
-              alert("You ain't got no routes bruh");
+              alert(
+                "Sorry - no routes are available on this itinierary. Try pushing your departure date out a bit further."
+              );
             }
           }
 
@@ -140,9 +142,6 @@ class FlightForm extends Component {
             }
           })
           .catch(function(response) {
-            alert(
-              "There was an error finding itineraries. If you are attempting to look for same-day flights there may be none available."
-            );
             console.log(response);
           });
       });
@@ -184,8 +183,8 @@ class FlightForm extends Component {
         <form action="">
           <Container>
             <Row>
-              <Col sm={12} md={5} lg={5} xl={5} className="inputBox dport">               
-                <label>Departure Airport Code</label>                
+              <Col sm={12} md={5} lg={5} xl={5} className="inputBox dport">
+                <label>Departure Airport Code</label>
                 <input
                   type="text"
                   name="originPlace"
@@ -200,7 +199,7 @@ class FlightForm extends Component {
                   name="destinationPlace"
                   defaultValue={this.state.destinationPlace}
                   onChange={this.handleChange}
-                />               
+                />
               </Col>
               <Col sm={12} md={2} lg={2} xl={2} className="inputBox passengers">
                 {/* <Row>
@@ -220,7 +219,7 @@ class FlightForm extends Component {
             </Row>
             <Row>
               <Col sm={12} md={6} lg={3} xl={3} className="inputBox ddate">
-                <label>Departure Date</label>               
+                <label>Departure Date</label>
                 <DateP
                   fieldName="outboundDate"
                   handleChange={this.handleChange}
@@ -276,11 +275,13 @@ class FlightForm extends Component {
                   </button>
                 </div>
               </Col>
+              <Col className='d-flex'>
+                <h2>{this.state.status}</h2>
+                <h2 className="formSubmit">{this.state.livePrice}</h2>
+              </Col>
             </Row>
           </Container>
         </form>
-        <h2>{this.state.status}</h2>
-        <h2 className="formSubmit">{this.state.livePrice}</h2>
       </div>
     );
   }
