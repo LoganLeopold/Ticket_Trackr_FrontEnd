@@ -17,13 +17,14 @@ class CustomInput extends React.Component {
           onChange={this.props.handleChange}
           value={this.props.value}
           onClick={this.props.onClick}
+          style={{
+            width: (this.props.value.length * .75) + 'em'
+          }}
           >
      
         </input>
       )
     }
   }
-  
- 
   
 export default CustomInput

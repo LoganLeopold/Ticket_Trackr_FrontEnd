@@ -219,6 +219,7 @@ class FlightForm extends Component {
                 <label>Departure Date</label>
                 {/* <div className='dateWrap'> */}
                   <DateP
+                    className='datepicker'
                     fieldName="outboundDate"
                     handleChange={this.handleChange}
                     {...this.state}
@@ -229,6 +230,7 @@ class FlightForm extends Component {
                 <label>Return Date</label>
                 {/* <div className='dateWrap'> */}
                   <DateP
+                  className='datepicker'
                     fieldName="inboundDate"
                     handleChange={this.handleChange}
                     {...this.state}

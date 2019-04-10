@@ -82,6 +82,7 @@ form {
   flex-direction: column;
   justify-items: center;
   align-items: center;
+  width: auto;
 }
 
 button {
@@ -120,9 +121,8 @@ label {
 }
 
 input {
-  max-width: 10vh;
-  height: 100;
   width: 100%;
+  height: 100;
   font-size: 3.5vh;
 }
 
@@ -130,10 +130,29 @@ input {
   display: flex;
 }
 
-.datepicker {
-  width: 100%
+/* .customDatePickerWidth {
+  width: 100%;
+} */
+
+/* .react-datepicker-wrapper {
+  width: 100%;
+} */
+
+/* .react-datepicker__input-container {
+  width: 100%;
+} */
+
+/* .react-datepicker-wrapper .react-datepicker__input-container input {
+  width: 100%;
+} */
+
+/* .customDatePickerWidth, 
+.customDatePickerWidth > div.react-datepicker-wrapper, 
+.customDatePickerWidth > div > div.react-datepicker__input-container
+.customDatePickerWidth > div > div.react-datepicker__input-container input {
+   width: 100%;
 }
 
-.customInput {
-  width: inherit;
-}
+.datepicker {
+  min-width: 100%;
+} */
