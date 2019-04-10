@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import CustomInput from './CustomInput'
 
 
 class DateP extends React.Component {
@@ -25,19 +26,11 @@ class DateP extends React.Component {
       this.props.handleChange(this.props.fieldName, this.state.startDate)   
     })
 }
-
-    // handleChange(date) {
-
-    //     this.setState((prevState) => {
-    //        return {startDate: date}
-    //       }, () => 
-    //     )
-    // }
-   
     render() {
         console.log("Date rendered boi")
       return (
         <DatePicker
+          customInput={<CustomInput handleChange={this.handleChange}/>}
           selected={this.state.startDate}
           onChange={this.handleChange}
         />

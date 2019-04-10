@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-// import { Link, Route } from "react-router-dom";
-// import FlightSearch from "./FlightSearch";
-// import LocationSearch from "./LocationSearch";
 import { Row, Container, Col } from "reactstrap";
 import DateP from "./Date";
 var querystring = require("querystring");
@@ -220,19 +217,23 @@ class FlightForm extends Component {
             <Row>
               <Col sm={12} md={6} lg={3} xl={3} className="inputBox ddate">
                 <label>Departure Date</label>
-                <DateP
-                  fieldName="outboundDate"
-                  handleChange={this.handleChange}
-                  {...this.state}
-                />
+                {/* <div className='dateWrap'> */}
+                  <DateP
+                    fieldName="outboundDate"
+                    handleChange={this.handleChange}
+                    {...this.state}
+                  />
+                {/* </div> */}
               </Col>
               <Col sm={12} md={6} lg={3} xl={3} className="inputBox rdate">
                 <label>Return Date</label>
-                <DateP
-                  fieldName="inboundDate"
-                  handleChange={this.handleChange}
-                  {...this.state}
-                />
+                {/* <div className='dateWrap'> */}
+                  <DateP
+                    fieldName="inboundDate"
+                    handleChange={this.handleChange}
+                    {...this.state}
+                  />
+                {/* </div> */}
               </Col>
               <Col sm={12} md={6} lg={3} xl={3} className="inputBox country">
                 <label>Origin Country</label>
@@ -275,7 +276,7 @@ class FlightForm extends Component {
                   </button>
                 </div>
               </Col>
-              <Col className='d-flex'>
+              <Col className="d-flex">
                 <h2>{this.state.status}</h2>
                 <h2 className="formSubmit">{this.state.livePrice}</h2>
               </Col>
