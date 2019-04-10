@@ -7,15 +7,19 @@ class CustomInput extends React.Component {
     this.state = {
       startDate: new Date()
     }
-  }
+    
+    }
 
     render () {
       return (
-        <button
+        <input
           className="customInput"
-          onChange={this.props.handleChange}>
-          {this.state.startDate}
-        </button>
+          onChange={this.props.handleChange}
+          value={this.props.value}
+          onClick={this.props.onClick}
+          >
+     
+        </input>
       )
     }
   }

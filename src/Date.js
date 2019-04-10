@@ -30,9 +30,12 @@ class DateP extends React.Component {
         console.log("Date rendered boi")
       return (
         <DatePicker
+          className='datepicker'
           customInput={<CustomInput handleChange={this.handleChange}/>}
+          date={this.state.startDate}
           selected={this.state.startDate}
-          onChange={this.handleChange}
+          // onChange={this.handleChange} I am not sure I need this if the change occurs with the custom input
+          onClick={this.props.onClick}
         />
       );
     }

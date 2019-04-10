@@ -126,10 +126,14 @@ input {
   font-size: 3.5vh;
 }
 
-.react-datepicker-wrapper .react-datepicker__input-container input {
-  width: 100%;
-}
-
 .row {
   display: flex;
+}
+
+.datepicker {
+  width: 100%
+}
+
+.customInput {
+  width: inherit;
 }
