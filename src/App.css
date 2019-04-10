@@ -10,7 +10,6 @@ html {
 }
 
 body {
-  /* display: flex; */
   margin: 0;
   min-width: 100%;
   height: 100%;
@@ -26,12 +25,11 @@ body {
   min-width: 100%;
   min-height: 100%;
   justify-content: center;
-  /* display: flex; */
+
 }
 
 .App {
-  /* display: flex;
-  flex-direction: column; */
+
   margin: 0 ;
   min-width: 100%;
   min-height: 100%;
@@ -82,7 +80,6 @@ form {
   flex-direction: column;
   justify-items: center;
   align-items: center;
-  width: auto;
 }
 
 button {
@@ -130,29 +127,14 @@ input {
   display: flex;
 }
 
-/* .customDatePickerWidth {
-  width: 100%;
-} */
-
-/* .react-datepicker-wrapper {
-  width: 100%;
-} */
-
-/* .react-datepicker__input-container {
-  width: 100%;
-} */
-
-/* .react-datepicker-wrapper .react-datepicker__input-container input {
-  width: 100%;
-} */
-
-/* .customDatePickerWidth, 
-.customDatePickerWidth > div.react-datepicker-wrapper, 
-.customDatePickerWidth > div > div.react-datepicker__input-container
-.customDatePickerWidth > div > div.react-datepicker__input-container input {
-   width: 100%;
+select {
+  padding: 2vh;
+  text-overflow: ellipsis;
 }
 
-.datepicker {
-  min-width: 100%;
-} */
+.country .select-selected {
+  text-overflow: ellipsis;
+}
+
+
+

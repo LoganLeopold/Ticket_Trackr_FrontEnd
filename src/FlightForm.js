@@ -187,6 +187,9 @@ class FlightForm extends Component {
                   name="originPlace"
                   defaultValue={this.state.originPlace}
                   onChange={this.handleChange}
+                  style={{
+                    width: this.state.originPlace.length + 'em'
+                  }}
                 />
               </Col>
               <Col sm={12} md={5} lg={5} xl={5} className="inputBox aport">
@@ -196,6 +199,9 @@ class FlightForm extends Component {
                   name="destinationPlace"
                   defaultValue={this.state.destinationPlace}
                   onChange={this.handleChange}
+                  style={{
+                    width: this.state.destinationPlace.length + 'em'
+                  }}
                 />
               </Col>
               <Col sm={12} md={2} lg={2} xl={2} className="inputBox passengers">
