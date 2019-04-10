@@ -1,25 +1,38 @@
 import React, { Component } from 'react';
-
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
-// 
+
 class DateP extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
         startDate: new Date()
-      };
+      }
       this.handleChange = this.handleChange.bind(this);
+      this.componentDidMount = this.componentDidMount.bind(this);
     }
-   // ________event was "date"
-    handleChange(date) {
+ 
 
-        this.setState({
-            startDate: date
-        }, () => this.props.handleChange(this.props.fieldName, this.state.startDate)   
-        )
+    componentDidMount () { 
+      this.props.handleChange(this.props.fieldName, this.state.startDate)
     }
+
+   handleChange = (date) => {
+    this.setState({
+      startDate: date
+    }, () => {
+      this.props.handleChange(this.props.fieldName, this.state.startDate)   
+    })
+}
+
+    // handleChange(date) {
+
+    //     this.setState((prevState) => {
+    //        return {startDate: date}
+    //       }, () => 
+    //     )
+    // }
    
     render() {
         console.log("Date rendered boi")

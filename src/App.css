@@ -1,83 +1,137 @@
 html {
   box-sizing: border-box;
   margin: 0px;
-  height: 100%;
+  min-height: 100%;
   min-width: 100%;
   justify-content: center;
-  padding: 10vh;
+  padding: 15vh;
+  display: flex;
+  align-items: center;
+}
+
+body {
+  /* display: flex; */
+  margin: 0;
+  min-width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-content: center;
+  background: #FFD23F;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
 }
 
 #root {
   margin: 0;
   min-width: 100%;
-  height: 100%;
-  justify-content: center;
-  
-}
-
-body {
-  margin: 0;
-  min-width: 100%;
   min-height: 100%;
   justify-content: center;
-  background: lightblue;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  /* align-items: center; */
-  
+  /* display: flex; */
 }
 
 .App {
-  margin: 0;
+  /* display: flex;
+  flex-direction: column; */
+  margin: 0 ;
   min-width: 100%;
   min-height: 100%;
   text-align: center;
-  background: lightblue;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  background: #FFD23F;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+}
+
+header {
+  margin: 1vh;
+  color: #3c991d;
+  font-size: 7vh;
+  background: #3BCEAC;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+.flightform {
+  margin: 0;
+  min-width: 100%;
+  min-height: 100%;
 }
 
 main {
   margin: 0;
   min-width: 100%;
   min-height: 100%;
-  justify-content: center;
-  
 }
 
 form {
-  display: grid;
-  grid-template-rows: 2fr;
-  grid-template-columns: 2fr;
+  margin: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.container {
+  margin: 0;
+  min-width: 100%;
+  min-height: 100%;
+  justify-content: center;
 }
 
 .inputBox {
-  margin: 4vh;
-  background: lightblue;
+  margin: 4vh 0;
+  background: #3BCEAC;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+ 
+  /* box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3); */
 }
 
-.ddate {
-  grid-column-start: 1;
-  grid-column-end: span 1;
-  grid-row-start: 1;
-  grid-row-end: span 1;
+button {
+  border-style: none;
+  background: #3BCEAC;
+  font-size: 5vh;
+  font-weight: 700;
+  color: #3c991d;
+  font-family: 'Poppins', sans-serif;
+  width: auto;
+  height: auto; 
+  margin: 4vh 0; 
+  padding: 1vh;
+
 }
 
-.rdate {
-  grid-column-start: 2;
-  grid-column-end: span 1;
-  grid-row-start: 1;
-  grid-row-end: span 1;
+h1 {
+  margin: 1vh;
+  color: #3c991d;
+  font-size: 5vh;
+  background: #3BCEAC;
 }
 
-.dport {
-  grid-column-start: 1;
-  grid-column-end: span 1;
-  grid-row-start: 2;
-  grid-row-end: span 1;
+h2 {
+  margin: 1vh;
+  color: #3c991d;
+  background: #3BCEAC;
+  font-size: 5vh;
+  height: auto;
 }
 
-.aport {
-  grid-column-start: 2;
-  grid-column-end: span 1;
-  grid-row-start: 2;
-  grid-row-end: span 1;
+label {
+  background: transparent;
+  font-size: 3.5vh;
+  color: #3c991d;
+}
+
+input {
+  max-width: 10vh;
+  height: 100;
+  width: 100%;
+  font-size: 3.5vh;
+}
+
+.react-datepicker-wrapper .react-datepicker__input-container input {
+  width: 100%;
+}
+
+.row {
+  display: flex;
 }

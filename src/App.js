@@ -1,41 +1,66 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link, Route } from "react-router-dom";
-import Tester from "./Tester";
-import FlightSearch from "./FlightSearch";
+import {Row, Container, Column} from 'reactstrap'
 import "./App.css";
-import LocationSearch from "./LocationSearch";
-import DateP from "./Date";
 import FlightForm from "./FlightForm";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      airports: []
+      airports: [],
+      markets: []
     };
     this.componentDidMount = this.componentDidMount.bind(this)
   }
 
   componentDidMount() {
     console.log("App mounted boi");
-    const config = {
+    const configAir = {
       headers: {
         accept: "text/html"
       }
     };
-    axios.get("http://localhost:8000/airports/search", config).then(list => {
-      this.setState({
-        airports: list.data
-      });
-    });
-  }
 
+    const configMarkets = {
+      headers: {
+        'X-RapidAPI-Key': "2598ac1afamshdac98da0b5326d1p1a89a8jsndbb4a4b83763",
+        'Content-Type': "application/x-www-form-urlencoded",
+      }
+    }
+
+
+    axios.get("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/reference/v1.0/countries/en-US", configMarkets)
+    .then( (res) => {
+      this.setState({
+        markets: res.data.Countries
+      })
+    })
+    .catch(function(response) {
+      console.log(response);
+    })
+    .then(
+
+      () => {
+        axios.get("http://localhost:8000/airports/search", configAir)
+        .then(list => {
+        this.setState({
+          airports: list.data
+        })
+      })
+    .catch(function(response) {
+      console.log(response);
+    })
+      }
+    );
+  }
 
   render() {
     console.log("App rendered boi");
     return (
-      <div>
+      <div className="App">
+        <header>Ticket Trackr</header>
         <FlightForm {...this.props}{...this.state}/>
       </div>
     );
@@ -63,23 +88,5 @@ export default App;
 </div> */
 }
 
-{
-  /* <div className="inputBox">
-              <label>Travel Tier</label>
-              <input
-                type="text"
-                name="cabinClass"
-                defaultValue={this.state.cabinClass}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="inputBox">
-              <label>Passenger Count</label>
-              <input
-                type="text"
-                name="adults"
-                defaultValue={this.state.adults}
-                onChange={this.handleChange}
-              />
-            </div> */
-}
+ 
+
