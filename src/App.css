@@ -75,6 +75,7 @@ form {
 
 .inputBox {
   margin: 4vh 0;
+  padding: 3vh;
   background: #3BCEAC;
   display: flex;
   flex-direction: column;
@@ -125,6 +126,7 @@ input {
 
 .row {
   display: flex;
+  justify-content: space-around;
 }
 
 select {
