@@ -18,7 +18,9 @@ class CustomInput extends React.Component {
           value={this.props.value}
           onClick={this.props.onClick}
           style={{
-            width: (this.props.value.length * .75) + 'em'
+            width: '50%',
+            overflow: 'auto',
+            // (this.props.value.length * .75) + 'em'
           }}
           >
      
@@ -28,3 +30,4 @@ class CustomInput extends React.Component {
   }
   
 export default CustomInput
+

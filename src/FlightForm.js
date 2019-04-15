@@ -13,7 +13,7 @@ class FlightForm extends Component {
       adults: "1",
       outboundDate: "",
       inboundDate: "",
-      originPlace: "LHR",
+      originPlace: "IAD",
       destinationPlace: "SFO",
       country: "US",
       currency: "USD",

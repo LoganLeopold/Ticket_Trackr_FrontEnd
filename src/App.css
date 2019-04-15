@@ -81,6 +81,7 @@ form {
   flex-direction: column;
   justify-items: center;
   align-items: center;
+
 }
 
 button {
@@ -130,13 +131,24 @@ input {
 }
 
 select {
-  padding: 2vh;
+  padding: 1vh;
   text-overflow: ellipsis;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: white;
+  border: none;
+  border-radius: 3px;
+  font-size: 3.5vh;
+  /* overflow: auto; */
+  max-width: 100%;
+
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.country .select-selected {
+select .select-selected {
   text-overflow: ellipsis;
+  overflow: hidden;
 }
-
-
 
