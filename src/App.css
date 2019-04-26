@@ -147,8 +147,3 @@ select {
   overflow: hidden;
 }
 
-select .select-selected {
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
