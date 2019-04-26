@@ -23,6 +23,7 @@ The current live version of the application is a React app that makes a call to 
 At the outset of the application build I wanted the data to go from the API --> my Python/Django backend --> my React app. I was learning how to make third-party API calls with Python/Django to begin with, but Skyscanner's functions with a twist:
 
 -First a call is made that establishes a session ID - this session is using the search paramters to send live-pricing searches out to all of SkyScanner's sources.
+
 -A second call using the session ID is made to get the results from your session. 
 
 I knew that would be a unique challenge for me at the time. I decided to get the app functional using a simpler call, so I used a SkyScanner airports API call to get a list of airports that would populate a suggestive search when users were choosing their origin and destination. After going through Django REST documentation and realizing I did not need most of what was there, I had success and could send data to my React app from the airports API through my backend. 
