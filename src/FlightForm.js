@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-// import { Link, Route } from "react-router-dom";
-// import FlightSearch from "./FlightSearch";
-// import LocationSearch from "./LocationSearch";
 import { Row, Container, Col } from "reactstrap";
 import DateP from "./Date";
 var querystring = require("querystring");
@@ -16,7 +13,7 @@ class FlightForm extends Component {
       adults: "1",
       outboundDate: "",
       inboundDate: "",
-      originPlace: "LHR",
+      originPlace: "IAD",
       destinationPlace: "SFO",
       country: "US",
       currency: "USD",
@@ -183,58 +180,7 @@ class FlightForm extends Component {
         <form action="">
           <Container>
             <Row>
-              <Col sm={12} md={5} lg={5} xl={5} className="inputBox dport">
-                <label>Departure Airport Code</label>
-                <input
-                  type="text"
-                  name="originPlace"
-                  defaultValue={this.state.originPlace}
-                  onChange={this.handleChange}
-                />
-              </Col>
-              <Col sm={12} md={5} lg={5} xl={5} className="inputBox aport">
-                <label>Arrival Airport Code</label>
-                <input
-                  type="text"
-                  name="destinationPlace"
-                  defaultValue={this.state.destinationPlace}
-                  onChange={this.handleChange}
-                />
-              </Col>
-              <Col sm={12} md={2} lg={2} xl={2} className="inputBox passengers">
-                {/* <Row>
-                    <Col sm={12} md={6} lg={6} xl={6}> */}
-                <label>Passenger Count</label>
-                <select
-                  type="text"
-                  name="adults"
-                  value={this.state.adults}
-                  onChange={this.handleValueChange}
-                >
-                  <option value="1"> 1 </option>
-                  <option value="2"> 2 </option>
-                  <option value="3"> 3 </option>
-                </select>
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={12} md={6} lg={3} xl={3} className="inputBox ddate">
-                <label>Departure Date</label>
-                <DateP
-                  fieldName="outboundDate"
-                  handleChange={this.handleChange}
-                  {...this.state}
-                />
-              </Col>
-              <Col sm={12} md={6} lg={3} xl={3} className="inputBox rdate">
-                <label>Return Date</label>
-                <DateP
-                  fieldName="inboundDate"
-                  handleChange={this.handleChange}
-                  {...this.state}
-                />
-              </Col>
-              <Col sm={12} md={6} lg={3} xl={3} className="inputBox country">
+            <Col sm={12} md={6} lg={6} xl={6} className="inputBox country">
                 <label>Origin Country</label>
                 <select
                   type="text"
@@ -251,7 +197,55 @@ class FlightForm extends Component {
                   })}
                 </select>
               </Col>
-              <Col sm={12} md={6} lg={3} xl={3} className="inputBox tier">
+              <Col sm={12} md={3} lg={3} xl={3} className="inputBox dport">
+                <label>Departure Airport Code</label>
+                <input
+                  type="text"
+                  name="originPlace"
+                  defaultValue={this.state.originPlace}
+                  onChange={this.handleChange}
+                  style={{
+                    width: this.state.originPlace.length + 'em'
+                  }}
+                />
+              </Col>
+              <Col sm={12} md={3} lg={3} xl={3} className="inputBox aport">
+                <label>Arrival Airport Code</label>
+                <input
+                  type="text"
+                  name="destinationPlace"
+                  defaultValue={this.state.destinationPlace}
+                  onChange={this.handleChange}
+                  style={{
+                    width: this.state.destinationPlace.length + 'em'
+                  }}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={12} md={4} lg={3} xl={3} className="inputBox ddate">
+                <label>Departure Date</label>
+                {/* <div className='dateWrap'> */}
+                  <DateP
+                    className='datepicker'
+                    fieldName="outboundDate"
+                    handleChange={this.handleChange}
+                    {...this.state}
+                  />
+                {/* </div> */}
+              </Col>
+              <Col sm={12} md={4} lg={3} xl={3} className="inputBox rdate">
+                <label>Return Date</label>
+                {/* <div className='dateWrap'> */}
+                  <DateP
+                  className='datepicker'
+                    fieldName="inboundDate"
+                    handleChange={this.handleChange}
+                    {...this.state}
+                  />
+                {/* </div> */}
+              </Col>
+              <Col sm={12} md={4} lg={3} xl={3} className="inputBox tier">
                 <label>Travel Tier</label>
                 <select
                   type="text"
@@ -265,17 +259,32 @@ class FlightForm extends Component {
                   <option value="first"> First </option>
                 </select>
               </Col>
+              <Col sm={12} md={12} lg={3} xl={3} className="inputBox passengers">
+                {/* <Row>
+                    <Col sm={12} md={6} lg={6} xl={6}> */}
+                <label>Passenger Count</label>
+                <select
+                  type="text"
+                  name="adults"
+                  value={this.state.adults}
+                  onChange={this.handleValueChange}
+                >
+                  <option value="1"> 1 </option>
+                  <option value="2"> 2 </option>
+                  <option value="3"> 3 </option>
+                </select>
+              </Col>
             </Row>
 
             <Row>
-              <Col>
+              <Col sm={12} md={6} lg={6} xl={6}>
                 <div className="subButton">
                   <button type="submit" onClick={this.handleClick}>
                     FIND ROUTES
                   </button>
                 </div>
               </Col>
-              <Col className='d-flex'>
+              <Col sm={12} md={6} lg={6} xl={6} className="d-flex flex-column">
                 <h2>{this.state.status}</h2>
                 <h2 className="formSubmit">{this.state.livePrice}</h2>
               </Col>
@@ -285,6 +294,6 @@ class FlightForm extends Component {
       </div>
     );
   }
-}
+} 
 
 export default FlightForm;

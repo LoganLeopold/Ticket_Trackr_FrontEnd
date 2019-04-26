@@ -1,68 +1,51 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Ticket Trackr
 
-## Available Scripts
+This application was inspired by my love for cost-effective travel, including a business I love by the name of [Scott's Cheap Flights] that has helped me travel the world. The idea is to provide users a very simple interface for finding live pricing data and eventually for tracking live pricing on multiple itineraries. 
 
-In the project directory, you can run:
+For this project my two goals were to really 1) have something functional on a tight deadline and 2) challenge myself with a framework that was fresh in my skill set. Additionally, I wanted to push focus that challenge on work with APIs. 
 
-### `npm start`
+## Technologies Used
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Current Build:
+React + Axios + Reactstrap
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Developing Build: 
+React + Axios + Python/Django + Reactstrap
 
-### `npm test`
+## Current Iteration
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+I found a live-pricing API by SkyScanner made available through RapidAPI ([found here]). 
 
-### `npm run build`
+The current live version of the application is a React app that makes a call to this API with axios and displays the live pricing data provided by SkyScanner. In addition, another SkyScanner API is used to populate a list of countries for a search parameter dropdown list. The price is displayed if one is found or the user is alerted if there is an error.  
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Build Storyline
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+At the outset of the application build I wanted the data to go from the API --> my Python/Django backend --> my React app. I was learning how to make third-party API calls with Python/Django to begin with, but Skyscanner's functions with a twist:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+-First a call is made that establishes a session ID - this session is using the search paramters to send live-pricing searches out to all of SkyScanner's sources.
+-A second call using the session ID is made to get the results from your session. 
 
-### `npm run eject`
+I knew that would be a unique challenge for me at the time. I decided to get the app functional using a simpler call, so I used a SkyScanner airports API call to get a list of airports that would populate a suggestive search when users were choosing their origin and destination. After going through Django REST documentation and realizing I did not need most of what was there, I had success and could send data to my React app from the airports API through my backend. 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Eventually, I ended up pausing backend development to fit my timeline. The main reason was that I did not find a satisfying way to handle asynchronous API calls (getting the session ID then polling the session) in Python/Django in the timeframe I had. I knew Axios, and so I excluded the backend I built and placed all of my third-party API calls directly in my React app with Axios. 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+I did accomplish the goals I had at the outset, just not the way that I envisioned. I did challenge myself with a fresh framework and I learned a lot, but that language and framework combo did not make it into the first live version of the app. I also did have something functional - although a bit crude - within the desired timeline. 
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Further Development
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+There is a great deal of further development to be done here. One of the reasons I wanted to increase my Python/Django experience is that authentication is a breeze with that framework. Users are definitely coming to this project - I want to be able to use this app to track live prices for my itinerary! 
 
-## Learn More
+There's a copule sore spots that I ran into during development that I want to tackle even before that though:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+-Firstly, I want to accomplish efficient suggestive search. This will likely come from wiring up a database. The good news is that I already have lots of Django documentation under my belt and a backend architecture already well-founded. I think this will be huge for when users are choosing their airports, and I want to dig deeper into handling large data sets (there are roughly 16,000 airports in the SkyScanner database).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+-Secondly, a more simple issue is making sure the user has a good indication that the API is still polling. Right now there is a crude solution, but I know there's a simple fix out there for communicating continuation of search efforts to the user. 
 
-### Code Splitting
+-Finally, I am nowhere near satisfied with the design of the site. I will be continuously working on the visual quality of all the site's design.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Installation
 
-### Analyzing the Bundle Size
+It should be straightforward - I used NPM to handle my package management so a simple NPM install ought to do the trick! 
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+[Scott's Cheap Flights]: https://scottscheapflights.com/
+[found here]: https://rapidapi.com/skyscanner/api/skyscanner-flight-search
