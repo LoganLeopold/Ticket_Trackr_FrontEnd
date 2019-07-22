@@ -15,7 +15,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log("App mounted boi");
+    console.log("App mounted boi")
+    
     const configAir = {
       headers: {
         accept: "text/html"
