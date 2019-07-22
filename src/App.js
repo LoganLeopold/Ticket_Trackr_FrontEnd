@@ -24,7 +24,7 @@ class App extends Component {
 
     const configMarkets = {
       headers: {
-        'X-RapidAPI-Key': "2598ac1afamshdac98da0b5326d1p1a89a8jsndbb4a4b83763",
+        'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API,
         'Content-Type': "application/x-www-form-urlencoded",
       }
     }
