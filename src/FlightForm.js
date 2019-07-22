@@ -29,7 +29,7 @@ class FlightForm extends Component {
   }
 
   componentDidMount() {
-    console.log("FlightForm mounted boi");
+    console.log("FlightForm mounted");
   }
 
   pollPrices(interval, timeout, key, config) {
