@@ -173,9 +173,47 @@ select {
   overflow: hidden;  
 }
 
+/* 
 .country {
-  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3)
+
 }
+
+.dport {
+
+}
+
+.aport {
+
+}
+
+.ddate {
+
+}
+
+.rdate {
+
+}
+
+.tier {
+
+}
+
+.passengers {
+
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) { ... }
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { ... }
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { ... }
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { ... } */
+
 /* 
 *this css left-aligns the React Datepicker elements
 *also of note is that I removed the import of the datepicker css from the datepicker component and added it directly in index.js so I could control the loading order (so I could overwrite the datepicker defaults)
