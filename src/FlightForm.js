@@ -225,25 +225,21 @@ class FlightForm extends Component {
             <Row>
               <Col sm={12} md={4} lg={3} xl={3} className="inputBox ddate">
                 <label>Departure Date</label>
-                {/* <div className='dateWrap'> */}
                   <DateP
                     className='datepicker'
                     fieldName="outboundDate"
                     handleChange={this.handleChange}
                     {...this.state}
                   />
-                {/* </div> */}
               </Col>
               <Col sm={12} md={4} lg={3} xl={3} className="inputBox rdate">
                 <label>Return Date</label>
-                {/* <div className='dateWrap'> */}
                   <DateP
-                  className='datepicker'
+                    className='datepicker'
                     fieldName="inboundDate"
                     handleChange={this.handleChange}
                     {...this.state}
                   />
-                {/* </div> */}
               </Col>
               <Col sm={12} md={4} lg={3} xl={3} className="inputBox tier">
                 <label>Travel Tier</label>
@@ -260,8 +256,6 @@ class FlightForm extends Component {
                 </select>
               </Col>
               <Col sm={12} md={12} lg={3} xl={3} className="inputBox passengers">
-                {/* <Row>
-                    <Col sm={12} md={6} lg={6} xl={6}> */}
                 <label>Passenger Count</label>
                 <select
                   type="text"
