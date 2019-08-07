@@ -4,7 +4,7 @@ html {
   min-height: 100%;
   min-width: 100%;
   justify-content: center;
-  padding: 15vh;
+  padding: 10vh 15vh;
   display: flex;
   align-items: center;
 }
@@ -115,7 +115,7 @@ h2 {
 
 label {
   background: transparent;
-  font-size: 3.5vh;
+  font-size: 3vh;
   color: #3c991d;
   text-align: left;
 }
@@ -140,7 +140,7 @@ select {
   background: white;
   border: none;
   border-radius: 3px;
-  font-size: 3.5vh;
+  font-size: 3vh;
   /* overflow: auto; */
   max-width: 100%;
 
@@ -148,16 +148,14 @@ select {
   overflow: hidden;
 }
 
+/* 
+*this css left-aligns the React Datepicker elements
+*also of note is that I removed the import of the datepicker css from the datepicker component and added it directly in index.js so I could control the loading order (so I could overwrite the datepicker defaults)
+ */
 .react-datepicker-wrapper {
   align-content: flex-end;
   display: flex;
-  /* align-items: flex-start;
-  -webkit-align-items: flex-start;
-  align-content: flex-start;
-  -webkit-align-content: flex-start; */
 
-  /* display: block;
-  float: left; */
 }
 
 .react-datepicker__input-container {
