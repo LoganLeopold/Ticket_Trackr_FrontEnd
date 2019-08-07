@@ -60,7 +60,11 @@ class App extends Component {
     console.log("App rendered boi");
     return (
       <div className="App">
-        <header>Ticket Trackr</header>
+        <header>
+          <div className='appHeader'>
+            Ticket Trackr
+          </div>
+        </header>
         <FlightForm {...this.props}{...this.state}/>
       </div>
     );
@@ -68,25 +72,6 @@ class App extends Component {
 }
 
 export default App;
-
-{
-  /* <div>
-<LocationSearch
-  {...this.props}
-  {...this.state}
-  name={["city", "faa", "name"]}
-  field="originPlace"
-  handleChange={this.handleChange}
-/>
-<LocationSearch
-  {...this.props}
-  {...this.state}
-  name={["city", "faa", "name"]}
-  field="destinationPlace"
-  handleChange={this.handleChange}
-/>
-</div> */
-}
 
  
 

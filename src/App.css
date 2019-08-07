@@ -15,8 +15,7 @@ body {
   height: 100%;
   justify-content: center;
   align-content: center;
-  background: #FFD23F;
-  font-family: 'Poppins', sans-serif;
+  background: #f7f9f8;
   text-align: center;
 }
 
@@ -34,17 +33,29 @@ body {
   min-width: 100%;
   min-height: 100%;
   text-align: center;
-  background: #FFD23F;
+  background: #f7f9f8;
   font-weight: bold;
   font-family: 'Poppins', sans-serif;
 }
 
 header {
   margin: 0 1vh 1vh 1vh;
-  color: #3c991d;
+
+  color: #034732;
   font-size: 7vh;
-  background: #3BCEAC;
   font-family: 'Poppins', sans-serif;
+}
+
+.appHeader {
+  width: 40vw;
+  margin: auto; 
+
+  background: #3BCEAC;
+
+  /* background-image: linear-gradient(#3BCEAC, #3BCEAC);
+  background-position: center center;
+  background-repeat: repeat-x;
+  background-size: 5vw 10vh; */
 }
 
 
@@ -89,7 +100,7 @@ button {
   background: #3BCEAC;
   font-size: 5vh;
   font-weight: 700;
-  color: #3c991d;
+  color: #034732;
   font-family: 'Poppins', sans-serif;
   width: auto;
   height: auto; 
@@ -100,14 +111,14 @@ button {
 
 h1 {
   margin: 1vh;
-  color: #3c991d;
+  color: #034732;
   font-size: 5vh;
   background: #3BCEAC;
 }
 
 h2 {
   margin: 1vh;
-  color: #3c991d;
+  color: #034732;
   background: #3BCEAC;
   font-size: 5vh;
   height: auto;
@@ -116,7 +127,7 @@ h2 {
 label {
   background: transparent;
   font-size: 3vh;
-  color: #3c991d;
+  color: #034732;
   text-align: left;
 }
 
