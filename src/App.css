@@ -41,6 +41,8 @@ body {
 header {
   margin: 0 1vh 1vh 1vh;
 
+  border-radius: 10px;
+
   color: #034732;
   font-size: 7vh;
   font-family: 'Poppins', sans-serif;
@@ -51,13 +53,20 @@ header {
   margin: auto; 
 
   background: #3BCEAC;
-
-  /* background-image: linear-gradient(#3BCEAC, #3BCEAC);
-  background-position: center center;
-  background-repeat: repeat-x;
-  background-size: 5vw 10vh; */
+  border-radius: 10px;
 }
 
+.instructions {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.5vh;
+  color: #034732;
+
+  width: 40vw;
+  margin: 2vh auto; 
+
+  background: #3BCEAC;
+  border-radius: 10px;
+}
 
 .flightform {
   margin: 0;
@@ -87,25 +96,28 @@ form {
 .inputBox {
   margin: 4vh 0;
   padding: 3vh;
+  
   background: #3BCEAC;
+  
   display: flex;
   flex-direction: column;
   justify-items: center;
   align-items: left;
-
 }
 
 button {
-  border-style: none;
   background: #3BCEAC;
+  border-radius: 25px;
+
   font-size: 5vh;
   font-weight: 700;
   color: #034732;
   font-family: 'Poppins', sans-serif;
+
   width: auto;
   height: auto; 
   margin: 4vh 0; 
-  padding: 1vh;
+  padding: 1.5vh 1.5vw ;
 
 }
 
@@ -129,6 +141,9 @@ label {
   font-size: 3vh;
   color: #034732;
   text-align: left;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 100;
+
 }
 
 input {
@@ -152,13 +167,15 @@ select {
   border: none;
   border-radius: 3px;
   font-size: 3vh;
-  /* overflow: auto; */
   max-width: 100%;
 
   white-space: nowrap;
-  overflow: hidden;
+  overflow: hidden;  
 }
 
+.country {
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3)
+}
 /* 
 *this css left-aligns the React Datepicker elements
 *also of note is that I removed the import of the datepicker css from the datepicker component and added it directly in index.js so I could control the loading order (so I could overwrite the datepicker defaults)

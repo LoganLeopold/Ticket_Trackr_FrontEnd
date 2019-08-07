@@ -250,7 +250,7 @@ class FlightForm extends Component {
                   onChange={this.handleValueChange}
                 >
                   <option value="economy"> Economy </option>
-                  <option value="premiumeconomy"> PremiumEconomy </option>
+                  <option value="premiumeconomy"> Premium Economy </option>
                   <option value="business"> Business </option>
                   <option value="first"> First </option>
                 </select>

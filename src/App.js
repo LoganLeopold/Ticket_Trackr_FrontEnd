@@ -1,6 +1,6 @@
 import React, { Component } from "react";
+import { Row, Container, Col } from "reactstrap";
 import axios from "axios";
-import { Link, Route } from "react-router-dom";
 import "./App.css";
 import FlightForm from "./FlightForm";
 
@@ -63,6 +63,9 @@ class App extends Component {
         <header>
           <div className='appHeader'>
             Ticket Trackr
+          </div>
+          <div className='instructions'>
+            Immediately see the cheapest flight to anywhere! 
           </div>
         </header>
         <FlightForm {...this.props}{...this.state}/>
