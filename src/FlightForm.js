@@ -32,10 +32,39 @@ class FlightForm extends Component {
     console.log("FlightForm mounted");
   }
 
+  // componentDidUpdate() {
+  //   if (this.state.inboundDate <= this.state.outboundDate) {
+  //     this.setState({
+  //       outboundDate: this.state.outboundDate + 1,
+  //     })
+  //     alert("Your departure date was too close to your arrival date (same day) so we added a day but you can change it again to get better results.")
+  //   }
+  // }
+
   pollPrices(interval, timeout, key, config) {
-    this.setState({
-      status: "Searching..."
-    });
+    // var count = 0;
+    // var searching = setInterval( () => {
+    //   if (count === 0) {
+    //     this.setState({
+    //       status: "Searching."
+    //     })
+    //     count++
+    //   } else if (count===1) {
+    //     this.setState({
+    //       status: "Searching.."
+    //     })
+    //     count++
+    //   } else {
+    //     this.setState({
+    //       status: "Searching..."
+    //     })
+    //     count = 0;
+    //   }
+    // }, 500)
+    // function stopSearching () {
+    //   console.log("Stop searching fired")
+    //   clearInterval(searching);
+    // }
     console.log("Poll fired");
     let start = Date.now();
     function startPoll() {
@@ -50,9 +79,6 @@ class FlightForm extends Component {
               setTimeout(resolve, t);
             });
           }
-
-          var count=0;
-          console.log(res);
 
           if (res.data.Status === "UpdatesPending") {
 
@@ -69,20 +95,7 @@ class FlightForm extends Component {
             ) {
               return new Error("timeout error on pollPrices");
             } else {
-              if (count === 0) {
-                this.setState({
-                  status: "Searching."
-                })
-              } else if (count===1) {
-                this.setState({
-                  status: "Searching.."
-                })
-              } else {
-                this.setState({
-                  status: "Searching..."
-                })
-                count = 0;
-              }
+              // stopSearching();
               return delay(interval).then(startPoll);
             }
           } 
@@ -96,8 +109,6 @@ class FlightForm extends Component {
               );
             }
           }
-
-          console.log(res);
         });
     }
     
@@ -131,7 +142,6 @@ class FlightForm extends Component {
         postConfig
       )
       .catch(function(response) {
-        console.log(response);
         return response;
       })
       .then(response => {
@@ -145,7 +155,6 @@ class FlightForm extends Component {
 
         this.pollPrices(500, 35000, session, liveConfig)
           .then(res => {
-            console.log(res);
             if (res.data.Itineraries.length > 0) {
               this.setState({
                 livePrice: res.data.Itineraries[0].PricingOptions[0].Price,
@@ -184,7 +193,6 @@ class FlightForm extends Component {
   }
 
   render() {
-    console.log("FlightForm rendered boi");
 
     const iterateNames = this.props.markets.sort((a, b) => {
       if (a.Name > b.Name) {
