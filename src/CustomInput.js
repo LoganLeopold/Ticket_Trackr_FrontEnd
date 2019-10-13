@@ -20,7 +20,6 @@ class CustomInput extends React.Component {
           style={{
             width: '50%',
             overflow: 'auto',
-            // (this.props.value.length * .75) + 'em'
           }}
           >
      

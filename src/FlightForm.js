@@ -51,8 +51,11 @@ class FlightForm extends Component {
             });
           }
 
+          var count=0;
           console.log(res);
+
           if (res.data.Status === "UpdatesPending") {
+
             if (
               timeout !== 0 &&
               Date.now() - start > timeout &&
@@ -66,9 +69,25 @@ class FlightForm extends Component {
             ) {
               return new Error("timeout error on pollPrices");
             } else {
+              if (count === 0) {
+                this.setState({
+                  status: "Searching."
+                })
+              } else if (count===1) {
+                this.setState({
+                  status: "Searching.."
+                })
+              } else {
+                this.setState({
+                  status: "Searching..."
+                })
+                count = 0;
+              }
               return delay(interval).then(startPoll);
             }
-          } else if (res.data.Status === "UpdatesComplete") {
+          } 
+          
+            else if (res.data.Status === "UpdatesComplete") {
             if (res.data.Itineraries.length > 0) {
               return res;
             } else if (res.data.Itineraries <= 0) {
@@ -81,7 +100,7 @@ class FlightForm extends Component {
           console.log(res);
         });
     }
-
+    
     return startPoll();
   }
 
