@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 class CustomInput extends React.Component {
 
@@ -17,11 +17,10 @@ class CustomInput extends React.Component {
           onChange={this.props.handleChange}
           value={this.props.value}
           onClick={this.props.onClick}
-          style={{
-            width: '50%',
-            overflow: 'auto',
-            // (this.props.value.length * .75) + 'em'
-          }}
+          // style={{
+          //   width: '50%',
+          //   overflow: 'auto',
+          // }}
           >
      
         </input>

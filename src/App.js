@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Link, Route } from "react-router-dom";
 import "./App.css";
 import FlightForm from "./FlightForm";
 
@@ -60,7 +59,14 @@ class App extends Component {
     console.log("App rendered boi");
     return (
       <div className="App">
-        <header>Ticket Trackr</header>
+        <header>
+          <div className='appHeader'>
+            Ticket Trackr
+          </div>
+          <div className='instructions'>
+            Immediately see the cheapest flight to anywhere! 
+          </div>
+        </header>
         <FlightForm {...this.props}{...this.state}/>
       </div>
     );
@@ -68,25 +74,6 @@ class App extends Component {
 }
 
 export default App;
-
-{
-  /* <div>
-<LocationSearch
-  {...this.props}
-  {...this.state}
-  name={["city", "faa", "name"]}
-  field="originPlace"
-  handleChange={this.handleChange}
-/>
-<LocationSearch
-  {...this.props}
-  {...this.state}
-  name={["city", "faa", "name"]}
-  field="destinationPlace"
-  handleChange={this.handleChange}
-/>
-</div> */
-}
 
  
 

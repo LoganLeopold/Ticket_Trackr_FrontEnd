@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+
 import CustomInput from "./CustomInput";
 
 class DateP extends React.Component {
@@ -30,7 +30,7 @@ class DateP extends React.Component {
   render() {
     console.log("Date rendered boi");
     return (
-      <div className="customDatePickerWidth">
+      
         <DatePicker
           className="datepicker"
           customInput={<CustomInput handleChange={this.handleChange} />}
@@ -39,7 +39,7 @@ class DateP extends React.Component {
           onChange={this.handleChange}
           onClick={this.props.onClick}
         />
-      </div>
+      
     );
   }
 }

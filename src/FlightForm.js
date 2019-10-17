@@ -32,10 +32,42 @@ class FlightForm extends Component {
     console.log("FlightForm mounted");
   }
 
+  // componentDidUpdate() {
+  //   if (this.state.inboundDate <= this.state.outboundDate) {
+  //     this.setState({
+  //       outboundDate: this.state.outboundDate + 1,
+  //     })
+  //     alert("Your departure date was too close to your arrival date (same day) so we added a day but you can change it again to get better results.")
+  //   }
+  // }
+
   pollPrices(interval, timeout, key, config) {
     this.setState({
-      status: "Searching..."
+      status: "Searching"
     });
+    var count = 0;
+    var searching = setInterval( () => {
+      if (count === 0) {
+        this.setState({
+          status: "Searching."
+        })
+        count++
+      } else if (count===1) {
+        this.setState({
+          status: "Searching.."
+        })
+        count++
+      } else {
+        this.setState({
+          status: "Searching..."
+        })
+        count = 0;
+      }
+    }, 500)
+    function stopSearching () {
+      console.log("Stop searching fired")
+      clearInterval(searching);
+    }
     console.log("Poll fired");
     let start = Date.now();
     function startPoll() {
@@ -51,8 +83,9 @@ class FlightForm extends Component {
             });
           }
 
-          console.log(res);
           if (res.data.Status === "UpdatesPending") {
+            console.log("UPdatespending")
+
             if (
               timeout !== 0 &&
               Date.now() - start > timeout &&
@@ -68,7 +101,10 @@ class FlightForm extends Component {
             } else {
               return delay(interval).then(startPoll);
             }
-          } else if (res.data.Status === "UpdatesComplete") {
+          } 
+          
+            else if (res.data.Status === "UpdatesComplete") {
+              stopSearching();
             if (res.data.Itineraries.length > 0) {
               return res;
             } else if (res.data.Itineraries <= 0) {
@@ -77,11 +113,9 @@ class FlightForm extends Component {
               );
             }
           }
-
-          console.log(res);
         });
     }
-
+    
     return startPoll();
   }
 
@@ -112,7 +146,7 @@ class FlightForm extends Component {
         postConfig
       )
       .catch(function(response) {
-        console.log(response);
+        console.log(response, "This is the handleclick error response")
         return response;
       })
       .then(response => {
@@ -123,10 +157,11 @@ class FlightForm extends Component {
           }
         };
         let session = response.headers.location.split("/").pop(-1);
+        console.log(session, "this is the session")
 
         this.pollPrices(500, 35000, session, liveConfig)
           .then(res => {
-            console.log(res);
+            console.log(res, "this is the handle click poll prices response")
             if (res.data.Itineraries.length > 0) {
               this.setState({
                 livePrice: res.data.Itineraries[0].PricingOptions[0].Price,
@@ -165,7 +200,6 @@ class FlightForm extends Component {
   }
 
   render() {
-    console.log("FlightForm rendered boi");
 
     const iterateNames = this.props.markets.sort((a, b) => {
       if (a.Name > b.Name) {
@@ -222,28 +256,27 @@ class FlightForm extends Component {
                 />
               </Col>
             </Row>
+
+
+
             <Row>
               <Col sm={12} md={4} lg={3} xl={3} className="inputBox ddate">
                 <label>Departure Date</label>
-                {/* <div className='dateWrap'> */}
                   <DateP
                     className='datepicker'
                     fieldName="outboundDate"
                     handleChange={this.handleChange}
                     {...this.state}
                   />
-                {/* </div> */}
               </Col>
               <Col sm={12} md={4} lg={3} xl={3} className="inputBox rdate">
                 <label>Return Date</label>
-                {/* <div className='dateWrap'> */}
                   <DateP
-                  className='datepicker'
+                    className='datepicker'
                     fieldName="inboundDate"
                     handleChange={this.handleChange}
                     {...this.state}
                   />
-                {/* </div> */}
               </Col>
               <Col sm={12} md={4} lg={3} xl={3} className="inputBox tier">
                 <label>Travel Tier</label>
@@ -254,14 +287,12 @@ class FlightForm extends Component {
                   onChange={this.handleValueChange}
                 >
                   <option value="economy"> Economy </option>
-                  <option value="premiumeconomy"> PremiumEconomy </option>
+                  <option value="premiumeconomy"> Premium Economy </option>
                   <option value="business"> Business </option>
                   <option value="first"> First </option>
                 </select>
               </Col>
               <Col sm={12} md={12} lg={3} xl={3} className="inputBox passengers">
-                {/* <Row>
-                    <Col sm={12} md={6} lg={6} xl={6}> */}
                 <label>Passenger Count</label>
                 <select
                   type="text"
