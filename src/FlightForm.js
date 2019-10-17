@@ -42,29 +42,32 @@ class FlightForm extends Component {
   // }
 
   pollPrices(interval, timeout, key, config) {
-    // var count = 0;
-    // var searching = setInterval( () => {
-    //   if (count === 0) {
-    //     this.setState({
-    //       status: "Searching."
-    //     })
-    //     count++
-    //   } else if (count===1) {
-    //     this.setState({
-    //       status: "Searching.."
-    //     })
-    //     count++
-    //   } else {
-    //     this.setState({
-    //       status: "Searching..."
-    //     })
-    //     count = 0;
-    //   }
-    // }, 500)
-    // function stopSearching () {
-    //   console.log("Stop searching fired")
-    //   clearInterval(searching);
-    // }
+    this.setState({
+      status: "Searching"
+    });
+    var count = 0;
+    var searching = setInterval( () => {
+      if (count === 0) {
+        this.setState({
+          status: "Searching."
+        })
+        count++
+      } else if (count===1) {
+        this.setState({
+          status: "Searching.."
+        })
+        count++
+      } else {
+        this.setState({
+          status: "Searching..."
+        })
+        count = 0;
+      }
+    }, 500)
+    function stopSearching () {
+      console.log("Stop searching fired")
+      clearInterval(searching);
+    }
     console.log("Poll fired");
     let start = Date.now();
     function startPoll() {
@@ -81,6 +84,7 @@ class FlightForm extends Component {
           }
 
           if (res.data.Status === "UpdatesPending") {
+            console.log("UPdatespending")
 
             if (
               timeout !== 0 &&
@@ -95,12 +99,12 @@ class FlightForm extends Component {
             ) {
               return new Error("timeout error on pollPrices");
             } else {
-              // stopSearching();
               return delay(interval).then(startPoll);
             }
           } 
           
             else if (res.data.Status === "UpdatesComplete") {
+              stopSearching();
             if (res.data.Itineraries.length > 0) {
               return res;
             } else if (res.data.Itineraries <= 0) {
@@ -142,6 +146,7 @@ class FlightForm extends Component {
         postConfig
       )
       .catch(function(response) {
+        console.log(response, "This is the handleclick error response")
         return response;
       })
       .then(response => {
@@ -152,9 +157,11 @@ class FlightForm extends Component {
           }
         };
         let session = response.headers.location.split("/").pop(-1);
+        console.log(session, "this is the session")
 
         this.pollPrices(500, 35000, session, liveConfig)
           .then(res => {
+            console.log(res, "this is the handle click poll prices response")
             if (res.data.Itineraries.length > 0) {
               this.setState({
                 livePrice: res.data.Itineraries[0].PricingOptions[0].Price,

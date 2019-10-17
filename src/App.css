@@ -35,7 +35,7 @@ body {
   text-align: center;
   background: #f7f9f8;
   font-weight: bold;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Arimo', sans-serif;
 }
 
 header {
@@ -45,7 +45,7 @@ header {
 
   color: #034732;
   font-size: 7vh;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Arimo', sans-serif;
 }
 
 .appHeader {
@@ -57,7 +57,7 @@ header {
 }
 
 .instructions {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Arimo', sans-serif;
   font-size: 2.5vh;
   color: #034732;
 
@@ -112,7 +112,7 @@ button {
   font-size: 5vh;
   font-weight: 700;
   color: #034732;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Arimo', sans-serif;
 
   width: auto;
   height: auto; 
@@ -143,8 +143,8 @@ label {
   word-wrap: normal;
   color: #034732;
   text-align: left;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 100;
+  font-family: 'Arimo', sans-serif;
+  font-weight: 700;
 
 }
 
@@ -152,6 +152,9 @@ input {
   min-width: 100%;
   height: 100;
   font-size: 3vh;
+
+  color: #034732;
+  font-weight: 500;
 }
 
 .row {
