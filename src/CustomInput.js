@@ -17,10 +17,10 @@ class CustomInput extends React.Component {
           onChange={this.props.handleChange}
           value={this.props.value}
           onClick={this.props.onClick}
-          style={{
-            width: '50%',
-            overflow: 'auto',
-          }}
+          // style={{
+          //   width: '50%',
+          //   overflow: 'auto',
+          // }}
           >
      
         </input>

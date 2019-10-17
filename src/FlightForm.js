@@ -256,6 +256,9 @@ class FlightForm extends Component {
                 />
               </Col>
             </Row>
+
+
+
             <Row>
               <Col sm={12} md={4} lg={3} xl={3} className="inputBox ddate">
                 <label>Departure Date</label>
