@@ -119,11 +119,6 @@ class FlightForm extends Component {
     return startPoll();
   }
 
-  testPython () {
-    axios.get('http://127.0.0.1:8000/countries/search/').then( res => console.log(res));
-  };
-
-
   handleClick(event) {
     event.preventDefault();
 
@@ -205,8 +200,6 @@ class FlightForm extends Component {
   }
 
   render() {
-
-    this.testPython();
 
     const iterateNames = this.props.markets.sort((a, b) => {
       if (a.Name > b.Name) {

@@ -14,48 +14,30 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log("App mounted boi")
-    console.log(process.env.REACT_APP_RAPID_API)
 
-    const configAir = {
-      headers: {
-        accept: "text/html"
-      }
-    };
-
-    const configMarkets = {
-      headers: {
-        'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API,
-        'Content-Type': "application/x-www-form-urlencoded",
-      }
-    }
-
-
-    axios.get("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/reference/v1.0/countries/en-US", configMarkets)
-    // testPython () {
-    //   axios.get('http://127.0.0.1:8000/countries/search/')
+    axios.get('http://127.0.0.1:8000/countries/search/')
     .then( (res) => {
       this.setState({
-        markets: res.data.Countries
+        markets: res.data,
       })
     })
     .catch(function(response) {
       console.log(response);
     })
-    .then(
+    // .then(
 
-      () => {
-        axios.get("http://localhost:8000/airports/search", configAir)
-        .then(list => {
-        this.setState({
-          airports: list.data
-        })
-      })
-    .catch(function(response) {
-      console.log(response);
-    })
-      }
-    );
+    //   () => {
+    //     axios.get("http://localhost:8000/airports/search", configAir)
+    //     .then(list => {
+    //     this.setState({
+    //       airports: list.data
+    //     })
+    //   })
+    // .catch(function(response) {
+    //   console.log(response);
+    // })
+    //   }
+    // );
   }
 
   render() {
