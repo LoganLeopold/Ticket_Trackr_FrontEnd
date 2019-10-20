@@ -16,6 +16,7 @@ class App extends Component {
   componentDidMount() {
     console.log("App mounted boi")
     console.log(process.env.REACT_APP_RAPID_API)
+
     const configAir = {
       headers: {
         accept: "text/html"
@@ -31,6 +32,8 @@ class App extends Component {
 
 
     axios.get("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/reference/v1.0/countries/en-US", configMarkets)
+    // testPython () {
+    //   axios.get('http://127.0.0.1:8000/countries/search/')
     .then( (res) => {
       this.setState({
         markets: res.data.Countries
