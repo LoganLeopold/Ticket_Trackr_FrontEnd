@@ -15,7 +15,7 @@ class App extends Component {
 
   componentDidMount() {
 
-    axios.get('http://127.0.0.1:8000/countries/search/')
+    axios.get('http://127.0.0.1:8000/api/countries/search/')
     .then( (res) => {
       this.setState({
         markets: res.data,
