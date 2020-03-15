@@ -15,7 +15,7 @@ class App extends Component {
 
   componentDidMount() {
 
-    axios.get('http://127.0.0.1:8000/api/countries/search/')
+    axios.get('https://tickettrackr.herokuapp.com/api/countries/search/db')
     .then( (res) => {
       this.setState({
         markets: res.data,

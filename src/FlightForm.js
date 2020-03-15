@@ -32,15 +32,6 @@ class FlightForm extends Component {
     console.log("FlightForm mounted");
   }
 
-  // componentDidUpdate() {
-  //   if (this.state.inboundDate <= this.state.outboundDate) {
-  //     this.setState({
-  //       outboundDate: this.state.outboundDate + 1,
-  //     })
-  //     alert("Your departure date was too close to your arrival date (same day) so we added a day but you can change it again to get better results.")
-  //   }
-  // }
-
   pollPrices(interval, timeout, key, config) {
     this.setState({
       status: "Searching"
