@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class countrySelect extends Component {
+class CountrySelect extends Component {
     constructor(){
         super();
         this.state = {
@@ -9,9 +9,9 @@ class countrySelect extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleChange(name, value) {
+    handleChange = evt => {
         this.setState({
-          [name]: value
+          stateValue: evt.target.value
         });
       }
 
@@ -32,7 +32,7 @@ class countrySelect extends Component {
                 <select
                   type="text"
                   name="country"
-                  value={this.state.country}
+                  value={this.state.stateValue}
                 //   onChange={this.handleValueChange}
                   onChange={this.handleChange}
                 >
@@ -50,4 +50,4 @@ class countrySelect extends Component {
     }
 }
 
-export default countrySelect;
+export default CountrySelect;
