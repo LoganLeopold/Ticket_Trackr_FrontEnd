@@ -24,20 +24,6 @@ class App extends Component {
     .catch(function(response) {
       console.log(response);
     })
-    // .then(
-
-    //   () => {
-    //     axios.get("http://localhost:8000/airports/search", configAir)
-    //     .then(list => {
-    //     this.setState({
-    //       airports: list.data
-    //     })
-    //   })
-    // .catch(function(response) {
-    //   console.log(response);
-    // })
-    //   }
-    // );
   }
 
   render() {
