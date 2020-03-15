@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Row, Container, Col } from "reactstrap";
+import countrySelect from "./countrySelect"
 import DateP from "./Date";
 var querystring = require("querystring");
 var moment = require("moment");
@@ -192,21 +193,23 @@ class FlightForm extends Component {
 
   render() {
 
-    const iterateNames = this.props.markets.sort((a, b) => {
-      if (a.Name > b.Name) {
-        return 1;
-      } else if (a.Name < b.Name) {
-        return -1;
-      } else return 0;
-    });
+    // const iterateNames = this.props.markets.sort((a, b) => {
+    //   if (a.Name > b.Name) {
+    //     return 1;
+    //   } else if (a.Name < b.Name) {
+    //     return -1;
+    //   } else return 0;
+    // });
 
     return (
       <div className="flightForm">
         <form action="">
           <Container>
             <Row>
-            <Col sm={12} md={6} lg={6} xl={6} className="inputBox country">
-                <label>Origin Country</label>
+            <Col sm={12} md={6} lg={6} xl={6} 
+            // className="inputBox country"
+            >
+                {/* <label>Origin Country</label>
                 <select
                   type="text"
                   name="country"
@@ -220,7 +223,7 @@ class FlightForm extends Component {
                       </option>
                     );
                   })}
-                </select>
+                </select> */}
               </Col>
               <Col sm={12} md={3} lg={3} xl={3} className="inputBox dport">
                 <label>Departure Airport Code</label>
