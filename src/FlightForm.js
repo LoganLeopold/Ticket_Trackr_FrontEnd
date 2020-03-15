@@ -193,14 +193,6 @@ class FlightForm extends Component {
 
   render() {
 
-    // const iterateNames = this.props.markets.sort((a, b) => {
-    //   if (a.Name > b.Name) {
-    //     return 1;
-    //   } else if (a.Name < b.Name) {
-    //     return -1;
-    //   } else return 0;
-    // });
-
     return (
       <div className="flightForm">
         <form action="">
@@ -224,6 +216,7 @@ class FlightForm extends Component {
                     );
                   })}
                 </select> */}
+                <countrySelect name="country" {...this.props} {...this.state} onChange={this.handleValueChange} />
               </Col>
               <Col sm={12} md={3} lg={3} xl={3} className="inputBox dport">
                 <label>Departure Airport Code</label>

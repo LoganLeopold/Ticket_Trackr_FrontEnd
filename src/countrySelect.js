@@ -4,10 +4,17 @@ class countrySelect extends Component {
     constructor(){
         super();
         this.state = {
-
+            stateValue: "US"
         };
-
+        this.handleChange = this.handleChange.bind(this);
     }
+
+    handleChange(name, value) {
+        this.setState({
+          [name]: value
+        });
+      }
+
     render() {
 
         const iterateNames = this.props.markets.sort((a, b) => {
@@ -26,7 +33,8 @@ class countrySelect extends Component {
                   type="text"
                   name="country"
                   value={this.state.country}
-                  onChange={this.handleValueChange}
+                //   onChange={this.handleValueChange}
+                  onChange={this.handleChange}
                 >
                   {iterateNames.map(country => {
                     return (
