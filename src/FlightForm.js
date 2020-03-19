@@ -199,7 +199,7 @@ class FlightForm extends Component {
     //     });
     //   })
 
-    console.log(name)
+    console.log(name.value)
 
   };
 
@@ -218,7 +218,7 @@ class FlightForm extends Component {
           <Container>
             <Row>
               <Col sm={12} md={6} lg={6} xl={6} >
-                <CountrySelect name="country" {...this.props} {...this.state} onChange={this.handleCountryValueChange}/>
+                <CountrySelect name="country" {...this.props} {...this.state} valueUp={this.handleCountryValueChange}/>
               </Col>
               <Col sm={12} md={3} lg={3} xl={3} className="inputBox dport">
                 <label>Departure Airport Code</label>
