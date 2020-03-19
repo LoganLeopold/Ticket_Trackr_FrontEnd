@@ -9,6 +9,7 @@ class CountrySelect extends Component {
         this.handleChange = this.handleChange.bind(this);
         // this.componentDidUpdate = this.componentDidUpdate.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this)
+        this.changes = this.changes.bind(this)
     }
 
     handleChange = evt => {
@@ -20,9 +21,11 @@ class CountrySelect extends Component {
     componentDidMount() {
       console.log(this.props)
     }
-    // componentDidUpdate() {
-    //   // console.logthis.props
-    // }
+
+    changes(event) {
+      this.props.valueUp(event); 
+      this.handleChange(event)
+    }
 
     render() {
 
@@ -42,9 +45,7 @@ class CountrySelect extends Component {
                   type="text"
                   name="country"
                   value={this.state.stateValue}
-                  // onChange={event => {this.props.valueUp(event); this.handleChange(event)}}
-                  // onChange={this.handleChange}
-                  onChange={this.props.valueUp}
+                  onChange={this.changes}
                 >
                   {iterateNames.map(country => {
                     return (

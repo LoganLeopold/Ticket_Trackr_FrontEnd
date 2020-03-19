@@ -189,15 +189,9 @@ class FlightForm extends Component {
   // For testing countrySelect
   handleCountryValueChange = function(event) {
     const name = event.target;
-    // this.setState(
-    //   {
-    //     value: event.target.value
-    //   },
-    //   () => {
-    //     this.setState({
-    //       [name]: this.state.value
-    //     });
-    //   })
+    this.setState({
+      country: name.value
+    })
 
     console.log(name.value)
 
