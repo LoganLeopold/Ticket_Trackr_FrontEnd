@@ -7,6 +7,7 @@ class CountrySelect extends Component {
             stateValue: "US"
         };
         this.handleChange = this.handleChange.bind(this);
+        this.componentDidUpdate = this.componentDidUpdate.bind(this);
     }
 
     handleChange = evt => {
@@ -14,6 +15,10 @@ class CountrySelect extends Component {
           stateValue: evt.target.value
         });
       }
+
+    // componentDidUpdate() {
+    //   // console.logthis.props
+    // }
 
     render() {
 
@@ -33,8 +38,8 @@ class CountrySelect extends Component {
                   type="text"
                   name="country"
                   value={this.state.stateValue}
-                //   onChange={this.handleValueChange}
-                  onChange={this.handleChange}
+                  onChange={this.props.handleValueChange}
+                  // onChange={this.handleChange}
                 >
                   {iterateNames.map(country => {
                     return (

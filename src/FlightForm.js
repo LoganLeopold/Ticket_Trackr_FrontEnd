@@ -27,6 +27,7 @@ class FlightForm extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleValueChange = this.handleValueChange.bind(this);
     this.pollPrices = this.pollPrices.bind(this);
+    this.handleCountryValueChange = this.handleCountryValueChange.bind(this)
   }
 
   componentDidMount() {
@@ -186,8 +187,8 @@ class FlightForm extends Component {
   };
 
   // For testing countrySelect
-  handleCountryValueChange = event => {
-    // const name = event.target.name;
+  handleCountryValueChange = function(event) {
+    const name = event.target;
     // this.setState(
     //   {
     //     value: event.target.value
@@ -196,11 +197,10 @@ class FlightForm extends Component {
     //     this.setState({
     //       [name]: this.state.value
     //     });
-    //   }
-    // );
-    this.setState({
-      country: event.target.state.stateValue
-    })
+    //   })
+
+    console.log(name)
+
   };
 
 
@@ -218,7 +218,7 @@ class FlightForm extends Component {
           <Container>
             <Row>
               <Col sm={12} md={6} lg={6} xl={6} >
-                <CountrySelect name="country" {...this.props} {...this.state} onChange={this.handleCountryValueChange} />
+                <CountrySelect name="country" {...this.props} {...this.state} onChange={this.handleCountryValueChange}/>
               </Col>
               <Col sm={12} md={3} lg={3} xl={3} className="inputBox dport">
                 <label>Departure Airport Code</label>
