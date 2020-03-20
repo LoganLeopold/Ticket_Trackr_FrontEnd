@@ -32,6 +32,14 @@ class FlightForm extends Component {
 
   componentDidMount() {
     console.log("FlightForm mounted");
+
+
+    // var localeDate = new Date()
+    // var londonTime = new Date().toLocaleString("en-US", {timeZone: "Europe/London"});
+    // londonTime = new Date(londonTime)
+    // console.log(londonTime)
+
+    // console.log(Math.ceil((londonTime - localeDate) / 3600000))
   }
 
   pollPrices(interval, timeout, key, config) {
@@ -138,10 +146,6 @@ class FlightForm extends Component {
         }),
         postConfig
       )
-      .catch(function(response) {
-        console.log(response, "This is the handleclick error response")
-        return response;
-      })
       .then(response => {
         let liveConfig = {
           headers: {
@@ -169,6 +173,14 @@ class FlightForm extends Component {
           .catch(function(response) {
             console.log(response);
           });
+      })
+      .catch(function(err) {
+        console.log(err.response.data.ValidationErrors)
+        if (err.response.data.ValidationErrors.length > 0) {
+          console.log("GOTEEM")
+        }
+        // console.log(response, "This is the handleclick error response")
+        // return response;
       });
   }
 
@@ -211,7 +223,7 @@ class FlightForm extends Component {
         <form action="">
           <Container>
             <Row>
-              <Col sm={12} md={6} lg={6} xl={6} >
+              <Col sm={12} md={6} lg={6} xl={6} className="inputBox">
                 <CountrySelect name="country" {...this.props} {...this.state} valueUp={this.handleCountryValueChange}/>
               </Col>
               <Col sm={12} md={3} lg={3} xl={3} className="inputBox dport">
@@ -239,8 +251,6 @@ class FlightForm extends Component {
                 />
               </Col>
             </Row>
-
-
 
             <Row>
               <Col sm={12} md={4} lg={3} xl={3} className="inputBox ddate">

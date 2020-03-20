@@ -3,10 +3,10 @@ import React from 'react';
 class CustomInput extends React.Component {
 
     constructor(props) {
-    super(props);
-    this.state = {
-      startDate: new Date()
-    }
+      super(props);
+      this.state = {
+        startDate: new Date()
+      }
     
     }
 
@@ -17,10 +17,6 @@ class CustomInput extends React.Component {
           onChange={this.props.handleChange}
           value={this.props.value}
           onClick={this.props.onClick}
-          // style={{
-          //   width: '50%',
-          //   overflow: 'auto',
-          // }}
           >
      
         </input>
