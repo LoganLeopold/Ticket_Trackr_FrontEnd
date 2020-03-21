@@ -33,10 +33,23 @@ class FlightForm extends Component {
   componentDidMount() {
     console.log("FlightForm mounted");
 
+    // var offset;
+    var today = new Date()
+    console.log(moment(today).isDST())
+    // todayOff = today.getTimezoneOffset()
+    // var summer = new Date(2020, 6, 1)
+    // var summerOff = summer.getTimezoneOffset()
+    // var winter = new Date (2020, 1, 1)
+    // var winterOff = winter.getTimezoneOffset()
+    
+    // if (summerOff != winterOff) {
+    //   offset = 5;
+    // }
 
-    // var localeDate = new Date()
-    // var londonTime = new Date().toLocaleString("en-US", {timeZone: "Europe/London"});
-    // londonTime = new Date(londonTime)
+
+
+    var londonTime = new Date().toLocaleString("en-US", {timeZone: "Europe/London"});
+    londonTime = new Date(londonTime)
     // console.log(londonTime)
 
     // console.log(Math.ceil((londonTime - localeDate) / 3600000))
