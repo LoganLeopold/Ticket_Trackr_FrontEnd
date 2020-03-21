@@ -18,7 +18,6 @@ class CustomInput extends React.Component {
           value={this.props.value}
           onClick={this.props.onClick}
           >
-     
         </input>
       )
     }

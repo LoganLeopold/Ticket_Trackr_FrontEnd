@@ -94,30 +94,23 @@ form {
 }
 
 .inputBox {
-  margin: 2vh 0;
-  padding: 15px;
-  
-  /* background: #3BCEAC; */
+  padding: 0 10px;
   background: transparent;
-  
   display: flex;
   flex-direction: column;
-  justify-items: center;
-  align-items: flex-start;
+  justify-content: flex-end;
 }
 
 button {
   background: #3BCEAC;
   border-radius: 25px;
-
   font-size: 4vh;
   font-weight: 700;
   color: #034732;
   font-family: 'Arimo', sans-serif;
-
   width: auto;
   height: auto; 
-  margin: 4vh 0; 
+  margin: 0; 
   padding: 1.5vh 1.5vw ;
 
 }
@@ -148,6 +141,7 @@ label {
   font-weight: 700;
 
   padding-left: 3px;
+  padding-bottom: 0;
   width: 100%;
 }
 
@@ -162,10 +156,6 @@ input {
 
   padding: 0 0 0 5px;
 }
-
-/* .country {
-  justify-content: flex-end;
-} */
 
 .row {
   display: flex;
@@ -184,45 +174,24 @@ select {
   font-size: 3vh;
   width: 100%;
   font-weight: 600;
-
   white-space: nowrap;
   overflow: hidden;  
-
   border: 3px solid #3BCEAC;
 
 }
 
-.react-datepicker-wrapper {
-  align-content: flex-end;
-  display: flex;
-  height: 80%;
-}
-
 .react-datepicker__input-container {
-  align-content: flex-end;
-  display: flex;
-  height: 80%;
+  max-width: 100%;
 }
 
 .customInput {
-  width: 50%;
-  overflow: auto;
-  height: 80%
+  max-width: 100%;
 }
 
 @media (max-width: 1053px) and (min-width: 768px) {
-  .inputBox {
-    justify-content: flex-end;
+  .appHeader {
+    background: red;
   }
-
-  .country label {
-    margin-bottom: 10px; 
-  }
-
-  .tier, .passengers {
-    padding-bottom: 29px;
-  }
-
 }
 
 @media (max-width: 991px) {

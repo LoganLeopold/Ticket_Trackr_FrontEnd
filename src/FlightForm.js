@@ -142,6 +142,34 @@ class FlightForm extends Component {
   handleClick(event) {
     event.preventDefault();
 
+    var params = [
+      "cabinClass",
+      "adults",
+      "outboundDate",
+      "inboundDate",
+      "originPlace",
+      "destinationPlace",
+      "country",
+      "currency",
+      "locale",
+      "livePrice",
+      "status",
+    ]
+
+    var replacements = [
+      "Cabin class",
+      "Adults",
+      "Outbound date",
+      "Inbound date",
+      "Origin place",
+      "Destination place",
+      "Country",
+      "Currency",
+      "Locale",
+      "Live price",
+      "Status",
+    ]
+
     var postConfig = {
       headers: {
         "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API,
@@ -196,10 +224,17 @@ class FlightForm extends Component {
       .catch(function(err) {
         console.log(err.response.data.ValidationErrors)
         if (err.response.data.ValidationErrors.length > 0) {
-          console.log("GOTEEM")
+          var alert = document.querySelectorAll('.formStatus')[0]
+
+          var errorMsg = err.response.data.ValidationErrors[0].Message
+
+          // for (var i=0; i < params.length; i++) {
+          //   // errorMsg.replace()
+          //   if 
+          // }
+
+          alert.innerHTML = err.response.data.ValidationErrors[0].ParameterName + ": " +           err.response.data.ValidationErrors[0].Message
         }
-        // console.log(response, "This is the handleclick error response")
-        // return response;
       });
   }
 
@@ -217,7 +252,7 @@ class FlightForm extends Component {
     );
   };
 
-  // For testing countrySelect
+  // For countrySelect
   handleCountryValueChange = function(event) {
     const name = event.target;
     this.setState({
@@ -227,7 +262,6 @@ class FlightForm extends Component {
     console.log(name.value)
 
   };
-
 
   handleChange(name, value) {
     this.setState({
@@ -328,7 +362,7 @@ class FlightForm extends Component {
                 </div>
               </Col>
               <Col sm={12} md={6} lg={6} xl={6} className="d-flex flex-column">
-                <h2>{this.state.status}</h2>
+                <h2 className="formStatus">{this.state.status}</h2>
                 <h2 className="formSubmit">{this.state.livePrice}</h2>
               </Col>
             </Row>
