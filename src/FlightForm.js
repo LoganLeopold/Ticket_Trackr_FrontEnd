@@ -61,10 +61,24 @@ class FlightForm extends Component {
     
   }
 
+  // componentDidUpdate() {
+  //   var livePriceDisplay;
+  //   if (this.state.livePrice.length > 0) {
+  //     this.props.livePriceDisplay = "block"
+  //   } else {
+  //     this.props.livePriceDisplay = "none"
+  //   }
+  // }
+
   pollPrices(interval, timeout, key, config) {
     this.setState({
       status: "Searching"
     });
+
+    var statuses = document.querySelectorAll("H2")
+    statuses[0].style.display = "block"
+    statuses[1].style.display = "none"
+
     var count = 0;
     var searching = setInterval( () => {
       if (count === 0) {
@@ -84,12 +98,16 @@ class FlightForm extends Component {
         count = 0;
       }
     }, 500)
+
     function stopSearching () {
       console.log("Stop searching fired")
       clearInterval(searching);
     }
+
     console.log("Poll fired");
+    
     let start = Date.now();
+
     function startPoll() {
       return axios
         .get(
@@ -126,11 +144,12 @@ class FlightForm extends Component {
           else if (res.data.Status === "UpdatesComplete") {
             stopSearching();
             if (res.data.Itineraries.length > 0) {
+              statuses[1].style.display = "block"
               return res;
             } else if (res.data.Itineraries <= 0) {
-              alert(
-                "Sorry - no routes are available on this itinierary. Try pushing your departure date out a bit further."
-              );
+              this.setState({
+                status: "Sorry - no routes are available on this itinierary. Try pushing your departure date out a bit further."
+              })
             }
           }
         });
@@ -179,7 +198,7 @@ class FlightForm extends Component {
 
     axios
       .post(
-        "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.{}om/apiservices/pricing/v1.0",
+        "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/v1.0",
         querystring.stringify({
           country: this.state.country,
           currency: this.state.currency,
@@ -226,30 +245,27 @@ class FlightForm extends Component {
           var alert = document.querySelectorAll('.formStatus')[0]
 
           var errorParam = err.response.data.ValidationErrors[0].ParameterName
+          var errorMessage = err.response.data.ValidationErrors[0].Message
 
           var errorParamLong = errorParam.split(' ')
+          var errorMessageLong = errorMessage.split(' ')
           
           for (var i=0; i < params.length; i++) {
             for (var j=0; j < errorParamLong.length; j++) {
-              console.log(params[i], errorParamLong[j].toLowerCase())
               if (params[i] === errorParamLong[j].toLowerCase()) {
-                errorParamLong[i] = replacements[i]
+                errorParamLong[j] = replacements[i]
+              }
+            }
+            for (var f=0; f < errorMessageLong.length; f++) {
+              if (params[i] === errorMessageLong[f].toLowerCase()) {
+                errorMessageLong[f] = replacements[i]
               }
             }
           }
 
-          // console.log(errorParamLong)
+          var errorReString = errorParamLong.toString().replace(/,/g, " ")
 
-          var errorReString = errorParamLong.toString().replace(',', " ")
-
-          // console.log(errorReString)
-
-          for (i=0; i < params.length; i++) {
-            if (params[i] === errorParam.toLowerCase()) {
-              errorParam = replacements[i]
-            }
-          }
-          alert.innerHTML = errorParam + ": " + err.response.data.ValidationErrors[0].Message
+          alert.innerHTML = errorReString + ": " + err.response.data.ValidationErrors[0].Message
         }
       });
   }
@@ -370,7 +386,7 @@ class FlightForm extends Component {
             </Row>
 
             <Row>
-              <Col sm={12} md={6} lg={6} xl={6}>
+              <Col sm={12} md={6} lg={6} xl={6} className="formButton">
                 <div className="subButton">
                   <button type="submit" onClick={this.handleClick}>
                     FIND ROUTES
@@ -378,7 +394,7 @@ class FlightForm extends Component {
                 </div>
               </Col>
               <Col sm={12} md={6} lg={6} xl={6} className="d-flex flex-column">
-                <h2 className="formStatus">{this.state.status}</h2>
+                <h2 className="formStatus"> {this.state.status}</h2>
                 <h2 className="formSubmit">{this.state.livePrice}</h2>
               </Col>
             </Row>
