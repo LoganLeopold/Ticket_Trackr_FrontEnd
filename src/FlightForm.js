@@ -123,8 +123,8 @@ class FlightForm extends Component {
             }
           } 
           
-            else if (res.data.Status === "UpdatesComplete") {
-              stopSearching();
+          else if (res.data.Status === "UpdatesComplete") {
+            stopSearching();
             if (res.data.Itineraries.length > 0) {
               return res;
             } else if (res.data.Itineraries <= 0) {

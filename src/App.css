@@ -95,6 +95,7 @@ form {
 
 .inputBox {
   padding: 0 10px;
+  margin: 10px 0;
   background: transparent;
   display: flex;
   flex-direction: column;
@@ -133,15 +134,14 @@ h2 {
 label {
   background: transparent;
   font-size: 2.25vh;
-
   word-wrap: normal;
   color: #034732;
   text-align: left;
   font-family: 'Arimo', sans-serif;
   font-weight: 700;
-
   padding-left: 3px;
   padding-bottom: 0;
+  margin-bottom: 5px;
   width: 100%;
 }
 
@@ -160,6 +160,10 @@ input {
 .row {
   display: flex;
   justify-content: space-around;
+}
+
+.row:last-child {
+  margin: 30px 0 0 0;
 }
 
 select {
@@ -189,14 +193,12 @@ select {
 }
 
 @media (max-width: 1053px) and (min-width: 768px) {
-  .appHeader {
-    background: red;
-  }
+
 }
 
 @media (max-width: 991px) {
   .inputBox {
-    margin: .5vh 0;
+    /* margin: .5vh 0; */
   }
 }
 
