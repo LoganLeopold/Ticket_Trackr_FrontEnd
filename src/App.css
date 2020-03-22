@@ -124,7 +124,7 @@ h1 {
 }
 
 h2 {
-  margin: 1vh;
+  /* margin: 1vh; */
   color: #034732;
   background: #3BCEAC;
   font-size: 5vh;

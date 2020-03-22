@@ -143,16 +143,16 @@ class FlightForm extends Component {
     event.preventDefault();
 
     var params = [
-      "cabinClass",
+      "cabinclass",
       "adults",
-      "outboundDate",
-      "inboundDate",
-      "originPlace",
-      "destinationPlace",
+      "outbounddate",
+      "inbounddate",
+      "originplace",
+      "destinationplace",
       "country",
       "currency",
       "locale",
-      "livePrice",
+      "liveprice",
       "status",
     ]
 
@@ -179,7 +179,7 @@ class FlightForm extends Component {
 
     axios
       .post(
-        "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/v1.0",
+        "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.{}om/apiservices/pricing/v1.0",
         querystring.stringify({
           country: this.state.country,
           currency: this.state.currency,
@@ -222,18 +222,34 @@ class FlightForm extends Component {
           });
       })
       .catch(function(err) {
-        console.log(err.response.data.ValidationErrors)
         if (err.response.data.ValidationErrors.length > 0) {
           var alert = document.querySelectorAll('.formStatus')[0]
 
-          var errorMsg = err.response.data.ValidationErrors[0].Message
+          var errorParam = err.response.data.ValidationErrors[0].ParameterName
 
-          // for (var i=0; i < params.length; i++) {
-          //   // errorMsg.replace()
-          //   if 
-          // }
+          var errorParamLong = errorParam.split(' ')
+          
+          for (var i=0; i < params.length; i++) {
+            for (var j=0; j < errorParamLong.length; j++) {
+              console.log(params[i], errorParamLong[j].toLowerCase())
+              if (params[i] === errorParamLong[j].toLowerCase()) {
+                errorParamLong[i] = replacements[i]
+              }
+            }
+          }
 
-          alert.innerHTML = err.response.data.ValidationErrors[0].ParameterName + ": " +           err.response.data.ValidationErrors[0].Message
+          // console.log(errorParamLong)
+
+          var errorReString = errorParamLong.toString().replace(',', " ")
+
+          // console.log(errorReString)
+
+          for (i=0; i < params.length; i++) {
+            if (params[i] === errorParam.toLowerCase()) {
+              errorParam = replacements[i]
+            }
+          }
+          alert.innerHTML = errorParam + ": " + err.response.data.ValidationErrors[0].Message
         }
       });
   }

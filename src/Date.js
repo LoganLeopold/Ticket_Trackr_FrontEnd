@@ -27,7 +27,7 @@ class DateP extends React.Component {
       // Establish offset with DST functions and londonTime object
       var offset;
       //One time is in DST but the other isn't
-      if ((moment(today).isDST()) != moment(londonTime).isDST()) {
+      if ((moment(today).isDST()) !== moment(londonTime).isDST()) {
         offset = 5;
       //We're both in the same setup so we're in the standard difference
       } else {
@@ -64,7 +64,6 @@ class DateP extends React.Component {
         this.props.handleChange(this.props.fieldName, this.state.startDate);
       }
     );
-
   };
 
   render() {
