@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import axios from "axios";
+import {Route, Link} from "react-router-dom"
 import "./App.css";
 import FlightForm from "./FlightForm";
 import Login from "./Login"
-import {Route, Link} from "react-router-dom"
+import CreateUser from "./CreateUser";
+import axios from "axios";
+
 
 class App extends Component {
   constructor() {
@@ -34,17 +36,19 @@ class App extends Component {
       <div className="App">
         <header>
           <div className='appHeader'>
-            Ticket Trackr
+            <a href="/">Ticket Trackr</a>
           </div>
           <div className='instructions'>
             Immediately see the cheapest flight to anywhere! 
           </div>
-          <Link to='/login'><div class="logins">Login</div></Link>
+          <Link to='/login'><div class="navLinks">Login</div></Link>
+          <Link to='/new-user'><div class="navLinks">Create Account</div></Link>
         </header>
         {/* <FlightForm {...this.props}{...this.state}/> */}
         <div>
           <Route path="/" exact render={ (routerProps) =>  <FlightForm {...routerProps}{...this.props}{...this.state}/> }></Route>
           <Route path="/login" exact render={(routerProps) => <Login {...routerProps}{...this.state} />}></Route>
+          <Route path="/new-user" exact render={(routerProps) => <CreateUser {...routerProps}{...this.state} />}></Route>
         </div>
       </div>
     );
