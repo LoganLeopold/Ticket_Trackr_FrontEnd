@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import "./App.css";
 import FlightForm from "./FlightForm";
+import Login from "./Login"
+import {Route, Link} from "react-router-dom"
 
 class App extends Component {
   constructor() {
@@ -37,8 +39,12 @@ class App extends Component {
           <div className='instructions'>
             Immediately see the cheapest flight to anywhere! 
           </div>
+          <Link to='/login'><div class="logins">Login</div></Link>
         </header>
         <FlightForm {...this.props}{...this.state}/>
+        <div>
+          <Route path="/login" render={(routerProps) => <Login {...routerProps}{...this.state} />}></Route>
+        </div>
       </div>
     );
   }

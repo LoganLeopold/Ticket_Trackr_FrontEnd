@@ -228,7 +228,7 @@ class FlightForm extends Component {
             if (res.data.Itineraries.length > 0) {
               this.setState({
                 livePrice: res.data.Itineraries[0].PricingOptions[0].Price,
-                status: "Price:"
+                status: "The cheapest price:"
               });
             } else {
               this.setState({
