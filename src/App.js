@@ -41,9 +41,10 @@ class App extends Component {
           </div>
           <Link to='/login'><div class="logins">Login</div></Link>
         </header>
-        <FlightForm {...this.props}{...this.state}/>
+        {/* <FlightForm {...this.props}{...this.state}/> */}
         <div>
-          <Route path="/login" render={(routerProps) => <Login {...routerProps}{...this.state} />}></Route>
+          <Route path="/" exact render={ (routerProps) =>  <FlightForm {...routerProps}{...this.props}{...this.state}/> }></Route>
+          <Route path="/login" exact render={(routerProps) => <Login {...routerProps}{...this.state} />}></Route>
         </div>
       </div>
     );
