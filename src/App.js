@@ -41,8 +41,8 @@ class App extends Component {
           <div className='instructions'>
             Immediately see the cheapest flight to anywhere! 
           </div>
-          <Link to='/login'><div class="navLinks">Login</div></Link>
-          <Link to='/new-user'><div class="navLinks">Create Account</div></Link>
+          {/* <Link to='/login'><div class="navLinks">Login</div></Link>
+          <Link to='/new-user'><div class="navLinks">Create Account</div></Link> */}
         </header>
         {/* <FlightForm {...this.props}{...this.state}/> */}
         <div>
