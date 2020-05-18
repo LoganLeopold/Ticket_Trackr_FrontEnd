@@ -19,7 +19,7 @@ class App extends Component {
 
   componentDidMount() {
 
-    axios.get('https://tickettrackr.herokuapp.com/api/countries/search/db')
+    axios.get('https://tickettrackr.herokuapp.com/api/countries/db/search')
     .then( (res) => {
       this.setState({
         markets: res.data,
