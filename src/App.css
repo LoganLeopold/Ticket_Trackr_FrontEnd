@@ -263,6 +263,11 @@ select {
 }
 
 @media (max-width: 768px) {
+
+  .update p {
+    font-size: 25px;
+  }
+
   .react-datepicker-wrapper, .react-datepicker__input-container, .customInput {
     width: 100%;
   }
@@ -286,5 +291,13 @@ select {
     width: auto;
     margin: 2vh 0;
     padding: 0 15px;
+  }
+
+  .update {
+    padding: 10%;
+  }
+  
+  .update p {
+    font-size: 16px;
   }
 }
