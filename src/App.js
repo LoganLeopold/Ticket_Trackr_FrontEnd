@@ -47,8 +47,8 @@ class App extends Component {
         {/* <FlightForm {...this.props}{...this.state}/> */}
         <div>
           <Route path="/" exact render={ (routerProps) =>  <FlightForm {...routerProps}{...this.props}{...this.state}/> }></Route>
-          <Route path="/login" exact render={(routerProps) => <Login {...routerProps}{...this.state} />}></Route>
-          <Route path="/new-user" exact render={(routerProps) => <CreateUser {...routerProps}{...this.state} />}></Route>
+          {/* <Route path="/login" exact render={(routerProps) => <Login {...routerProps}{...this.state} />}></Route>
+          <Route path="/new-user" exact render={(routerProps) => <CreateUser {...routerProps}{...this.state} />}></Route> */}
         </div>
       </div>
     );
