@@ -168,9 +168,12 @@ class FlightForm extends Component {
 
     // document.querySelectorAll('button[type="submit"]')[0].style.textDecoration = 'line-through'
     var update = document.querySelectorAll('.update')[0]
+    var today = document.querySelectorAll('.today')[0]
 
     update.style.display = "flex"
-    
+
+    today.innerHTML = '(' + moment(new Date()).format("MM-DD-YYYY") + ')'
+
   }
 
   /* The following is temporarily commented out handleClick value */
