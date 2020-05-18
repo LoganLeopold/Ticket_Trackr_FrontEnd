@@ -41,6 +41,9 @@ class App extends Component {
           <div className='instructions'>
             Immediately see the cheapest flight to anywhere! 
           </div>
+          <div class='update'>
+            <p >Public access to the main 3rd-party API used for this app was recently restricted. Redevelopment with a new partner is under way. Please refer to the github for the <span><a href="https://github.com/LoganLeopold/Ticket_Trackr_FrontEnd">front end</a></span> and <a href="https://github.com/LoganLeopold/Ticket_Trackr_BackEnd">back end</a> in the meantime. -Logan (05/17/2020)</p>
+          </div>
           {/* <Link to='/login'><div class="navLinks">Login</div></Link>
           <Link to='/new-user'><div class="navLinks">Create Account</div></Link> */}
         </header>

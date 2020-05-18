@@ -92,6 +92,30 @@ header a[href="/new-user"] {
   box-shadow: 5px 5px 9px rgba(0,0,0, 0.20);
 }
 
+.update {
+  display: none;
+  position: fixed;
+  top: 15%;
+  right: 15%;
+  bottom: 15%;
+  left: 15%;
+  box-shadow: 10px 10px 14px rgba(3,71,50, 0.20), -10px -10px 14px rgba(3,71,50, 0.20);
+  background: #3bceac;
+  color: #034732;
+  /* background:#034732;
+  color: #3bceac; */
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 30px;
+  padding: 5%;
+  z-index: 1000;
+  align-items: center;
+}
+
+.update a {
+  text-decoration: underline;
+}
+
 .flightForm {
   margin: 30px 0 0 0;
   padding: 0 5%;

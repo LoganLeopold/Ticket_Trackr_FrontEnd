@@ -24,9 +24,9 @@ class FlightForm extends Component {
     };
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
     this.handleValueChange = this.handleValueChange.bind(this);
-    this.pollPrices = this.pollPrices.bind(this);
+    // this.pollPrices = this.pollPrices.bind(this);
     this.handleCountryValueChange = this.handleCountryValueChange.bind(this)
   }
 
@@ -70,205 +70,218 @@ class FlightForm extends Component {
   //   }
   // }
 
-  pollPrices(interval, timeout, key, config) {
-    this.setState({
-      status: "Searching"
-    });
+  // pollPrices(interval, timeout, key, config) {
+  //   this.setState({
+  //     status: "Searching"
+  //   });
 
-    var statuses = document.querySelectorAll("H2")
-    statuses[0].style.display = "block"
-    statuses[1].style.display = "none"
+  //   var statuses = document.querySelectorAll("H2")
+  //   statuses[0].style.display = "block"
+  //   statuses[1].style.display = "none"
 
-    var count = 0;
-    var searching = setInterval( () => {
-      if (count === 0) {
-        this.setState({
-          status: "Searching."
-        })
-        count++
-      } else if (count===1) {
-        this.setState({
-          status: "Searching.."
-        })
-        count++
-      } else {
-        this.setState({
-          status: "Searching..."
-        })
-        count = 0;
-      }
-    }, 500)
+  //   var count = 0;
+  //   var searching = setInterval( () => {
+  //     if (count === 0) {
+  //       this.setState({
+  //         status: "Searching."
+  //       })
+  //       count++
+  //     } else if (count===1) {
+  //       this.setState({
+  //         status: "Searching.."
+  //       })
+  //       count++
+  //     } else {
+  //       this.setState({
+  //         status: "Searching..."
+  //       })
+  //       count = 0;
+  //     }
+  //   }, 500)
 
-    function stopSearching () {
-      console.log("Stop searching fired")
-      clearInterval(searching);
-    }
+  //   function stopSearching () {
+  //     console.log("Stop searching fired")
+  //     clearInterval(searching);
+  //   }
 
-    console.log("Poll fired");
+  //   console.log("Poll fired");
     
-    let start = Date.now();
+  //   let start = Date.now();
 
-    function startPoll() {
-      return axios
-        .get(
-          `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/uk2/v1.0/${key}/?sortType=price&sortOrder=asc&pageIndex=0`,
-          config
-        )
-        .then(res => {
-          function delay(t) {
-            return new Promise(function(resolve) {
-              setTimeout(resolve, t);
-            });
-          }
+  //   function startPoll() {
+  //     return axios
+  //       .get(
+  //         `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/uk2/v1.0/${key}/?sortType=price&sortOrder=asc&pageIndex=0`,
+  //         config
+  //       )
+  //       .then(res => {
+  //         function delay(t) {
+  //           return new Promise(function(resolve) {
+  //             setTimeout(resolve, t);
+  //           });
+  //         }
 
-          if (res.data.Status === "UpdatesPending") {
-            console.log("UPdatespending")
+  //         if (res.data.Status === "UpdatesPending") {
+  //           console.log("UPdatespending")
 
-            if (
-              timeout !== 0 &&
-              Date.now() - start > timeout &&
-              res.data.Itineraries !== undefined
-            ) {
-              return res;
-            } else if (
-              timeout !== 0 &&
-              Date.now() - start > timeout &&
-              res.data.Itineraries === undefined
-            ) {
-              return new Error("timeout error on pollPrices");
-            } else {
-              return delay(interval).then(startPoll);
-            }
-          } 
+  //           if (
+  //             timeout !== 0 &&
+  //             Date.now() - start > timeout &&
+  //             res.data.Itineraries !== undefined
+  //           ) {
+  //             return res;
+  //           } else if (
+  //             timeout !== 0 &&
+  //             Date.now() - start > timeout &&
+  //             res.data.Itineraries === undefined
+  //           ) {
+  //             return new Error("timeout error on pollPrices");
+  //           } else {
+  //             return delay(interval).then(startPoll);
+  //           }
+  //         } 
           
-          else if (res.data.Status === "UpdatesComplete") {
-            stopSearching();
-            if (res.data.Itineraries.length > 0) {
-              statuses[1].style.display = "block"
-              return res;
-            } else if (res.data.Itineraries <= 0) {
-              this.setState({
-                status: "Sorry - no routes are available on this itinierary. Try pushing your departure date out a bit further."
-              })
-            }
-          }
-        });
-    }
+  //         else if (res.data.Status === "UpdatesComplete") {
+  //           stopSearching();
+  //           if (res.data.Itineraries.length > 0) {
+  //             statuses[1].style.display = "block"
+  //             return res;
+  //           } else if (res.data.Itineraries <= 0) {
+  //             this.setState({
+  //               status: "Sorry - no routes are available on this itinierary. Try pushing your departure date out a bit further."
+  //             })
+  //           }
+  //         }
+  //       });
+  //   }
     
-    return startPoll();
-  }
+  //   return startPoll();
+  // }
 
   handleClick(event) {
     event.preventDefault();
 
-    var params = [
-      "cabinclass",
-      "adults",
-      "outbounddate",
-      "inbounddate",
-      "originplace",
-      "destinationplace",
-      "country",
-      "currency",
-      "locale",
-      "liveprice",
-      "status",
-    ]
+    // var alert = document.querySelectorAll('.formStatus')[0]
 
-    var replacements = [
-      "Cabin class",
-      "Adults",
-      "Outbound date",
-      "Inbound date",
-      "Origin place",
-      "Destination place",
-      "Country",
-      "Currency",
-      "Locale",
-      "Live price",
-      "Status",
-    ]
+    // alert.innerHTML = "Main 3rd-party API deprecated; under redevelopment"
+    // alert.style.display = "flex"
 
-    var postConfig = {
-      headers: {
-        "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API,
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    };
+    // document.querySelectorAll('button[type="submit"]')[0].style.textDecoration = 'line-through'
+    var update = document.querySelectorAll('.update')[0]
 
-    axios
-      .post(
-        "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/v1.0",
-        querystring.stringify({
-          country: this.state.country,
-          currency: this.state.currency,
-          locale: this.state.locale,
-          cabinClass: this.state.cabinClass,
-          adults: this.state.adults,
-          outboundDate: moment(this.state.outboundDate).format("YYYY-MM-DD"),
-          inboundDate: moment(this.state.inboundDate).format("YYYY-MM-DD"),
-          originPlace: this.state.originPlace + "-sky",
-          destinationPlace: this.state.destinationPlace + "-sky"
-        }),
-        postConfig
-      )
-      .then(response => {
-        let liveConfig = {
-          headers: {
-            "X-RapidAPI-Key":
-            process.env.REACT_APP_RAPID_API
-          }
-        };
-        let session = response.headers.location.split("/").pop(-1);
-        console.log(session, "this is the session")
-
-        this.pollPrices(500, 35000, session, liveConfig)
-          .then(res => {
-            console.log(res, "this is the handle click poll prices response")
-            if (res.data.Itineraries.length > 0) {
-              this.setState({
-                livePrice: res.data.Itineraries[0].PricingOptions[0].Price,
-                status: "The cheapest price:"
-              });
-            } else {
-              this.setState({
-                status: ""
-              });
-            }
-          })
-          .catch(function(response) {
-            console.log(response);
-          });
-      })
-      .catch(function(err) {
-        if (err.response.data.ValidationErrors.length > 0) {
-          var alert = document.querySelectorAll('.formStatus')[0]
-
-          var errorParam = err.response.data.ValidationErrors[0].ParameterName
-          var errorMessage = err.response.data.ValidationErrors[0].Message
-
-          var errorParamLong = errorParam.split(' ')
-          var errorMessageLong = errorMessage.split(' ')
-          
-          for (var i=0; i < params.length; i++) {
-            for (var j=0; j < errorParamLong.length; j++) {
-              if (params[i] === errorParamLong[j].toLowerCase()) {
-                errorParamLong[j] = replacements[i]
-              }
-            }
-            for (var f=0; f < errorMessageLong.length; f++) {
-              if (params[i] === errorMessageLong[f].toLowerCase()) {
-                errorMessageLong[f] = replacements[i]
-              }
-            }
-          }
-
-          var errorReString = errorParamLong.toString().replace(/,/g, " ")
-
-          alert.innerHTML = errorReString + ": " + err.response.data.ValidationErrors[0].Message
-        }
-      });
+    update.style.display = "flex"
+    
   }
+
+  /* The following is temporarily commented out handleClick value */
+  //   var params = [
+  //     "cabinclass",
+  //     "adults",
+  //     "outbounddate",
+  //     "inbounddate",
+  //     "originplace",
+  //     "destinationplace",
+  //     "country",
+  //     "currency",
+  //     "locale",
+  //     "liveprice",
+  //     "status",
+  //   ]
+
+  //   var replacements = [
+  //     "Cabin class",
+  //     "Adults",
+  //     "Outbound date",
+  //     "Inbound date",
+  //     "Origin place",
+  //     "Destination place",
+  //     "Country",
+  //     "Currency",
+  //     "Locale",
+  //     "Live price",
+  //     "Status",
+  //   ]
+
+  //   var postConfig = {
+  //     headers: {
+  //       "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API,
+  //       "Content-Type": "application/x-www-form-urlencoded"
+  //     }
+  //   };
+
+  //   axios
+  //     .post(
+  //       "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/v1.0",
+  //       querystring.stringify({
+  //         country: this.state.country,
+  //         currency: this.state.currency,
+  //         locale: this.state.locale,
+  //         cabinClass: this.state.cabinClass,
+  //         adults: this.state.adults,
+  //         outboundDate: moment(this.state.outboundDate).format("YYYY-MM-DD"),
+  //         inboundDate: moment(this.state.inboundDate).format("YYYY-MM-DD"),
+  //         originPlace: this.state.originPlace + "-sky",
+  //         destinationPlace: this.state.destinationPlace + "-sky"
+  //       }),
+  //       postConfig
+  //     )
+  //     .then(response => {
+  //       let liveConfig = {
+  //         headers: {
+  //           "X-RapidAPI-Key":
+  //           process.env.REACT_APP_RAPID_API
+  //         }
+  //       };
+  //       let session = response.headers.location.split("/").pop(-1);
+  //       console.log(session, "this is the session")
+
+  //       this.pollPrices(500, 35000, session, liveConfig)
+  //         .then(res => {
+  //           console.log(res, "this is the handle click poll prices response")
+  //           if (res.data.Itineraries.length > 0) {
+  //             this.setState({
+  //               livePrice: res.data.Itineraries[0].PricingOptions[0].Price,
+  //               status: "The cheapest price:"
+  //             });
+  //           } else {
+  //             this.setState({
+  //               status: ""
+  //             });
+  //           }
+  //         })
+  //         .catch(function(response) {
+  //           console.log(response);
+  //         });
+  //     })
+  //     .catch(function(err) {
+  //       if (err.response.data.message.length > 0) {
+  //         var alert = document.querySelectorAll('.formStatus')[0]
+
+  //         var errorParam = err.response.data.ValidationErrors[0].ParameterName
+  //         var errorMessage = err.response.data.ValidationErrors[0].Message
+
+  //         var errorParamLong = errorParam.split(' ')
+  //         var errorMessageLong = errorMessage.split(' ')
+          
+  //         for (var i=0; i < params.length; i++) {
+  //           for (var j=0; j < errorParamLong.length; j++) {
+  //             if (params[i] === errorParamLong[j].toLowerCase()) {
+  //               errorParamLong[j] = replacements[i]
+  //             }
+  //           }
+  //           for (var f=0; f < errorMessageLong.length; f++) {
+  //             if (params[i] === errorMessageLong[f].toLowerCase()) {
+  //               errorMessageLong[f] = replacements[i]
+  //             }
+  //           }
+  //       }
+
+  //         var errorReString = errorParamLong.toString().replace(/,/g, " ")
+
+  //         alert.innerHTML = errorReString + ": " + err.response.data.ValidationErrors[0].Message
+  //       }
+  //     });
+  // }
 
   handleValueChange = event => {
     const name = event.target.name;
