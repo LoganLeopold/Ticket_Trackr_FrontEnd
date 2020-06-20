@@ -161,12 +161,6 @@ class FlightForm extends Component {
   handleClick(event) {
     event.preventDefault();
 
-    // var alert = document.querySelectorAll('.formStatus')[0]
-
-    // alert.innerHTML = "Main 3rd-party API deprecated; under redevelopment"
-    // alert.style.display = "flex"
-
-    // document.querySelectorAll('button[type="submit"]')[0].style.textDecoration = 'line-through'
     var update = document.querySelectorAll('.update')[0]
     var today = document.querySelectorAll('.today')[0]
 
@@ -354,7 +348,7 @@ class FlightForm extends Component {
             </Row>
 
             <Row>
-              <Col sm={12} md={4} lg={3} xl={3} className="inputBox ddate">
+              <Col sm={12} md={3} lg={3} xl={3} className="inputBox ddate">
                 <label>Departure Date</label>
                   <DateP
                     className='datepicker'
@@ -363,7 +357,7 @@ class FlightForm extends Component {
                     {...this.state}
                   />
               </Col>
-              <Col sm={12} md={4} lg={3} xl={3} className="inputBox rdate">
+              <Col sm={12} md={3} lg={3} xl={3} className="inputBox rdate">
                 <label>Return Date</label>
                   <DateP
                     className='datepicker'
@@ -372,7 +366,7 @@ class FlightForm extends Component {
                     {...this.state}
                   />
               </Col>
-              <Col sm={12} md={4} lg={3} xl={3} className="inputBox tier">
+              <Col sm={12} md={3} lg={3} xl={3} className="inputBox tier">
                 <label>Travel Tier</label>
                 <select
                   type="text"
@@ -386,7 +380,7 @@ class FlightForm extends Component {
                   <option value="first"> First </option>
                 </select>
               </Col>
-              <Col sm={12} md={12} lg={3} xl={3} className="inputBox passengers">
+              <Col sm={12} md={3} lg={3} xl={3} className="inputBox passengers">
                 <label>Passenger Count</label>
                 <select
                   type="text"
