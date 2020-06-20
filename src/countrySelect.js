@@ -47,12 +47,15 @@ class CountrySelect extends Component {
                   value={this.state.stateValue}
                   onChange={this.changes}
                 >
+                <option key="US" value="US">United States</option>
                   {iterateNames.map(country => {
-                    return (
-                      <option key={country.Code} value={country.Code}>
-                        {country.Name}
-                      </option>
-                    );
+                    if (country.Code !== "US") {
+                      return (
+                        <option key={country.Code} value={country.Code}>
+                          {country.Name}
+                        </option>
+                      );
+                    }
                   })}
                 </select>
 
