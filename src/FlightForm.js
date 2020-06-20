@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Row, Container, Col } from "reactstrap";
-import CountrySelect from "./CountrySelect"
+import CountrySelect from "./countrySelect"
 import DateP from "./Date";
 var querystring = require("querystring");
 var moment = require("moment");
