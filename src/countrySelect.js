@@ -7,7 +7,7 @@ class CountrySelect extends Component {
             stateValue: "US"
         };
         this.handleChange = this.handleChange.bind(this);
-        // this.componentDidUpdate = this.componentDidUpdate.bind(this);
+        this.componentDidUpdate = this.componentDidUpdate.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this)
         this.changes = this.changes.bind(this)
     }
@@ -19,7 +19,15 @@ class CountrySelect extends Component {
       }
 
     componentDidMount() {
-      console.log(this.props)
+      
+    }
+
+    componentDidUpdate() {
+      var UY = document.querySelectorAll('option[value="UY"]')[0]
+      var US = document.querySelectorAll('option[value="US"]')[0]
+      var select = document.querySelectorAll('select[name="country"]')[0]
+
+      select.insertBefore(US, UY)
     }
 
     changes(event) {
