@@ -10,18 +10,13 @@ class FlightForm extends Component {
   constructor() {
     super();
     this.state = {
-      cabinClass: "economy",
-      adults: "1",
-      outboundDate: "",
-      inboundDate: "",
-      originPlace: "IAD",
-      destinationPlace: "SFO",
-      country: "US",
-      currency: "USD",
-      locale: "en-US",
-      livePrice: "",
-      status: ""
+      originLocationCode: 'IAD',
+      destinationLocationCode: 'SFO',
+      departureDate: '',
+      returnDate: '', 
+      adults: '',
     };
+
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleChange = this.handleChange.bind(this);
     // this.handleClick = this.handleClick.bind(this);
@@ -159,119 +154,129 @@ class FlightForm extends Component {
   // }
 
   handleClick(event) {
-    event.preventDefault();
 
-    var update = document.querySelectorAll('.update')[0]
-    var today = document.querySelectorAll('.today')[0]
+    var postConfig = {
+      headers: {
+        "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API,
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    }
 
-    update.style.display = "flex"
-
-    today.innerHTML = '(' + moment(new Date()).format("MM-DD-YYYY") + ')'
+    axios.get('https://test.api.amadeus.com/v2/shopping/flight-offers', 
+      querystring.stringify({
+        originLocationCode: this.state.originLocationCode,
+        destinationLocationCode: this.state.destinationLocationCode,
+        departureDate: moment(this.state.departureDate).format("YYYY-MM-DD"),
+        returnDate: moment(this.state.returnDate).format("YYYY-MM-DD"),           
+        adults: this.state.adults,
+      }),
+      postConfig
+    )
 
   }
 
-  /* The following is temporarily commented out handleClick value */
-  //   var params = [
-  //     "cabinclass",
-  //     "adults",
-  //     "outbounddate",
-  //     "inbounddate",
-  //     "originplace",
-  //     "destinationplace",
-  //     "country",
-  //     "currency",
-  //     "locale",
-  //     "liveprice",
-  //     "status",
-  //   ]
+  // /* The following is temporarily commented out handleClick value */
+  // //   var params = [
+  // //     "cabinclass",
+  // //     "adults",
+  // //     "outbounddate",
+  // //     "inbounddate",
+  // //     "originplace",
+  // //     "destinationplace",
+  // //     "country",
+  // //     "currency",
+  // //     "locale",
+  // //     "liveprice",
+  // //     "status",
+  // //   ]
 
-  //   var replacements = [
-  //     "Cabin class",
-  //     "Adults",
-  //     "Outbound date",
-  //     "Inbound date",
-  //     "Origin place",
-  //     "Destination place",
-  //     "Country",
-  //     "Currency",
-  //     "Locale",
-  //     "Live price",
-  //     "Status",
-  //   ]
+  // //   var replacements = [
+  // //     "Cabin class",
+  // //     "Adults",
+  // //     "Outbound date",
+  // //     "Inbound date",
+  // //     "Origin place",
+  // //     "Destination place",
+  // //     "Country",
+  // //     "Currency",
+  // //     "Locale",
+  // //     "Live price",
+  // //     "Status",
+  // //   ]
 
-  //   var postConfig = {
-  //     headers: {
-  //       "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API,
-  //       "Content-Type": "application/x-www-form-urlencoded"
-  //     }
-  //   };
+  // //   var postConfig = {
+  // //     headers: {
+  // //       "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API,
+  // //       "Content-Type": "application/x-www-form-urlencoded"
+  // //     }
+  // //   };
 
-  //   axios
-  //     .post(
-  //       "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/v1.0",
-  //       querystring.stringify({
-  //         country: this.state.country,
-  //         currency: this.state.currency,
-  //         locale: this.state.locale,
-  //         cabinClass: this.state.cabinClass,
-  //         adults: this.state.adults,
-  //         outboundDate: moment(this.state.outboundDate).format("YYYY-MM-DD"),
-  //         inboundDate: moment(this.state.inboundDate).format("YYYY-MM-DD"),
-  //         originPlace: this.state.originPlace + "-sky",
-  //         destinationPlace: this.state.destinationPlace + "-sky"
-  //       }),
-  //       postConfig
-  //     )
-  //     .then(response => {
-  //       let liveConfig = {
-  //         headers: {
-  //           "X-RapidAPI-Key":
-  //           process.env.REACT_APP_RAPID_API
-  //         }
-  //       };
-  //       let session = response.headers.location.split("/").pop(-1);
-  //       console.log(session, "this is the session")
+  // //   axios
+  // //     .post(
+  // //       "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/v1.0",
+  // //       querystring.stringify({
+  // //         country: this.state.country,
+  // //         currency: this.state.currency,
+  // //         locale: this.state.locale,
+  // //         cabinClass: this.state.cabinClass,
+  // //         adults: this.state.adults,
+  // //         outboundDate: moment(this.state.outboundDate).format("YYYY-MM-DD"),
+  // //         inboundDate: moment(this.state.inboundDate).format("YYYY-MM-DD"),
+  // //         originPlace: this.state.originPlace + "-sky",
+  // //         destinationPlace: this.state.destinationPlace + "-sky"
+  // //       }),
+  // //       postConfig
+  // //     )
+  // //     .then(response => {
+  // //       let liveConfig = {
+  // //         headers: {
+  // //           "X-RapidAPI-Key":
+  // //           process.env.REACT_APP_RAPID_API
+  // //         }
+  // //       };
+  // //       let session = response.headers.location.split("/").pop(-1);
+  // //       console.log(session, "this is the session")
 
-  //       this.pollPrices(500, 35000, session, liveConfig)
-  //         .then(res => {
-  //           console.log(res, "this is the handle click poll prices response")
-  //           if (res.data.Itineraries.length > 0) {
-  //             this.setState({
-  //               livePrice: res.data.Itineraries[0].PricingOptions[0].Price,
-  //               status: "The cheapest price:"
-  //             });
-  //           } else {
-  //             this.setState({
-  //               status: ""
-  //             });
-  //           }
-  //         })
-  //         .catch(function(response) {
-  //           console.log(response);
-  //         });
-  //     })
-  //     .catch(function(err) {
-  //       if (err.response.data.message.length > 0) {
-  //         var alert = document.querySelectorAll('.formStatus')[0]
+  // //       this.pollPrices(500, 35000, session, liveConfig)
+  // //         .then(res => {
+  // //           console.log(res, "this is the handle click poll prices response")
+  // //           if (res.data.Itineraries.length > 0) {
+  // //             this.setState({
+  // //               livePrice: res.data.Itineraries[0].PricingOptions[0].Price,
+  // //               status: "The cheapest price:"
+  // //             });
+  // //           } else {
+  // //             this.setState({
+  // //               status: ""
+  // //             });
+  // //           }
+  // //         })
+  // //         .catch(function(response) {
+  // //           console.log(response);
+  // //         });
+  // //     })
+  // //     .catch(function(err) {
+  // //       if (err.response.data.message.length > 0) {
+  // //         var alert = document.querySelectorAll('.formStatus')[0]
 
-  //         var errorParam = err.response.data.ValidationErrors[0].ParameterName
-  //         var errorMessage = err.response.data.ValidationErrors[0].Message
+  // //         var errorParam = err.response.data.ValidationErrors[0].ParameterName
+  // //         var errorMessage = err.response.data.ValidationErrors[0].Message
 
-  //         var errorParamLong = errorParam.split(' ')
-  //         var errorMessageLong = errorMessage.split(' ')
+  // //         var errorParamLong = errorParam.split(' ')
+  // //         var errorMessageLong = errorMessage.split(' ')
           
-  //         for (var i=0; i < params.length; i++) {
-  //           for (var j=0; j < errorParamLong.length; j++) {
-  //             if (params[i] === errorParamLong[j].toLowerCase()) {
-  //               errorParamLong[j] = replacements[i]
-  //             }
-  //           }
-  //           for (var f=0; f < errorMessageLong.length; f++) {
-  //             if (params[i] === errorMessageLong[f].toLowerCase()) {
-  //               errorMessageLong[f] = replacements[i]
-  //             }
-  //           }
-  //       }
+  // //         for (var i=0; i < params.length; i++) {
+  // //           for (var j=0; j < errorParamLong.length; j++) {
+  // //             if (params[i] === errorParamLong[j].toLowerCase()) {
+  // //               errorParamLong[j] = replacements[i]
+  // //             }
+  // //           }
+  // //           for (var f=0; f < errorMessageLong.length; f++) {
+  // //             if (params[i] === errorMessageLong[f].toLowerCase()) {
+  // //               errorMessageLong[f] = replacements[i]
+  // //             }
+  // //           }
+  // //       }
 
   //         var errorReString = errorParamLong.toString().replace(/,/g, " ")
 
@@ -318,18 +323,15 @@ class FlightForm extends Component {
         <form action="">
           <Container>
             <Row>
-              <Col sm={12} md={6} lg={6} xl={6} className="inputBox">
-                <CountrySelect name="country" {...this.props} {...this.state} valueUp={this.handleCountryValueChange}/>
-              </Col>
               <Col sm={12} md={3} lg={3} xl={3} className="inputBox dport">
                 <label>Departure Airport Code</label>
                 <input
                   type="text"
-                  name="originPlace"
-                  defaultValue={this.state.originPlace}
+                  name="originLocationCode"
+                  defaultValue={this.state.originLocationCode}
                   onChange={this.handleChange}
                   style={{
-                    width: this.state.originPlace.length + 'em'
+                    width: this.state.originLocationCode.length + 'em'
                   }}
                 />
               </Col>
@@ -337,17 +339,14 @@ class FlightForm extends Component {
                 <label>Arrival Airport Code</label>
                 <input
                   type="text"
-                  name="destinationPlace"
-                  defaultValue={this.state.destinationPlace}
+                  name="destinationLocationCode"
+                  defaultValue={this.state.destinationLocationCode}
                   onChange={this.handleChange}
                   style={{
-                    width: this.state.destinationPlace.length + 'em'
+                    width: this.state.destinationLocationCode.length + 'em'
                   }}
                 />
               </Col>
-            </Row>
-
-            <Row>
               <Col sm={12} md={3} lg={3} xl={3} className="inputBox ddate">
                 <label>Departure Date</label>
                   <DateP
@@ -366,21 +365,7 @@ class FlightForm extends Component {
                     {...this.state}
                   />
               </Col>
-              <Col sm={12} md={3} lg={3} xl={3} className="inputBox tier">
-                <label>Travel Tier</label>
-                <select
-                  type="text"
-                  name="cabinClass"
-                  value={this.state.cabinClass}
-                  onChange={this.handleValueChange}
-                >
-                  <option value="economy"> Economy </option>
-                  <option value="premiumeconomy"> Premium Economy </option>
-                  <option value="business"> Business </option>
-                  <option value="first"> First </option>
-                </select>
-              </Col>
-              <Col sm={12} md={3} lg={3} xl={3} className="inputBox passengers">
+              <Col sm={12} md={2} lg={2} xl={2} className="inputBox passengers">
                 <label>Passenger Count</label>
                 <select
                   type="text"
@@ -394,6 +379,10 @@ class FlightForm extends Component {
                 </select>
               </Col>
             </Row>
+
+            {/* <Row>
+ 
+            </Row> */}
 
             <Row>
               <Col sm={12} md={6} lg={6} xl={6} className="formButton">
