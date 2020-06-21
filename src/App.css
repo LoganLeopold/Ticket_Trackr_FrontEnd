@@ -151,6 +151,10 @@ form {
   justify-content: flex-end;
 }
 
+.inputBox > input {
+  box-shadow: 5px 5px 9px rgba(0,0,0, 0.20);
+}
+
 button {
   background: #3BCEAC;
   border-radius: 25px;
@@ -188,7 +192,8 @@ h2 {
 }
 
 .formSubmit {
-  margin-top: 10px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 label {
@@ -247,11 +252,13 @@ select {
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;  
-  border: 3px solid #3BCEAC
+  border: 3px solid #3BCEAC;
+  box-shadow: 5px 5px 9px rgba(0,0,0, 0.20);
 }
 
 .react-datepicker-wrapper {
   display: flex;
+  box-shadow: 5px 5px 9px rgba(0,0,0, 0.20);
 }
 
 .react-datepicker__input-container {
@@ -277,9 +284,9 @@ select {
     padding: 0 0 50px 0;
   }
 
-  .formStatus {
+  /* .formStatus {
     margin-top: 30px;
-  }
+  } */
 }
 
 

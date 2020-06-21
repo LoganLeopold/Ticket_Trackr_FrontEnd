@@ -10,8 +10,6 @@ class FlightForm extends Component {
   constructor() {
     super();
     this.state = {
-      // cabinClass: "economy",
-      // adults: "1",
       outboundDate: "",
       inboundDate: "",
       originPlace: "IAD",
@@ -32,7 +30,6 @@ class FlightForm extends Component {
   }
 
   componentDidMount() {
-    console.log("FlightForm mounted");
 
     // Establish two current local times and the day value of the Date objects
     var today = new Date()
@@ -59,118 +56,16 @@ class FlightForm extends Component {
     if (todayDay < todayBritainDay) {
       today.setHours(today.getHours() + offset)
     }
+
+    this.setState({
+      inboundDate: today,
+      outboundDate: today
+    })
     
   }
 
-  // componentDidUpdate() {
-  //   var livePriceDisplay;
-  //   if (this.state.livePrice.length > 0) {
-  //     this.props.livePriceDisplay = "block"
-  //   } else {
-  //     this.props.livePriceDisplay = "none"
-  //   }
-  // }
-
-  // pollPrices(interval, timeout, key, config) {
-  //   this.setState({
-  //     status: "Searching"
-  //   });
-
-  //   var statuses = document.querySelectorAll("H2")
-  //   statuses[0].style.display = "block"
-  //   statuses[1].style.display = "none"
-
-  //   var count = 0;
-  //   var searching = setInterval( () => {
-  //     if (count === 0) {
-  //       this.setState({
-  //         status: "Searching."
-  //       })
-  //       count++
-  //     } else if (count===1) {
-  //       this.setState({
-  //         status: "Searching.."
-  //       })
-  //       count++
-  //     } else {
-  //       this.setState({
-  //         status: "Searching..."
-  //       })
-  //       count = 0;
-  //     }
-  //   }, 500)
-
-  //   function stopSearching () {
-  //     console.log("Stop searching fired")
-  //     clearInterval(searching);
-  //   }
-
-  //   console.log("Poll fired");
-    
-  //   let start = Date.now();
-
-  //   function startPoll() {
-  //     return axios
-  //       .get(
-  //         `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/uk2/v1.0/${key}/?sortType=price&sortOrder=asc&pageIndex=0`,
-  //         config
-  //       )
-  //       .then(res => {
-  //         function delay(t) {
-  //           return new Promise(function(resolve) {
-  //             setTimeout(resolve, t);
-  //           });
-  //         }
-
-  //         if (res.data.Status === "UpdatesPending") {
-  //           console.log("UPdatespending")
-
-  //           if (
-  //             timeout !== 0 &&
-  //             Date.now() - start > timeout &&
-  //             res.data.Itineraries !== undefined
-  //           ) {
-  //             return res;
-  //           } else if (
-  //             timeout !== 0 &&
-  //             Date.now() - start > timeout &&
-  //             res.data.Itineraries === undefined
-  //           ) {
-  //             return new Error("timeout error on pollPrices");
-  //           } else {
-  //             return delay(interval).then(startPoll);
-  //           }
-  //         } 
-          
-  //         else if (res.data.Status === "UpdatesComplete") {
-  //           stopSearching();
-  //           if (res.data.Itineraries.length > 0) {
-  //             statuses[1].style.display = "block"
-  //             return res;
-  //           } else if (res.data.Itineraries <= 0) {
-  //             this.setState({
-  //               status: "Sorry - no routes are available on this itinierary. Try pushing your departure date out a bit further."
-  //             })
-  //           }
-  //         }
-  //       });
-  //   }
-    
-  //   return startPoll();
-  // }
-
   handleClick(event) {
     event.preventDefault()
-
-    // console.log(process.env.REACT_APP_RAPID_API)
-
-    // axios.get(
-    //   "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0", 
-    //   {params}, 
-    //   postConfig,
-    // )
-    // .then( function(response) {console.log(response)})
-    // .catch( err => console.log(err))
 
     axios({
       method: 'GET',
@@ -185,90 +80,27 @@ class FlightForm extends Component {
         inboundpartialdate: moment(this.state.inboundDate).format("YYYY-MM-DD")
       }
     })
-    .then( response => console.log(response.data.Quotes))
+    .then( function(response) {
+      var alert = document.querySelectorAll('.formStatus')[0];
+      var priceDisplay = document.querySelectorAll('.formSubmit')[0];
+      if (response.data.Quotes.length === 0) {
+        alert.innerHTML = "There are no results on this itinerary. Try pushing out your outbound date a bit further."
+        alert.style.display = "block"
+      } else {
+        var price = response.data.Quotes[0].MinPrice; 
+        for (var i=0; i < response.data.Quotes.length; i++) {
+          if (response.data.Quotes[i].MinPrice < price) {
+            price = response.data.Quotes[i].MinPrice;
+          }
+        }
+        priceDisplay.innerHTML = price;
+        alert.style.display = 'none';
+        priceDisplay.style.display = 'block';
+      }
+    })
     .catch( err => console.log(err))
   }
 
-  /* The following is temporarily commented out handleClick value */
-  //   var params = [
-  //     "cabinclass",
-  //     "adults",
-  //     "outbounddate",
-  //     "inbounddate",
-  //     "originplace",
-  //     "destinationplace",
-  //     "country",
-  //     "currency",
-  //     "locale",
-  //     "liveprice",
-  //     "status",
-  //   ]
-
-  //   var replacements = [
-  //     "Cabin class",
-  //     "Adults",
-  //     "Outbound date",
-  //     "Inbound date",
-  //     "Origin place",
-  //     "Destination place",
-  //     "Country",
-  //     "Currency",
-  //     "Locale",
-  //     "Live price",
-  //     "Status",
-  //   ]
-
-  //   var postConfig = {
-  //     headers: {
-  //       "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API,
-  //       "Content-Type": "application/x-www-form-urlencoded"
-  //     }
-  //   };
-
-  //   axios
-  //     .post(
-  //       "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/v1.0",
-  //       querystring.stringify({
-  //         country: this.state.country,
-  //         currency: this.state.currency,
-  //         locale: this.state.locale,
-  //         cabinClass: this.state.cabinClass,
-  //         adults: this.state.adults,
-  //         outboundDate: moment(this.state.outboundDate).format("YYYY-MM-DD"),
-  //         inboundDate: moment(this.state.inboundDate).format("YYYY-MM-DD"),
-  //         originPlace: this.state.originPlace + "-sky",
-  //         destinationPlace: this.state.destinationPlace + "-sky"
-  //       }),
-  //       postConfig
-  //     )
-  //     .then(response => {
-  //       let liveConfig = {
-  //         headers: {
-  //           "X-RapidAPI-Key":
-  //           process.env.REACT_APP_RAPID_API
-  //         }
-  //       };
-  //       let session = response.headers.location.split("/").pop(-1);
-  //       console.log(session, "this is the session")
-
-  //       this.pollPrices(500, 35000, session, liveConfig)
-  //         .then(res => {
-  //           console.log(res, "this is the handle click poll prices response")
-  //           if (res.data.Itineraries.length > 0) {
-  //             this.setState({
-  //               livePrice: res.data.Itineraries[0].PricingOptions[0].Price,
-  //               status: "The cheapest price:"
-  //             });
-  //           } else {
-  //             this.setState({
-  //               status: ""
-  //             });
-  //           }
-  //         })
-  //         .catch(function(response) {
-  //           console.log(response);
-  //         });
-  //     })
   //     .catch(function(err) {
   //       if (err.response.data.message.length > 0) {
   //         var alert = document.querySelectorAll('.formStatus')[0]
@@ -319,9 +151,6 @@ class FlightForm extends Component {
     this.setState({
       country: name.value
     })
-
-    console.log(name.value)
-
   };
 
   handleChange(name, value) {
@@ -415,14 +244,14 @@ class FlightForm extends Component {
             </Row>
 
             <Row>
-              <Col sm={12} md={6} lg={6} xl={6} className="formButton">
+              <Col sm={6} md={6} lg={6} xl={6} className="formButton">
                 <div className="subButton">
                   <button type="submit" onClick={this.handleClick}>
                     FIND ROUTES
                   </button>
                 </div>
               </Col>
-              <Col sm={12} md={6} lg={6} xl={6} className="d-flex flex-column">
+              <Col sm={6} md={6} lg={6} xl={6} className="d-flex flex-column">
                 <h2 className="formStatus"> {this.state.status}</h2>
                 <h2 className="formSubmit">{this.state.livePrice}</h2>
               </Col>
