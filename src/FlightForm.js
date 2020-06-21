@@ -213,14 +213,14 @@ class FlightForm extends Component {
             </Row>
 
             <Row>
-              <Col sm={6} md={6} lg={6} xl={6} className="formButton">
+              <Col sm={12} md={4} lg={4} xl={4} className="formButton">
                 <div className="subButton">
                   <button type="submit" onClick={this.handleClick}>
                     FIND ROUTES
                   </button>
                 </div>
               </Col>
-              <Col sm={6} md={6} lg={6} xl={6} className="d-flex flex-column">
+              <Col sm={12} md={8} lg={8} xl={8} className="d-flex flex-column">
                 <h2 className="formStatus"> {this.state.status}</h2>
                 <h2 className="formSubmit">{this.state.livePrice}</h2>
               </Col>
