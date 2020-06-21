@@ -25,7 +25,6 @@ class FlightForm extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleValueChange = this.handleValueChange.bind(this);
-    // this.pollPrices = this.pollPrices.bind(this);
     this.handleCountryValueChange = this.handleCountryValueChange.bind(this)
   }
 
@@ -93,43 +92,13 @@ class FlightForm extends Component {
             price = response.data.Quotes[i].MinPrice;
           }
         }
-        priceDisplay.innerHTML = price;
+        priceDisplay.innerHTML = 'Lowest price: $' + price;
         alert.style.display = 'none';
         priceDisplay.style.display = 'block';
       }
     })
     .catch( err => console.log(err))
   }
-
-  //     .catch(function(err) {
-  //       if (err.response.data.message.length > 0) {
-  //         var alert = document.querySelectorAll('.formStatus')[0]
-
-  //         var errorParam = err.response.data.ValidationErrors[0].ParameterName
-  //         var errorMessage = err.response.data.ValidationErrors[0].Message
-
-  //         var errorParamLong = errorParam.split(' ')
-  //         var errorMessageLong = errorMessage.split(' ')
-          
-  //         for (var i=0; i < params.length; i++) {
-  //           for (var j=0; j < errorParamLong.length; j++) {
-  //             if (params[i] === errorParamLong[j].toLowerCase()) {
-  //               errorParamLong[j] = replacements[i]
-  //             }
-  //           }
-  //           for (var f=0; f < errorMessageLong.length; f++) {
-  //             if (params[i] === errorMessageLong[f].toLowerCase()) {
-  //               errorMessageLong[f] = replacements[i]
-  //             }
-  //           }
-  //       }
-
-  //         var errorReString = errorParamLong.toString().replace(/,/g, " ")
-
-  //         alert.innerHTML = errorReString + ": " + err.response.data.ValidationErrors[0].Message
-  //       }
-  //     });
-  // }
 
   handleValueChange = event => {
     const name = event.target.name;
@@ -169,7 +138,10 @@ class FlightForm extends Component {
               <Col sm={12} md={6} lg={6} xl={6} className="inputBox">
                 <CountrySelect name="country" {...this.props} {...this.state} valueUp={this.handleCountryValueChange}/>
               </Col>
-              <Col sm={12} md={3} lg={3} xl={3} className="inputBox dport">
+            </Row>
+
+            <Row>
+            <Col sm={12} md={3} lg={3} xl={3} className="inputBox dport">
                 <label>Departure Airport Code</label>
                 <input
                   type="text"
@@ -193,9 +165,6 @@ class FlightForm extends Component {
                   }}
                 />
               </Col>
-            </Row>
-
-            <Row>
               <Col sm={12} md={3} lg={3} xl={3} className="inputBox ddate">
                 <label>Departure Date</label>
                   <DateP
@@ -213,33 +182,6 @@ class FlightForm extends Component {
                     handleChange={this.handleChange}
                     {...this.state}
                   />
-              </Col>
-              <Col sm={12} md={3} lg={3} xl={3} className="inputBox tier">
-                <label>Travel Tier</label>
-                <select
-                  type="text"
-                  name="cabinClass"
-                  value={this.state.cabinClass}
-                  onChange={this.handleValueChange}
-                >
-                  <option value="economy"> Economy </option>
-                  <option value="premiumeconomy"> Premium Economy </option>
-                  <option value="business"> Business </option>
-                  <option value="first"> First </option>
-                </select>
-              </Col>
-              <Col sm={12} md={3} lg={3} xl={3} className="inputBox passengers">
-                <label>Passenger Count</label>
-                <select
-                  type="text"
-                  name="adults"
-                  value={this.state.adults}
-                  onChange={this.handleValueChange}
-                >
-                  <option value="1"> 1 </option>
-                  <option value="2"> 2 </option>
-                  <option value="3"> 3 </option>
-                </select>
               </Col>
             </Row>
 
