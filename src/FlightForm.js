@@ -24,8 +24,9 @@ class FlightForm extends Component {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.handleValueChange = this.handleValueChange.bind(this);
+    // this.handleValueChange = this.handleValueChange.bind(this);
     this.handleCountryValueChange = this.handleCountryValueChange.bind(this)
+    this.handleInput = this.handleInput.bind(this)
   }
 
   componentDidMount() {
@@ -66,6 +67,23 @@ class FlightForm extends Component {
   handleClick(event) {
     event.preventDefault()
 
+    var params = {
+      OutboundDate: "Departure Date",
+      InboundDate: "Return Date",
+      OriginPlace: "Departure Airport Code",
+      DestinationPlace: "Arrival Airport Code",
+    }
+
+    document.querySelectorAll('.formSubmit')[0].style.display = "none"
+    
+    var alert = document.querySelectorAll('.formStatus')[0];
+
+    if (Date.parse(this.state.inboundDate) < Date.parse(this.state.outboundDate)) {
+      alert.innerHTML = "Sorry - your return date is before your departure. Adjust and try again."
+      alert.style.display = "block"
+      return
+    }
+
     axios({
       method: 'GET',
       url: `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/${this.state.originPlace}/${this.state.destinationPlace}/${moment(this.state.outboundDate).format("YYYY-MM-DD")}`,
@@ -97,22 +115,12 @@ class FlightForm extends Component {
         priceDisplay.style.display = 'block';
       }
     })
-    .catch( err => console.log(err))
+    .catch(function(err) {
+      err.response.data.ValidationErrors.forEach(error =>  alert.innerHTML = params[error.ParameterName] + ': ' + error.Message + ". <br />");
+      alert.innerHTML += "Adjust these errors and try again."
+      alert.style.display = "block";
+    })
   }
-
-  handleValueChange = event => {
-    const name = event.target.name;
-    this.setState(
-      {
-        value: event.target.value
-      },
-      () => {
-        this.setState({
-          [name]: this.state.value
-        });
-      }
-    );
-  };
 
   // For countrySelect
   handleCountryValueChange = function(event) {
@@ -122,9 +130,26 @@ class FlightForm extends Component {
     })
   };
 
+  // For DatePicker
   handleChange(name, value) {
     this.setState({
       [name]: value
+    }, 
+    function () {
+          var inbound = this.state.inboundDate
+      
+          if (name === "outboundDate" && Date.parse(inbound) < Date.parse(value)) {
+            this.setState({
+              inboundDate: value
+            })
+          }
+    });
+  }
+
+  // For normal text input
+  handleInput(event) {
+    this.setState({
+      [event.target.name]: event.target.value
     });
   }
 
@@ -141,13 +166,13 @@ class FlightForm extends Component {
             </Row>
 
             <Row>
-            <Col sm={12} md={3} lg={3} xl={3} className="inputBox dport">
+              <Col sm={12} md={3} lg={3} xl={3} className="inputBox dport">
                 <label>Departure Airport Code</label>
                 <input
                   type="text"
                   name="originPlace"
                   defaultValue={this.state.originPlace}
-                  onChange={this.handleChange}
+                  onChange={this.handleInput}
                   style={{
                     width: this.state.originPlace.length + 'em'
                   }}
@@ -159,7 +184,7 @@ class FlightForm extends Component {
                   type="text"
                   name="destinationPlace"
                   defaultValue={this.state.destinationPlace}
-                  onChange={this.handleChange}
+                  onChange={this.handleInput}
                   style={{
                     width: this.state.destinationPlace.length + 'em'
                   }}
@@ -171,6 +196,7 @@ class FlightForm extends Component {
                     className='datepicker'
                     fieldName="outboundDate"
                     handleChange={this.handleChange}
+                    {...this.renderProps}
                     {...this.state}
                   />
               </Col>
@@ -180,6 +206,7 @@ class FlightForm extends Component {
                     className='datepicker'
                     fieldName="inboundDate"
                     handleChange={this.handleChange}
+                    {...this.props}
                     {...this.state}
                   />
               </Col>

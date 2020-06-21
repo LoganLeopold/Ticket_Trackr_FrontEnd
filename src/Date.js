@@ -10,10 +10,13 @@ class DateP extends React.Component {
       startDate: new Date()
     };
     this.handleChange = this.handleChange.bind(this);
+    // this.componentDidUpdate = this.componentDidUpdate.bind(this)
     this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   componentDidMount() {
+
+    console.log("DATE MOUNTED BRO")
 
       // Establish two current local times and the day value of the Date objects
       var today = new Date()
@@ -54,6 +57,14 @@ class DateP extends React.Component {
 
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.fieldName === "inboundDate" && this.props.inboundDate !== prevProps.inboundDate) {
+      this.setState({
+        startDate: this.props.inboundDate
+      })
+    }
+  }
+
   handleChange = date => {
 
     this.setState(
@@ -67,7 +78,7 @@ class DateP extends React.Component {
   };
 
   render() {
-    console.log("Date rendered boi");
+
     return (
       
         <DatePicker

@@ -203,6 +203,8 @@ h2:nth-child(2) {
 .formSubmit {
   margin-top: auto;
   margin-bottom: auto;
+  justify-content: center;
+  align-items: center;
 }
 
 label {
@@ -247,13 +249,13 @@ input, select, button, h2, button:not(:disabled), [type="button"]:not(:disabled)
 
 .row:last-child {
   margin: 50px 0 0 0;
-  flex-direction: column;
+  /* flex-direction: column; */
 }
 
 .formButton {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
 }
 
 select {
@@ -288,10 +290,10 @@ select {
 .customInput {
   max-width: 100%;
 }
-
+/* 
 .flex-column {
   margin-top: 20px;
-}
+} */
 
 @media (max-width: 768px) {
 
@@ -305,11 +307,16 @@ select {
 
   .row:last-child {    
     padding: 0 0 50px 0;
-    align-items: center;
+    margin-top: 40px;
+    align-items: flex-start;
   }
 
   .formButton {
     justify-content: center;
+  }
+
+  .flex-column {
+    margin-top: 20px;
   }
 }
 
