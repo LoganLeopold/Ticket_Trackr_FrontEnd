@@ -159,14 +159,30 @@ class FlightForm extends Component {
   // }
 
   handleClick(event) {
-    event.preventDefault();
 
-    var update = document.querySelectorAll('.update')[0]
-    var today = document.querySelectorAll('.today')[0]
+    var postConfig = {
+      headers: {
+        "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API,
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    };
 
-    update.style.display = "flex"
-
-    today.innerHTML = '(' + moment(new Date()).format("MM-DD-YYYY") + ')'
+    axios.post(
+      "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0",
+      querystring.stringify({
+        country: this.state.country,
+        currency: this.state.currency,
+        locale: this.state.locale,
+        cabinClass: this.state.cabinClass,
+        adults: this.state.adults,
+        outboundDate: moment(this.state.outboundDate).format("YYYY-MM-DD"),
+        inboundDate: moment(this.state.inboundDate).format("YYYY-MM-DD"),
+        originPlace: this.state.originPlace + "-sky",
+        destinationPlace: this.state.destinationPlace + "-sky"
+      }),
+      postConfig
+    )
+    .then( function(response) {console.log(response)})
 
   }
 
