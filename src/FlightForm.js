@@ -10,8 +10,8 @@ class FlightForm extends Component {
   constructor() {
     super();
     this.state = {
-      cabinClass: "economy",
-      adults: "1",
+      // cabinClass: "economy",
+      // adults: "1",
       outboundDate: "",
       inboundDate: "",
       originPlace: "IAD",
@@ -22,9 +22,10 @@ class FlightForm extends Component {
       livePrice: "",
       status: ""
     };
+
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.handleValueChange = this.handleValueChange.bind(this);
     // this.pollPrices = this.pollPrices.bind(this);
     this.handleCountryValueChange = this.handleCountryValueChange.bind(this)
@@ -159,31 +160,33 @@ class FlightForm extends Component {
   // }
 
   handleClick(event) {
+    event.preventDefault()
 
-    var postConfig = {
+    // console.log(process.env.REACT_APP_RAPID_API)
+
+    // axios.get(
+    //   "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0", 
+    //   {params}, 
+    //   postConfig,
+    // )
+    // .then( function(response) {console.log(response)})
+    // .catch( err => console.log(err))
+
+    axios({
+      method: 'GET',
+      url: `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/${this.state.originPlace}/${this.state.destinationPlace}/${moment(this.state.outboundDate).format("YYYY-MM-DD")}`,
       headers: {
         "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API,
-        "Content-Type": "application/x-www-form-urlencoded"
+        "content-type":"application/octet-stream",
+        "x-rapidapi-host":"skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
+        "useQueryString": true,
+      },
+      params: {
+        inboundpartialdate: moment(this.state.inboundDate).format("YYYY-MM-DD")
       }
-    };
-
-    axios.post(
-      "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0",
-      querystring.stringify({
-        country: this.state.country,
-        currency: this.state.currency,
-        locale: this.state.locale,
-        cabinClass: this.state.cabinClass,
-        adults: this.state.adults,
-        outboundDate: moment(this.state.outboundDate).format("YYYY-MM-DD"),
-        inboundDate: moment(this.state.inboundDate).format("YYYY-MM-DD"),
-        originPlace: this.state.originPlace + "-sky",
-        destinationPlace: this.state.destinationPlace + "-sky"
-      }),
-      postConfig
-    )
-    .then( function(response) {console.log(response)})
-
+    })
+    .then( response => console.log(response.data.Quotes))
+    .catch( err => console.log(err))
   }
 
   /* The following is temporarily commented out handleClick value */
