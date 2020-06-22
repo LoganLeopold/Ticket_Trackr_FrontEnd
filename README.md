@@ -10,7 +10,7 @@ Current Build Front End:
 React + Reactstrap + Axios + Surge
 
 Current Build Back End:
-Python/Django + Heroku
+Python/Django + Postgres(via Heroku) + Heroku 
 
 ## Current Iteration
 
