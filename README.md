@@ -6,33 +6,24 @@ For this project my two goals were to really 1) have something functional on a t
 
 ## Technologies Used
 
-Current Build:
-React + Axios + Reactstrap
+Current Build Front End:
+React + Reactstrap + Axios + Surge
 
-Developing Build: 
-React + Axios + Python/Django + Reactstrap
+Current Build Back End:
+Python/Django + Heroku
 
 ## Current Iteration
 
-I found a live-pricing API by SkyScanner made available through RapidAPI ([found here]). 
-
-The current live version of the application is a React app that makes a call to this API with axios and displays the live pricing data provided by SkyScanner. In addition, another SkyScanner API is used to populate a list of countries for a search parameter dropdown list. The price is displayed if one is found or the user is alerted if there is an error.  
+Older versions of this project used the now deprecated Rapid API access for Skyscanner's live prices API. That was a very fun API to use and employ successfully. Now the project uses their cached quotes API to pull from their cache of pricing data.  
 
 ## Further Development
 
-There is a great deal of further development to be done here. First of all, the full-fledged version will have a backend in Python/Django so I can display the live-pricing on routes the user has saved and they can continuously track desired routes. I already have the backend retrieving from the API.
+-The user layer is the next goal. With the live pricing API, I was going to save search parameters for a search so the user could pull back up old searches and see how the prices have changed/monitor prices over time and pounce at the right moment (hypothetically - this was and remains an experimental project). That can still work with the cached quotes API I'm using now, but likely won't be as dynamic or thorough a data set. 
 
-There's a copule sore spots that I ran into during development that I want to tackle even before that though:
-
--Firstly, I want to accomplish efficient suggestive search. This is the next step after I finish up database configuration. The good news is that I already have lots of Django documentation under my belt and a backend architecture already well-founded. I think this will be huge for when users are choosing their airports, and I want to dig deeper into handling large data sets (there are roughly 16,000 airports in the SkyScanner database).
-
--Secondly, a more simple issue is making sure the user has a good indication that the API is still polling. Right now there is a crude solution, but I know there's a simple fix out there for communicating continuation of search efforts to the user. 
-
--Finally, I am nowhere near satisfied with the design of the site. I will be continuously working on the visual quality of all the site's design.
+-I'd love to dive deeper into suggestive search. I'd employ a from-scratch solution to populate airport names in the flight search form (drawing from a database generated and cached from another API somewhere).
 
 ## Installation
 
 It should be straightforward - I used NPM to handle my package management so a simple NPM install ought to do the trick! 
 
 [Scott's Cheap Flights]: https://scottscheapflights.com/
-[found here]: https://rapidapi.com/skyscanner/api/skyscanner-flight-search
