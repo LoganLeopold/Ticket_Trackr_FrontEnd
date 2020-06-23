@@ -4,7 +4,7 @@ class CountrySelect extends Component {
     constructor(){
         super();
         this.state = {
-            stateValue: "US"
+            stateValue: "Loading"
         };
         this.handleChange = this.handleChange.bind(this);
         this.componentDidUpdate = this.componentDidUpdate.bind(this);
@@ -23,11 +23,8 @@ class CountrySelect extends Component {
     }
 
     componentDidUpdate() {
-      var UY = document.querySelectorAll('option[value="UY"]')[0]
-      var US = document.querySelectorAll('option[value="US"]')[0]
       var select = document.querySelectorAll('select[name="country"]')[0]
-
-      select.insertBefore(US, UY)
+      select.value = "US"
     }
 
     changes(event) {
@@ -55,15 +52,15 @@ class CountrySelect extends Component {
                   value={this.state.stateValue}
                   onChange={this.changes}
                 >
-                <option key="US" value="US">United States</option>
+                <option key="US" value="Loading">Countries loading...</option>
                   {iterateNames.map(country => {
-                    if (country.Code !== "US") {
+                    // if (country.Code !== "US") {
                       return (
                         <option key={country.Code} value={country.Code}>
                           {country.Name}
                         </option>
                       );
-                    }
+                    // }
                   })}
                 </select>
 
