@@ -8,7 +8,7 @@ class CountrySelect extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.componentDidUpdate = this.componentDidUpdate.bind(this);
-        this.componentDidMount = this.componentDidMount.bind(this)
+        // this.componentDidMount = this.componentDidMount.bind(this)
         this.changes = this.changes.bind(this)
     }
 
@@ -17,10 +17,6 @@ class CountrySelect extends Component {
           stateValue: evt.target.value
         });
       }
-
-    componentDidMount() {
-      
-    }
 
     componentDidUpdate() {
       var select = document.querySelectorAll('select[name="country"]')[0]
@@ -54,13 +50,11 @@ class CountrySelect extends Component {
                 >
                 <option key="US" value="Loading">Countries loading...</option>
                   {iterateNames.map(country => {
-                    // if (country.Code !== "US") {
                       return (
                         <option key={country.Code} value={country.Code}>
                           {country.Name}
                         </option>
                       );
-                    // }
                   })}
                 </select>
 

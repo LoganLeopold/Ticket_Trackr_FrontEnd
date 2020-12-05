@@ -80,7 +80,7 @@ class FlightForm extends Component {
 
     if (Date.parse(this.state.inboundDate) < Date.parse(this.state.outboundDate)) {
       alert.innerHTML = "Sorry - your return date is before your departure. Adjust and try again."
-      alert.style.display = "block"
+      alert.style.display = "flex"
       return
     }
 
@@ -102,7 +102,7 @@ class FlightForm extends Component {
       var priceDisplay = document.querySelectorAll('.formSubmit')[0];
       if (response.data.Quotes.length === 0) {
         alert.innerHTML = "There are no results on this itinerary. Try pushing out your outbound date a bit further."
-        alert.style.display = "block"
+        alert.style.display = "flex"
       } else {
         var price = response.data.Quotes[0].MinPrice; 
         for (var i=0; i < response.data.Quotes.length; i++) {
@@ -112,13 +112,13 @@ class FlightForm extends Component {
         }
         priceDisplay.innerHTML = 'Lowest price: $' + price;
         alert.style.display = 'none';
-        priceDisplay.style.display = 'block';
+        priceDisplay.style.display = 'flex';
       }
     })
     .catch(function(err) {
       err.response.data.ValidationErrors.forEach(error =>  alert.innerHTML = params[error.ParameterName] + ': ' + error.Message + ". <br />");
       alert.innerHTML += "Adjust these errors and try again."
-      alert.style.display = "block";
+      alert.style.display = "flex";
     })
   }
 
@@ -216,7 +216,7 @@ class FlightForm extends Component {
               <Col sm={12} md={4} lg={4} xl={4} className="formButton">
                 <div className="subButton">
                   <button type="submit" onClick={this.handleClick}>
-                    FIND ROUTES
+                    Find Routes
                   </button>
                 </div>
               </Col>
