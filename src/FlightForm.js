@@ -63,19 +63,41 @@ class FlightForm extends Component {
       outboundDate: today
     })
 
+    let postData = querystring.stringify({ 
+      grant_type: "client_credentials",
+      client_id: `${process.env.REACT_APP_AMADEUS_KEY}`,
+      client_secret: `${process.env.REACT_APP_AMADEUS_SECRET}`
+    });
+
     axios({
       method: 'POST',
       url: 'https://test.api.amadeus.com/v1/security/oauth2/token/',
       headers: {
         "content-type":"application/x-www-form-urlencoded",
       },
-      data: `grant_type=client_credentials&client_id=${process.env.REACT_APP_AMADEUS_KEY}&client_secret=${process.env.REACT_APP_AMADEUS_SECRET}`,
+      data: postData
     })
     .then( function(response) {
       console.log(response)
     })
     
   }
+
+  // componentDidUpdate() {
+
+  //   axios({
+  //     method: 'post',
+  //     url: 'https://test.api.amadeus.com/v1/security/oauth2/token/',
+  //     headers: {
+  //       "Content-Type":"application/x-www-form-urlencoded",
+  //     },
+  //     data: `grant_type=client_credentials&client_id=${process.env.REACT_APP_AMADEUS_KEY}&client_secret=${process.env.REACT_APP_AMADEUS_SECRET}`,
+  //   })
+  //   .then( function(response) {
+  //     console.log(response)
+  //   })
+
+  // }
 
   handleClick(event) {
     event.preventDefault()
