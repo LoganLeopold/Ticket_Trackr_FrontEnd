@@ -18,7 +18,8 @@ class FlightForm extends Component {
       currency: "USD",
       locale: "en-US",
       livePrice: "",
-      status: ""
+      status: "",
+      oAuth: '',
     };
 
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -61,6 +62,21 @@ class FlightForm extends Component {
       inboundDate: today,
       outboundDate: today
     })
+
+    // axios({
+    //   method: 'GET',
+    //   url: '',
+    //   headers: {
+    //     "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API,
+    //     "content-type":"application/octet-stream",
+    //     "x-rapidapi-host":"skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
+    //     "useQueryString": true,
+    //   },
+    //   params: {
+    //     inboundpartialdate: moment(this.state.inboundDate).format("YYYY-MM-DD")
+    //   }
+    // })
+    // .then( function(response) {})
     
   }
 
@@ -148,6 +164,24 @@ class FlightForm extends Component {
 
   // For normal text input
   handleInput(event) {
+
+    // axios({
+    //   method: 'GET',
+    //   url: ,
+    //   headers: {
+    //     "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API,
+    //     "content-type":"application/octet-stream",
+    //     "x-rapidapi-host":"skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
+    //     "useQueryString": true,
+    //   },
+    //   params: {
+    //     inboundpartialdate: moment(this.state.inboundDate).format("YYYY-MM-DD")
+    //   }
+    // })
+    // .then( function(response) {
+
+    // })
+
     this.setState({
       [event.target.name]: event.target.value
     });
