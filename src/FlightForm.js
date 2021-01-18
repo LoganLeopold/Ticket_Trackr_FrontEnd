@@ -63,20 +63,17 @@ class FlightForm extends Component {
       outboundDate: today
     })
 
-    // axios({
-    //   method: 'GET',
-    //   url: '',
-    //   headers: {
-    //     "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API,
-    //     "content-type":"application/octet-stream",
-    //     "x-rapidapi-host":"skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-    //     "useQueryString": true,
-    //   },
-    //   params: {
-    //     inboundpartialdate: moment(this.state.inboundDate).format("YYYY-MM-DD")
-    //   }
-    // })
-    // .then( function(response) {})
+    axios({
+      method: 'POST',
+      url: 'https://test.api.amadeus.com/v1/security/oauth2/token/',
+      headers: {
+        "content-type":"application/x-www-form-urlencoded",
+      },
+      data: `grant_type=client_credentials&client_id=${process.env.REACT_APP_AMADEUS_KEY}&client_secret=${process.env.REACT_APP_AMADEUS_SECRET}`,
+    })
+    .then( function(response) {
+      console.log(response)
+    })
     
   }
 
