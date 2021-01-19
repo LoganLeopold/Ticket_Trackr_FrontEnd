@@ -69,6 +69,9 @@ class FlightForm extends Component {
       client_secret: `${process.env.REACT_APP_AMADEUS_SECRET}`
     });
 
+    // let random = `grant_type=client_credentials&client_id=${process.env.REACT_APP_AMADEUS_KEY}&client_secret=${process.env.REACT_APP_AMADEUS_SECRET}`
+    // console.log(random)
+
     axios({
       method: 'POST',
       url: 'https://test.api.amadeus.com/v1/security/oauth2/token/',
