@@ -69,8 +69,12 @@ class FlightForm extends Component {
       client_secret: `${process.env.REACT_APP_AMADEUS_SECRET}`
     });
 
-    let tokenForm = new URLSearchParams()
+    let encoded = encodeURIComponent(postData)
 
+    console.log(postData)
+    console.log(encoded)
+
+    let tokenForm = new URLSearchParams()
     tokenForm.append('grant_type', 'client_credentials')
     tokenForm.append('client_id', process.env.REACT_APP_AMADEUS_KEY)
     tokenForm.append('client_secret', process.env.REACT_APP_AMADEUS_SECRET)
@@ -81,8 +85,11 @@ class FlightForm extends Component {
       headers: {
         "Content-Type":"application/x-www-form-urlencoded",
       },
-      data: tokenForm
+      data: `${encoded}`
     })
+    // axios.post('https://test.api.amadeus.com/v1/security/oauth2/token/', JSON.stringify(tokenForm), {
+    //   headers: {"Content-Type":"application/x-www-form-urlencoded"}
+    // })
     .then( function(response) {
       console.log(response.data)
     }).catch( err => console.log(err))
