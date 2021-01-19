@@ -63,32 +63,32 @@ class FlightForm extends Component {
       outboundDate: today
     })
 
-    let postData = querystring.stringify({ 
-      grant_type: "client_credentials",
-      client_id: `${process.env.REACT_APP_AMADEUS_KEY}`,
-      client_secret: `${process.env.REACT_APP_AMADEUS_SECRET}`
-    });
+    // let postData = querystring.stringify({ 
+    //   grant_type: "client_credentials",
+    //   client_id: `${process.env.REACT_APP_AMADEUS_KEY}`,
+    //   client_secret: `${process.env.REACT_APP_AMADEUS_SECRET}`
+    // });
 
-    let encoded = encodeURIComponent(postData)
+    // let postData = { 
+    //   grant_type: "client_credentials",
+    //   client_id: `${process.env.REACT_APP_AMADEUS_KEY}`,
+    //   client_secret: `${process.env.REACT_APP_AMADEUS_SECRET}`
+    // };
 
-    console.log(postData)
-    console.log(encoded)
+    let body = `grant_type=client_credentials&client_id=${process.env.REACT_APP_AMADEUS_KEY}&client_secret=${process.env.REACT_APP_AMADEUS_SECRET}`
 
-    let tokenForm = new URLSearchParams()
-    tokenForm.append('grant_type', 'client_credentials')
-    tokenForm.append('client_id', process.env.REACT_APP_AMADEUS_KEY)
-    tokenForm.append('client_secret', process.env.REACT_APP_AMADEUS_SECRET)
+    // console.log(body)
 
     axios({
-      method: 'POST',
+      method: 'post',
       url: 'https://test.api.amadeus.com/v1/security/oauth2/token/',
       headers: {
         "Content-Type":"application/x-www-form-urlencoded",
       },
-      data: `${encoded}`
+      data: body
     })
-    // axios.post('https://test.api.amadeus.com/v1/security/oauth2/token/', JSON.stringify(tokenForm), {
-    //   headers: {"Content-Type":"application/x-www-form-urlencoded"}
+    // axios.post('https://test.api.amadeus.com/v1/security/oauth2/token/', {body}, {
+    //   headers: {"Content-Type":"application/x-www-form-urlencoded"},
     // })
     .then( function(response) {
       console.log(response.data)
