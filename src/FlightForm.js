@@ -63,54 +63,27 @@ class FlightForm extends Component {
       outboundDate: today
     })
 
-    // let postData = querystring.stringify({ 
-    //   grant_type: "client_credentials",
-    //   client_id: `${process.env.REACT_APP_AMADEUS_KEY}`,
-    //   client_secret: `${process.env.REACT_APP_AMADEUS_SECRET}`
-    // });
+    // Begin API Access 
 
-    // let postData = { 
-    //   grant_type: "client_credentials",
-    //   client_id: `${process.env.REACT_APP_AMADEUS_KEY}`,
-    //   client_secret: `${process.env.REACT_APP_AMADEUS_SECRET}`
-    // };
-
-    let body = `grant_type=client_credentials&client_id=${process.env.REACT_APP_AMADEUS_KEY}&client_secret=${process.env.REACT_APP_AMADEUS_SECRET}`
-
-    // console.log(body)
+    let body = `grant_type=client_credentials&client_id=${process.env.REACT_APP_AMADEUS_KEY}&client_secret=${process.env.REACT_APP_AMADEUS_SECRET}`;
+    let form = this
 
     axios({
       method: 'post',
-      url: 'https://test.api.amadeus.com/v1/security/oauth2/token/',
+      url: 'https://test.api.amadeus.com/v1/security/oauth2/token',
       headers: {
         "Content-Type":"application/x-www-form-urlencoded",
       },
       data: body
-    })
-    // axios.post('https://test.api.amadeus.com/v1/security/oauth2/token/', {body}, {
-    //   headers: {"Content-Type":"application/x-www-form-urlencoded"},
-    // })
-    .then( function(response) {
-      console.log(response.data)
+    }).then( function(response) {
+      console.log(response.data.access_token)
+      let token = response.data.access_token
+      form.setState({
+        oAuth: token
+      })
     }).catch( err => console.log(err))
-    
+
   }
-
-  // componentDidUpdate() {
-
-  //   axios({
-  //     method: 'post',
-  //     url: 'https://test.api.amadeus.com/v1/security/oauth2/token/',
-  //     headers: {
-  //       "Content-Type":"application/x-www-form-urlencoded",
-  //     },
-  //     data: `grant_type=client_credentials&client_id=${process.env.REACT_APP_AMADEUS_KEY}&client_secret=${process.env.REACT_APP_AMADEUS_SECRET}`,
-  //   })
-  //   .then( function(response) {
-  //     console.log(response)
-  //   })
-
-  // }
 
   handleClick(event) {
     event.preventDefault()
