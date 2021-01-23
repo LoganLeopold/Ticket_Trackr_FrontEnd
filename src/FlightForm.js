@@ -3,7 +3,7 @@ import axios from "axios";
 import { Row, Container, Col } from "reactstrap";
 import CountrySelect from "./countrySelect"
 import DateP from "./Date";
-var querystring = require("querystring");
+var Amadeus = require("amadeus")
 var moment = require("moment");
 
 class FlightForm extends Component {
@@ -169,25 +169,38 @@ class FlightForm extends Component {
   handleInput(event) {
 
     // axios({
-    //   method: 'GET',
-    //   url: ,
+    //   method: 'get',
+    //   url: 'https://test.api.amadeus.com/v1/reference-data/locations',
     //   headers: {
-    //     "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API,
-    //     "content-type":"application/octet-stream",
-    //     "x-rapidapi-host":"skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-    //     "useQueryString": true,
+    //     "Content-Type":"application/x-www-form-urlencoded",
+    //     "Authorization": `Bearer ${this.state.oAuth}`
     //   },
-    //   params: {
-    //     inboundpartialdate: moment(this.state.inboundDate).format("YYYY-MM-DD")
-    //   }
-    // })
-    // .then( function(response) {
+    //   data: body
+    // }).then( function(response) {
+    //   let token = response.data.access_token
+    //   form.setState({
+    //     oAuth: token
+    //   })
+    // }).catch( err => console.log(err))
 
-    // })
+    var amadeus = new Amadeus ({
+      clientId: process.env.REACT_APP_AMADEUS_KEY,
+      clientSecret: process.env.REACT_APP_AMADEUS_SECRET
+    })
+
+    amadeus.referenceData.locations.get({
+      keyword : `${event.target.value}`,
+      subType : Amadeus.location.any
+    }).then( function (response) {
+      console.log(response.data)
+    }).catch( function (err) {
+      console.log(err.data)
+    })
 
     this.setState({
       [event.target.name]: event.target.value
     });
+
   }
 
   render() {
@@ -208,18 +221,22 @@ class FlightForm extends Component {
                 <input
                   type="text"
                   name="originPlace"
+                  autocomplete="off"
                   defaultValue={this.state.originPlace}
                   onChange={this.handleInput}
                   style={{
                     width: this.state.originPlace.length + 'em'
                   }}
                 />
+                <div class="popup"></div>
+
               </Col>
               <Col sm={12} md={3} lg={3} xl={3} className="inputBox aport">
                 <label>Arrival Airport Code</label>
                 <input
                   type="text"
                   name="destinationPlace"
+                  autocomplete="off"
                   defaultValue={this.state.destinationPlace}
                   onChange={this.handleInput}
                   style={{
