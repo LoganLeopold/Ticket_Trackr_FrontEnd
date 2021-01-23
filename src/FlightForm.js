@@ -168,34 +168,30 @@ class FlightForm extends Component {
   // For normal text input
   handleInput(event) {
 
-    // axios({
-    //   method: 'get',
-    //   url: 'https://test.api.amadeus.com/v1/reference-data/locations',
-    //   headers: {
-    //     "Content-Type":"application/x-www-form-urlencoded",
-    //     "Authorization": `Bearer ${this.state.oAuth}`
-    //   },
-    //   data: body
-    // }).then( function(response) {
-    //   let token = response.data.access_token
-    //   form.setState({
-    //     oAuth: token
-    //   })
-    // }).catch( err => console.log(err))
+    axios({
+      method: 'get',
+      url: `https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT%2CCITY&keyword=${event.target.value}`,
+      headers: {
+        "Content-Type":"application/x-www-form-urlencoded",
+        "Authorization": `Bearer ${this.state.oAuth}`
+      }
+    }).then( function(response) {
+      console.log(response.data.data)
+    }).catch( err => console.log(err))
 
-    var amadeus = new Amadeus ({
-      clientId: process.env.REACT_APP_AMADEUS_KEY,
-      clientSecret: process.env.REACT_APP_AMADEUS_SECRET
-    })
+    // var amadeus = new Amadeus ({
+    //   clientId: process.env.REACT_APP_AMADEUS_KEY,
+    //   clientSecret: process.env.REACT_APP_AMADEUS_SECRET
+    // })
 
-    amadeus.referenceData.locations.get({
-      keyword : `${event.target.value}`,
-      subType : Amadeus.location.any
-    }).then( function (response) {
-      console.log(response.data)
-    }).catch( function (err) {
-      console.log(err.data)
-    })
+    // amadeus.referenceData.locations.get({
+    //   keyword : `${event.target.value}`,
+    //   subType : Amadeus.location.any
+    // }).then( function (response) {
+    //   console.log(response.data)
+    // }).catch( function (err) {
+    //   console.log(err.data)
+    // })
 
     this.setState({
       [event.target.name]: event.target.value
