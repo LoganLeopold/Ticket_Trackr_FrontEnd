@@ -64,7 +64,6 @@ class FlightForm extends Component {
     })
 
     // Begin API Access 
-
     let body = `grant_type=client_credentials&client_id=${process.env.REACT_APP_AMADEUS_KEY}&client_secret=${process.env.REACT_APP_AMADEUS_SECRET}`;
     let form = this
 
@@ -76,7 +75,6 @@ class FlightForm extends Component {
       },
       data: body
     }).then( function(response) {
-      console.log(response.data.access_token)
       let token = response.data.access_token
       form.setState({
         oAuth: token
