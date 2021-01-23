@@ -154,6 +154,21 @@ form {
   box-shadow: 5px 5px 9px rgba(0,0,0, 0.20);
 }
 
+.inputBox .popup {
+  position: absolute;
+  width: 96.5%;
+  top: 96%;
+  z-index: 10000;
+  min-width: 100%;
+  font-size: 3vh;
+  color: #034732;
+  font-weight: 600;
+  border: 3px solid #3BCEAC;
+  padding: 0 0 0 5px;
+  background: white;
+  text-align: left;
+}
+
 button, h2 {
   background: #3BCEAC;
   border-radius: 8px;

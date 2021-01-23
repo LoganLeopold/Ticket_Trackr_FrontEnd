@@ -243,6 +243,7 @@ class FlightForm extends Component {
                     width: this.state.destinationPlace.length + 'em'
                   }}
                 />
+                <div class="popup"></div>
               </Col>
               <Col sm={12} md={3} lg={3} xl={3} className="inputBox ddate">
                 <label>Departure Date</label>
