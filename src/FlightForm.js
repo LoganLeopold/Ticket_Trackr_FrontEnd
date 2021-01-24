@@ -197,7 +197,7 @@ class FlightForm extends Component {
           let option = document.createElement("OPTION")
           option.value = port.iataCode
           option.dataset.country = port.address.countryCode
-          option.innerHTML = portName
+          option.innerHTML = option.name = portName
           option.onclick = flightForm.handleOptionClick
           newPopup.appendChild(option)
         })
@@ -218,17 +218,18 @@ class FlightForm extends Component {
 
   handleOptionClick(event) {
 
+    event.target.parentNode.previousSibling.value = event.target.name
+
     this.setState({
-      [event.target.parentNode.parentNode.name]: event.target.value,
+      [event.target.parentNode.previousSibling.name]: event.target.value
     })
 
-    if (event.target.parentNode.parentNode.name === "originPlace") {
+    if (event.target.parentNode.previousSibling.name === "originPlace") {
       this.setState({
-        country: event.target.dataset.country
+        country: event.target.dataset.country,
       })
     }
     
-
     event.target.parentNode.parentNode.removeChild(event.target.parentNode)
 
   }

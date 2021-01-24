@@ -152,6 +152,7 @@ form {
 
 .inputBox > input {
   box-shadow: 5px 5px 9px rgba(0,0,0, 0.20);
+  text-transform: capitalize;
 }
 
 .inputBox .popup {
