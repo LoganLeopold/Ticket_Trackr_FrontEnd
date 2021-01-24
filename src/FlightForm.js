@@ -26,7 +26,7 @@ class FlightForm extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleOptionClick = this.handleOptionClick.bind(this)
-    this.handleCountryValueChange = this.handleCountryValueChange.bind(this)
+    // this.handleCountryValueChange = this.handleCountryValueChange.bind(this)
     this.handleInput = this.handleInput.bind(this)
   }
 
@@ -142,12 +142,12 @@ class FlightForm extends Component {
   }
 
   // For countrySelect
-  handleCountryValueChange = function(event) {
-    const name = event.target;
-    this.setState({
-      country: name.value
-    })
-  };
+  // handleCountryValueChange = function(event) {
+  //   const name = event.target;
+  //   this.setState({
+  //     country: name.value
+  //   })
+  // };
 
   // For DatePicker
   handleChange(name, value) {
@@ -247,7 +247,7 @@ class FlightForm extends Component {
 
             <Row>
               <Col sm={12} md={3} lg={3} xl={3} className="inputBox dport">
-                <label>Departure Airport Code</label>
+                <label>Departure Airport</label>
                 <input
                   type="text"
                   name="originPlace"
@@ -262,7 +262,7 @@ class FlightForm extends Component {
 
               </Col>
               <Col sm={12} md={3} lg={3} xl={3} className="inputBox aport">
-                <label>Arrival Airport Code</label>
+                <label>Arrival Airport</label>
                 <input
                   type="text"
                   name="destinationPlace"
