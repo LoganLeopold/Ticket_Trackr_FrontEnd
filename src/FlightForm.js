@@ -169,9 +169,6 @@ class FlightForm extends Component {
   handleInput(event) {
 
     let thisInput = event.target   
-    if (thisInput.nextSibling) {
-      event.target.parentNode.removeChild(thisInput.nextSibling)
-    }
 
     if (event.target.value.length > 0) {
       axios({
@@ -185,6 +182,10 @@ class FlightForm extends Component {
       }).then( function(response) {
 
         console.log(response.data.data)
+
+        while (thisInput.nextSibling) {
+          thisInput.parentNode.removeChild(thisInput.nextSibling)
+        }
 
         let newPopup = document.createElement("DIV")
         newPopup.className = "popup"
