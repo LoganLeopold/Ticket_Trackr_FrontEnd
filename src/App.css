@@ -155,19 +155,21 @@ form {
 }
 
 .inputBox .popup {
+  display: none;
   position: absolute;
   width: 96.5%;
   top: 96%;
   z-index: 10000;
-  min-width: 100%;
   font-size: 3vh;
   color: #034732;
-  font-weight: 600;
+  font-weight: 300;
   border: 3px solid #3BCEAC;
   padding: 0 0 0 5px;
   background: white;
   text-align: left;
+  text-transform: capitalize;
 }
+
 
 button, h2 {
   background: #3BCEAC;

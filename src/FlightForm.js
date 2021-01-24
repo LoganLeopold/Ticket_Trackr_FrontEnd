@@ -3,7 +3,7 @@ import axios from "axios";
 import { Row, Container, Col } from "reactstrap";
 import CountrySelect from "./countrySelect"
 import DateP from "./Date";
-var Amadeus = require("amadeus")
+// var Amadeus = require("amadeus")
 var moment = require("moment");
 
 class FlightForm extends Component {
@@ -168,34 +168,45 @@ class FlightForm extends Component {
   // For normal text input
   handleInput(event) {
 
-    axios({
-      method: 'get',
-      url: `https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT%2CCITY&keyword=${event.target.value}`,
-      headers: {
-        "Content-Type":"application/x-www-form-urlencoded",
-        "Authorization": `Bearer ${this.state.oAuth}`
-      }
-    }).then( function(response) {
-      console.log(response.data.data)
-    }).catch( err => console.log(err))
+    let thisInput = event.target   
+    if (thisInput.nextSibling) {
+      event.target.parentNode.removeChild(thisInput.nextSibling)
+    }
 
-    // var amadeus = new Amadeus ({
-    //   clientId: process.env.REACT_APP_AMADEUS_KEY,
-    //   clientSecret: process.env.REACT_APP_AMADEUS_SECRET
-    // })
+    if (event.target.value.length > 0) {
+      axios({
+        method: 'get',
+        // url: `https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT%2CCITY&keyword=${event.target.value}`,
+        url: `https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT&keyword=${event.target.value}`,
+        headers: {
+          "Content-Type":"application/x-www-form-urlencoded",
+          "Authorization": `Bearer ${this.state.oAuth}`
+        }
+      }).then( function(response) {
 
-    // amadeus.referenceData.locations.get({
-    //   keyword : `${event.target.value}`,
-    //   subType : Amadeus.location.any
-    // }).then( function (response) {
-    //   console.log(response.data)
-    // }).catch( function (err) {
-    //   console.log(err.data)
-    // })
+        console.log(response.data.data)
 
-    this.setState({
-      [event.target.name]: event.target.value
-    });
+        let newPopup = document.createElement("DIV")
+        newPopup.className = "popup"
+
+        response.data.data.slice(0,5).forEach( function (port) {
+          let portName = port.name.toLowerCase()
+          let option = document.createElement("OPTION")
+          option.value = option.innerHTML = portName
+          newPopup.appendChild(option)
+        })
+
+        newPopup.style.display = "block"
+
+        thisInput.parentNode.appendChild(newPopup)
+
+      }).catch( err => console.log(err))
+
+      this.setState({
+        [event.target.name]: event.target.value
+      });
+    
+    }
 
   }
 
@@ -217,14 +228,14 @@ class FlightForm extends Component {
                 <input
                   type="text"
                   name="originPlace"
-                  autocomplete="off"
+                  autoComplete="off"
                   defaultValue={this.state.originPlace}
                   onChange={this.handleInput}
                   style={{
                     width: this.state.originPlace.length + 'em'
                   }}
                 />
-                <div class="popup"></div>
+                <div className="popup"></div>
 
               </Col>
               <Col sm={12} md={3} lg={3} xl={3} className="inputBox aport">
@@ -232,7 +243,7 @@ class FlightForm extends Component {
                 <input
                   type="text"
                   name="destinationPlace"
-                  autocomplete="off"
+                  autoComplete="off"
                   defaultValue={this.state.destinationPlace}
                   onChange={this.handleInput}
                   style={{
