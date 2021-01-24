@@ -25,7 +25,7 @@ class FlightForm extends Component {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    // this.handleValueChange = this.handleValueChange.bind(this);
+    this.handleOptionClick = this.handleOptionClick.bind(this)
     this.handleCountryValueChange = this.handleCountryValueChange.bind(this)
     this.handleInput = this.handleInput.bind(this)
   }
@@ -168,6 +168,8 @@ class FlightForm extends Component {
   // For normal text input
   handleInput(event) {
 
+    let flightForm = this
+
     let thisInput = event.target   
 
     if (event.target.value.length > 0) {
@@ -194,6 +196,7 @@ class FlightForm extends Component {
           let portName = port.name.toLowerCase()
           let option = document.createElement("OPTION")
           option.value = option.innerHTML = portName
+          option.onclick = flightForm.handleOptionClick
           newPopup.appendChild(option)
         })
 
@@ -209,6 +212,10 @@ class FlightForm extends Component {
     
     }
 
+  }
+
+  handleOptionClick(event) {
+    console.log(event.target)
   }
 
   render() {
