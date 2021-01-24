@@ -14,21 +14,22 @@ class App extends Component {
       airports: [],
       markets: []
     };
-    this.componentDidMount = this.componentDidMount.bind(this)
+    // this.componentDidMount = this.componentDidMount.bind(this)
   }
 
-  componentDidMount() {
+  // componentDidMount() {
 
-    axios.get('https://tickettrackr.herokuapp.com/api/countries/db/search')
-    .then( (res) => {
-      this.setState({
-        markets: res.data,
-      })
-    })
-    .catch(function(response) {
-      console.log(response);
-    })
-  }
+  //   // axios.get('https://tickettrackr.herokuapp.com/api/countries/db/search')
+  //   // .then( (res) => {
+  //   //   this.setState({
+  //   //     markets: res.data,
+  //   //   })
+  //   // })
+  //   // .catch(function(response) {
+  //   //   console.log(response);
+  //   // })
+
+  // }
 
   render() {
     console.log("App rendered boi");

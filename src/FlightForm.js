@@ -12,8 +12,8 @@ class FlightForm extends Component {
     this.state = {
       outboundDate: "",
       inboundDate: "",
-      originPlace: "IAD",
-      destinationPlace: "SFO",
+      originPlace: "",
+      destinationPlace: "",
       country: "US",
       currency: "USD",
       locale: "en-US",
@@ -26,7 +26,6 @@ class FlightForm extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleOptionClick = this.handleOptionClick.bind(this)
-    // this.handleCountryValueChange = this.handleCountryValueChange.bind(this)
     this.handleInput = this.handleInput.bind(this)
   }
 
@@ -84,6 +83,7 @@ class FlightForm extends Component {
   }
 
   handleClick(event) {
+
     event.preventDefault()
 
     var params = {
@@ -103,51 +103,55 @@ class FlightForm extends Component {
       return
     }
 
-    axios({
-      method: 'GET',
-      url: `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/${this.state.originPlace}/${this.state.destinationPlace}/${moment(this.state.outboundDate).format("YYYY-MM-DD")}`,
-      headers: {
-        "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API,
-        "content-type":"application/octet-stream",
-        "x-rapidapi-host":"skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-        "useQueryString": true,
-      },
-      params: {
-        inboundpartialdate: moment(this.state.inboundDate).format("YYYY-MM-DD")
-      }
-    })
-    .then( function(response) {
-      var alert = document.querySelectorAll('.formStatus')[0];
-      var priceDisplay = document.querySelectorAll('.formSubmit')[0];
-      if (response.data.Quotes.length === 0) {
-        alert.innerHTML = "There are no results on this itinerary. Try pushing out your outbound date a bit further."
-        alert.style.display = "flex"
-      } else {
-        var price = response.data.Quotes[0].MinPrice; 
-        for (var i=0; i < response.data.Quotes.length; i++) {
-          if (response.data.Quotes[i].MinPrice < price) {
-            price = response.data.Quotes[i].MinPrice;
-          }
+    if (this.state.originPlace.length > 0 && this.state.destinationPlace.length > 0) {
+      axios({
+        method: 'GET',
+        url: `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/${this.state.originPlace}/${this.state.destinationPlace}/${moment(this.state.outboundDate).format("YYYY-MM-DD")}`, 
+        headers: {
+          "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API,
+          "content-type":"application/octet-stream",
+          "x-rapidapi-host":"skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
+          "useQueryString": true,
+        },
+        params: {
+          inboundpartialdate: moment(this.state.inboundDate).format("YYYY-MM-DD")
         }
-        priceDisplay.innerHTML = 'Lowest price: $' + price;
-        alert.style.display = 'none';
-        priceDisplay.style.display = 'flex';
-      }
-    })
-    .catch(function(err) {
-      err.response.data.ValidationErrors.forEach(error =>  alert.innerHTML = params[error.ParameterName] + ': ' + error.Message + ". <br />");
-      alert.innerHTML += "Adjust these errors and try again."
-      alert.style.display = "flex";
-    })
-  }
+      })
+      .then( function(response) {
+        var priceDisplay = document.querySelectorAll('.formSubmit')[0];
+        if (response.data.Quotes.length === 0) {
+          alert.innerHTML = "There are no results on this itinerary. Try pushing out your outbound date a bit further."
+          alert.style.display = "flex"
+        } else {
+          var price = response.data.Quotes[0].MinPrice; 
+          for (var i=0; i < response.data.Quotes.length; i++) {
+            if (response.data.Quotes[i].MinPrice < price) {
+              price = response.data.Quotes[i].MinPrice;
+            }
+          }
+          priceDisplay.innerHTML = 'Lowest price: $' + price;
+          alert.style.display = 'none';
+          priceDisplay.style.display = 'flex';
+        }
+      })
+      .catch(function(err) {
+        console.log(err.response)
+        // err.response.data.ValidationErrors.forEach(error =>  alert.innerHTML = params[error.ParameterName] + ': ' + error.Message + ". <br />");
+        // alert.innerHTML += "Adjust these errors and try again."
+        // alert.style.display = "flex";
+      })
+    } else {
+      /* 
+      This is if it's empty, but we need to assign option values no matter if the user has chosen an option, so I have several ideas:
 
-  // For countrySelect
-  // handleCountryValueChange = function(event) {
-  //   const name = event.target;
-  //   this.setState({
-  //     country: name.value
-  //   })
-  // };
+      1) End up storing Amadeus results in state somehow with input change, either in FlightForm state or by breaking inputs out into components. If flightform.state.airport is empty, use last stored value by alphabet/score/etc.
+      2) Also, if completely empty, instead of not making AJAX call, could use whatever is still in state from last type (if above is implemented)
+      */
+      
+      alert.innerHTML = "Make sure you have airports chosen and then press Find Routes again!"
+    }
+
+  }
 
   // For DatePicker
   handleChange(name, value) {
@@ -240,14 +244,9 @@ class FlightForm extends Component {
       <div className="flightForm">
         <form action="">
           <Container>
-            {/* <Row>
-              <Col sm={12} md={6} lg={6} xl={6} className="inputBox">
-                <CountrySelect name="country" {...this.props} {...this.state} valueUp={this.handleCountryValueChange}/>
-              </Col>
-            </Row> */}
 
             <Row>
-              <Col sm={12} md={3} lg={3} xl={3} className="inputBox dport">
+              <Col sm={12} md={6} lg={6} xl={6} className="inputBox dport">
                 <label>Departure Airport</label>
                 <input
                   type="text"
@@ -262,7 +261,7 @@ class FlightForm extends Component {
                 <div className="popup"></div>
 
               </Col>
-              <Col sm={12} md={3} lg={3} xl={3} className="inputBox aport">
+              <Col sm={12} md={6} lg={6} xl={6} className="inputBox aport">
                 <label>Arrival Airport</label>
                 <input
                   type="text"
@@ -296,16 +295,17 @@ class FlightForm extends Component {
                     {...this.state}
                   />
               </Col>
-            </Row>
-
-            <Row>
-              <Col sm={12} md={4} lg={4} xl={4} className="formButton">
+              <Col sm={12} md={6} lg={6} xl={6} className="formButton">
                 <div className="subButton">
                   <button type="submit" onClick={this.handleClick}>
                     Find Routes
                   </button>
                 </div>
               </Col>
+            </Row>
+
+            <Row>
+
               <Col sm={12} md={8} lg={8} xl={8} className="d-flex flex-column">
                 <h2 className="formStatus"> {this.state.status}</h2>
                 <h2 className="formSubmit">{this.state.livePrice}</h2>
