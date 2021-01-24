@@ -195,7 +195,9 @@ class FlightForm extends Component {
         response.data.data.slice(0,5).forEach( function (port) {
           let portName = port.name.toLowerCase()
           let option = document.createElement("OPTION")
-          option.value = option.innerHTML = portName
+          option.value = port.iataCode
+          option.dataset.country = port.address.countryCode
+          option.innerHTML = portName
           option.onclick = flightForm.handleOptionClick
           newPopup.appendChild(option)
         })
@@ -215,7 +217,20 @@ class FlightForm extends Component {
   }
 
   handleOptionClick(event) {
-    console.log(event.target)
+
+    this.setState({
+      [event.target.parentNode.parentNode.name]: event.target.value,
+    })
+
+    if (event.target.parentNode.parentNode.name === "originPlace") {
+      this.setState({
+        country: event.target.dataset.country
+      })
+    }
+    
+
+    event.target.parentNode.parentNode.removeChild(event.target.parentNode)
+
   }
 
   render() {
