@@ -10,7 +10,6 @@ class DateP extends React.Component {
       startDate: new Date()
     };
     this.handleChange = this.handleChange.bind(this);
-    // this.componentDidUpdate = this.componentDidUpdate.bind(this)
     this.componentDidMount = this.componentDidMount.bind(this);
   }
 
@@ -51,7 +50,7 @@ class DateP extends React.Component {
           startDate: today
         },
         () => {
-          this.props.handleChange(this.props.fieldName, this.state.startDate);
+          this.props.handleDateChange(this.props.fieldName, this.state.startDate);
         }
       );
 
@@ -72,7 +71,7 @@ class DateP extends React.Component {
         startDate: date
       },
       () => {
-        this.props.handleChange(this.props.fieldName, this.state.startDate);
+        this.props.handleDateChange(this.props.fieldName, this.state.startDate);
       }
     );
   };

@@ -23,8 +23,8 @@ class FlightForm extends Component {
     };
 
     this.componentDidMount = this.componentDidMount.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleFindRoutes = this.handleFindRoutes.bind(this);
     this.handleOptionClick = this.handleOptionClick.bind(this)
     this.handleInput = this.handleInput.bind(this)
   }
@@ -82,7 +82,7 @@ class FlightForm extends Component {
 
   }
 
-  handleClick(event) {
+  handleFindRoutes(event) {
 
     event.preventDefault()
 
@@ -146,6 +146,8 @@ class FlightForm extends Component {
 
       1) End up storing Amadeus results in state somehow with input change, either in FlightForm state or by breaking inputs out into components. If flightform.state.airport is empty, use last stored value by alphabet/score/etc.
       2) Also, if completely empty, instead of not making AJAX call, could use whatever is still in state from last type (if above is implemented)
+      
+      Also, I should maybe be treating this more like a traditional form and using all of the values/names from the inputs and controlling the values with state in components that are broken out to handle their own functions/value changes.
       */
       
       alert.innerHTML = "Make sure you have airports chosen and then press Find Routes again!"
@@ -154,7 +156,7 @@ class FlightForm extends Component {
   }
 
   // For DatePicker
-  handleChange(name, value) {
+  handleDateChange(name, value) {
     this.setState({
       [name]: value
     }, 
@@ -179,7 +181,6 @@ class FlightForm extends Component {
     if (event.target.value.length > 0) {
       axios({
         method: 'get',
-        // url: `https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT%2CCITY&keyword=${event.target.value}`,
         url: `https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT&keyword=${event.target.value}`,
         headers: {
           "Content-Type":"application/x-www-form-urlencoded",
@@ -280,7 +281,7 @@ class FlightForm extends Component {
                   <DateP
                     className='datepicker'
                     fieldName="outboundDate"
-                    handleChange={this.handleChange}
+                    handleDateChange={this.handleDateChange}
                     {...this.renderProps}
                     {...this.state}
                   />
@@ -290,14 +291,14 @@ class FlightForm extends Component {
                   <DateP
                     className='datepicker'
                     fieldName="inboundDate"
-                    handleChange={this.handleChange}
+                    handleDateChange={this.handleDateChange}
                     {...this.props}
                     {...this.state}
                   />
               </Col>
               <Col sm={12} md={6} lg={6} xl={6} className="formButton">
                 <div className="subButton">
-                  <button type="submit" onClick={this.handleClick}>
+                  <button type="submit" onClick={this.handleFindRoutes}>
                     Find Routes
                   </button>
                 </div>
