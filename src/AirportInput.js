@@ -5,6 +5,7 @@ class AirportInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      airport: "",
       inputRes: {},
     };
     this.handleInput = this.handleInput.bind(this);
@@ -19,6 +20,7 @@ class AirportInput extends Component {
   // For normal text input
   handleInput(event) {
 
+    let thisCom = this
     let thisInput = event.target
 
     if (event.target.value.length > 0) {
@@ -31,9 +33,10 @@ class AirportInput extends Component {
         },
       })
         .then(function (response) {
-          this.setState({
-              inputRes: response.data.data
+          thisCom.setState({
+              inputRes: response.data.data  
           })
+          // console.log(this)
           console.log(response.data.data);
 
           while (thisInput.nextSibling) {
@@ -49,7 +52,7 @@ class AirportInput extends Component {
             option.value = port.iataCode;
             option.dataset.country = port.address.countryCode;
             option.innerHTML = option.name = portName;
-            option.onclick = thisInput.handleOptionClick;
+            option.onclick = thisCom.handleOptionClick;
             newPopup.appendChild(option);
           });
 
@@ -59,9 +62,9 @@ class AirportInput extends Component {
         })
         .catch((err) => console.log(err));
 
-      this.setState({
-        [event.target.name]: event.target.value,
-      });
+      // this.setState({
+      //   [event.target.name]: event.target.value,
+      // });
     }
   }
 
@@ -69,16 +72,16 @@ class AirportInput extends Component {
     event.target.parentNode.previousSibling.value = event.target.name;
 
     this.setState({
-      [event.target.parentNode.previousSibling.name]: event.target.value,
+      airport: event.target.value
+    }, () => {
+      this.props.handleAirportChange(this.props.name, this.state.airport)
+      if (this.props.name === "originPlace" && event.target.dataset.country !== this.props.country) {
+        this.props.handleAirportChange("country", event.target.dataset.country)
+      }
     });
 
-    if (event.target.parentNode.previousSibling.name === "originPlace") {
-      this.setState({
-        country: event.target.dataset.country,
-      });
-    }
-
     event.target.parentNode.parentNode.removeChild(event.target.parentNode);
+
   }
 
   render() {

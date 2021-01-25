@@ -26,6 +26,7 @@ class FlightForm extends Component {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleFindRoutes = this.handleFindRoutes.bind(this);
+    this.handleAirportChange = this.handleAirportChange.bind(this)
     // this.handleOptionClick = this.handleOptionClick.bind(this)
     // this.handleInput = this.handleInput.bind(this)
   }
@@ -172,6 +173,12 @@ class FlightForm extends Component {
     });
   }
 
+  handleAirportChange(name, value) {
+    this.setState({
+      [name]: value
+    })  
+  }
+
   render() {
 
     return (
@@ -183,9 +190,10 @@ class FlightForm extends Component {
               <Col sm={12} md={6} lg={6} xl={6} className="inputBox dport">
                 <label>Departure Airport</label>
                 <AirportInput 
-                  name="destinationPlace"
+                  name="originPlace"
                   className="inputBox dport"
                   {...this.state}
+                  handleAirportChange={this.handleAirportChange}
                 />
               </Col>
               <Col sm={12} md={6} lg={6} xl={6} className="inputBox aport">
@@ -194,6 +202,7 @@ class FlightForm extends Component {
                   name="destinationPlace"
                   className="inputBox aport"
                   {...this.state}
+                  handleAirportChange={this.handleAirportChange}
                 />
               </Col>
               <Col sm={12} md={3} lg={3} xl={3} className="inputBox ddate">
