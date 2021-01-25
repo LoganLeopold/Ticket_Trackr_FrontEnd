@@ -3,6 +3,7 @@ import axios from "axios";
 import { Row, Container, Col } from "reactstrap";
 import CountrySelect from "./countrySelect"
 import DateP from "./Date";
+import AirportInput from "./AirportInput"
 // var Amadeus = require("amadeus")
 var moment = require("moment");
 
@@ -18,15 +19,15 @@ class FlightForm extends Component {
       currency: "USD",
       locale: "en-US",
       livePrice: "",
-      status: "",
+      // status: "",
       oAuth: '',
     };
 
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleFindRoutes = this.handleFindRoutes.bind(this);
-    this.handleOptionClick = this.handleOptionClick.bind(this)
-    this.handleInput = this.handleInput.bind(this)
+    // this.handleOptionClick = this.handleOptionClick.bind(this)
+    // this.handleInput = this.handleInput.bind(this)
   }
 
   componentDidMount() {
@@ -171,74 +172,6 @@ class FlightForm extends Component {
     });
   }
 
-  // For normal text input
-  handleInput(event) {
-
-    let flightForm = this
-
-    let thisInput = event.target   
-
-    if (event.target.value.length > 0) {
-      axios({
-        method: 'get',
-        url: `https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT&keyword=${event.target.value}`,
-        headers: {
-          "Content-Type":"application/x-www-form-urlencoded",
-          "Authorization": `Bearer ${this.state.oAuth}`
-        }
-      }).then( function(response) {
-
-        console.log(response.data.data)
-
-        while (thisInput.nextSibling) {
-          thisInput.parentNode.removeChild(thisInput.nextSibling)
-        }
-
-        let newPopup = document.createElement("DIV")
-        newPopup.className = "popup"
-
-        response.data.data.slice(0,5).forEach( function (port) {
-          let portName = port.name.toLowerCase()
-          let option = document.createElement("OPTION")
-          option.value = port.iataCode
-          option.dataset.country = port.address.countryCode
-          option.innerHTML = option.name = portName
-          option.onclick = flightForm.handleOptionClick
-          newPopup.appendChild(option)
-        })
-
-        newPopup.style.display = "block"
-
-        thisInput.parentNode.appendChild(newPopup)
-
-      }).catch( err => console.log(err))
-
-      this.setState({
-        [event.target.name]: event.target.value
-      });
-    
-    }
-
-  }
-
-  handleOptionClick(event) {
-
-    event.target.parentNode.previousSibling.value = event.target.name
-
-    this.setState({
-      [event.target.parentNode.previousSibling.name]: event.target.value
-    })
-
-    if (event.target.parentNode.previousSibling.name === "originPlace") {
-      this.setState({
-        country: event.target.dataset.country,
-      })
-    }
-    
-    event.target.parentNode.parentNode.removeChild(event.target.parentNode)
-
-  }
-
   render() {
 
     return (
@@ -249,32 +182,19 @@ class FlightForm extends Component {
             <Row>
               <Col sm={12} md={6} lg={6} xl={6} className="inputBox dport">
                 <label>Departure Airport</label>
-                <input
-                  type="text"
-                  name="originPlace"
-                  autoComplete="off"
-                  defaultValue={this.state.originPlace}
-                  onChange={this.handleInput}
-                  style={{
-                    width: this.state.originPlace.length + 'em'
-                  }}
+                <AirportInput 
+                  name="destinationPlace"
+                  className="inputBox dport"
+                  {...this.state}
                 />
-                <div className="popup"></div>
-
               </Col>
               <Col sm={12} md={6} lg={6} xl={6} className="inputBox aport">
                 <label>Arrival Airport</label>
-                <input
-                  type="text"
+                <AirportInput 
                   name="destinationPlace"
-                  autoComplete="off"
-                  defaultValue={this.state.destinationPlace}
-                  onChange={this.handleInput}
-                  style={{
-                    width: this.state.destinationPlace.length + 'em'
-                  }}
+                  className="inputBox aport"
+                  {...this.state}
                 />
-                <div class="popup"></div>
               </Col>
               <Col sm={12} md={3} lg={3} xl={3} className="inputBox ddate">
                 <label>Departure Date</label>
@@ -306,7 +226,6 @@ class FlightForm extends Component {
             </Row>
 
             <Row>
-
               <Col sm={12} md={8} lg={8} xl={8} className="d-flex flex-column">
                 <h2 className="formStatus"> {this.state.status}</h2>
                 <h2 className="formSubmit">{this.state.livePrice}</h2>

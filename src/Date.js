@@ -49,9 +49,9 @@ class DateP extends React.Component {
         {
           startDate: today
         },
-        () => {
-          this.props.handleDateChange(this.props.fieldName, this.state.startDate);
-        }
+          () => {
+            this.props.handleDateChange(this.props.fieldName, this.state.startDate);
+          }
       );
 
   }
