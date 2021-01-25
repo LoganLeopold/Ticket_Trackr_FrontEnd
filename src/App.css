@@ -34,7 +34,7 @@ body {
 header {
   padding: 30px 0;
   color: #034732;
-  font-size: 7vh;
+  font-size: 55px;
   font-family: 'Arimo', sans-serif;
   background: #3BCEAC;
 }
@@ -54,7 +54,7 @@ header {
 
 .instructions {
   font-family: 'Arimo', sans-serif;
-  font-size: 2.5vh;
+  font-size: 18px;
   color: #034732;
   width: 60vw;
   margin: 10px auto;
@@ -161,7 +161,7 @@ form {
   width: 96.5%;
   top: 96%;
   z-index: 10000;
-  font-size: 3vh;
+  font-size: 18px;
   color: #034732;
   font-weight: 300;
   border: 3px solid #3BCEAC;

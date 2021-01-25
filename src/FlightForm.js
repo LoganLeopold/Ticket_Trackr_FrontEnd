@@ -19,7 +19,7 @@ class FlightForm extends Component {
       currency: "USD",
       locale: "en-US",
       livePrice: "",
-      // status: "",
+      status: "",
       oAuth: '',
     };
 
@@ -27,8 +27,6 @@ class FlightForm extends Component {
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleFindRoutes = this.handleFindRoutes.bind(this);
     this.handleAirportChange = this.handleAirportChange.bind(this)
-    // this.handleOptionClick = this.handleOptionClick.bind(this)
-    // this.handleInput = this.handleInput.bind(this)
   }
 
   componentDidMount() {
