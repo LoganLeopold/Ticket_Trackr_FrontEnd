@@ -33,10 +33,17 @@ class AirportInput extends Component {
         },
       })
         .then(function (response) {
+          
           thisCom.setState({
-              inputRes: response.data.data  
-          })
-          // console.log(this)
+            airport: response.data.data[0]
+          }, () => {
+            console.log(thisCom.state.airport.name)
+          thisCom.props.handleAirportChange(thisCom.props.name, thisCom.state.airport)
+          if (thisCom.props.name === "originPlace" && thisInput.dataset.country !== thisCom.props.country) {
+            thisCom.props.handleAirportChange("country", thisInput.dataset.country)
+            }
+          });
+          
           console.log(response.data.data);
 
           while (thisInput.nextSibling) {
@@ -62,9 +69,6 @@ class AirportInput extends Component {
         })
         .catch((err) => console.log(err));
 
-      // this.setState({
-      //   [event.target.name]: event.target.value,
-      // });
     }
   }
 

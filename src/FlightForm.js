@@ -82,6 +82,7 @@ class FlightForm extends Component {
 
   }
 
+  // Find Routes Button
   handleFindRoutes(event) {
 
     event.preventDefault()
@@ -171,6 +172,7 @@ class FlightForm extends Component {
     });
   }
 
+  // For AirportInput
   handleAirportChange(name, value) {
     this.setState({
       [name]: value
