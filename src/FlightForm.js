@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Row, Container, Col } from "reactstrap";
-import CountrySelect from "./countrySelect"
 import DateP from "./Date";
 import AirportInput from "./AirportInput"
-// var Amadeus = require("amadeus")
 var moment = require("moment");
 
 class FlightForm extends Component {
@@ -62,7 +60,7 @@ class FlightForm extends Component {
       outboundDate: today
     })
 
-    // Begin API Access 
+    // Begin API Access - Retrieving Token
     let body = `grant_type=client_credentials&client_id=${process.env.REACT_APP_AMADEUS_KEY}&client_secret=${process.env.REACT_APP_AMADEUS_SECRET}`;
     let form = this
 
@@ -115,7 +113,7 @@ class FlightForm extends Component {
           "useQueryString": true,
         },
         params: {
-          inboundpartialdate: moment(this.state.inboundDate).format("YYYY-MM-DD")
+          // inboundpartialdate: moment(this.state.inboundDate).format("YYYY-MM-DD")
         }
       })
       .then( function(response) {
@@ -137,9 +135,6 @@ class FlightForm extends Component {
       })
       .catch(function(err) {
         console.log(err.response)
-        // err.response.data.ValidationErrors.forEach(error =>  alert.innerHTML = params[error.ParameterName] + ': ' + error.Message + ". <br />");
-        // alert.innerHTML += "Adjust these errors and try again."
-        // alert.style.display = "flex";
       })
     } else {
       /* 

@@ -37,14 +37,13 @@ class AirportInput extends Component {
           thisCom.setState({
             airport: response.data.data[0]
           }, () => {
-            console.log(thisCom.state.airport.name)
           thisCom.props.handleAirportChange(thisCom.props.name, thisCom.state.airport)
           if (thisCom.props.name === "originPlace" && thisInput.dataset.country !== thisCom.props.country) {
             thisCom.props.handleAirportChange("country", thisInput.dataset.country)
             }
           });
           
-          console.log(response.data.data);
+          // console.log(response.data.data);
 
           while (thisInput.nextSibling) {
             thisInput.parentNode.removeChild(thisInput.nextSibling);
