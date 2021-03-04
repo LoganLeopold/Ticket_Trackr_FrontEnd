@@ -113,7 +113,7 @@ class FlightForm extends Component {
           "useQueryString": true,
         },
         params: {
-          // inboundpartialdate: moment(this.state.inboundDate).format("YYYY-MM-DD")
+          inboundpartialdate: moment(this.state.inboundDate).format("YYYY-MM-DD")
         }
       })
       .then( function(response) {

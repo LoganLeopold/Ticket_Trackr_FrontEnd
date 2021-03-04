@@ -11,6 +11,7 @@ class AirportInput extends Component {
     this.handleInput = this.handleInput.bind(this);
     this.handleOptionClick = this.handleOptionClick.bind(this)
     this.handleInput = this.handleInput.bind(this)
+    this.handleAutoComplete = this.handleAutoComplete.bind(this)
   }
 
   componentDidMount() {
@@ -20,13 +21,30 @@ class AirportInput extends Component {
   // For normal text input
   handleInput(event) {
 
-    let thisCom = this
-    let thisInput = event.target
+      let snippet = event.target.value
+      let input = event.target
 
-    if (event.target.value.length > 0) {
+      clearTimeout()
+
+      setTimeout( () => {
+        this.handleAutoComplete(snippet, input)
+      }, 700)
+
+  }
+
+  afterError() {
+    
+  }
+
+  handleAutoComplete(snippet, input) {
+
+    let thisCom = this
+    let thisInput = input
+
+    if (snippet.length > 0) {
       axios({
         method: "get",
-        url: `https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT&keyword=${event.target.value}`,
+        url: `https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT&keyword=${snippet}`,
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           Authorization: `Bearer ${this.props.oAuth}`,
@@ -51,6 +69,11 @@ class AirportInput extends Component {
 
           let newPopup = document.createElement("DIV");
           newPopup.className = "popup";
+          newPopup.addEventListener('keydown', event => {
+            if (event.key === 40) {
+              newPopup.firstChild.focus()
+            }
+          })
 
           response.data.data.slice(0, 5).forEach(function (port) {
             let portName = port.name.toLowerCase();
@@ -59,6 +82,15 @@ class AirportInput extends Component {
             option.dataset.country = port.address.countryCode;
             option.innerHTML = option.name = portName;
             option.onclick = thisCom.handleOptionClick;
+            option.addEventListener('keydown', e => {
+              if (e.key === 40) {
+                e.target.nextSibling.focus()
+              } else if (e.key === 38) {
+                e.target.previousSibling.focus()
+              } else if (e.key === 13) {
+                thisCom.handleOptionClick(e)
+              }
+            })
             newPopup.appendChild(option);
           });
 
@@ -66,7 +98,7 @@ class AirportInput extends Component {
 
           thisInput.parentNode.appendChild(newPopup);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.response));
 
     }
   }
@@ -93,7 +125,8 @@ class AirportInput extends Component {
         className={this.props.classes}
         type="text"
         autoComplete="off"
-        onChange={this.handleInput}
+        // onChange={this.handleInput}
+        onKeyUp={this.handleInput}
       />
     );
   }
