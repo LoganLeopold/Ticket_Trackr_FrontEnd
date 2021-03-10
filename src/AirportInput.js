@@ -1,42 +1,62 @@
 import React, { Component, ReactDOM } from "react";
 import axios from "axios";
+import AirportsDropdown from "./AirportsDropdown"
 
 class AirportInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
       airport: "",
-      inputRes: {},
+      inputRes: [],
+      typing: false,
+      currVal: "",
+      dropdown: false
     };
     this.handleInput = this.handleInput.bind(this);
     this.handleOptionClick = this.handleOptionClick.bind(this)
     this.handleInput = this.handleInput.bind(this)
     this.handleAutoComplete = this.handleAutoComplete.bind(this)
+    // this.typingCheck = this.typingCheck.bind(this)
   }
 
   componentDidMount() {
-    console.log("airportInput Mounted");
+    // console.log("airportInput Mounted");
   }
 
   // For normal text input
   handleInput(event) {
+    
+    let snippet = event.target.value
+    let input = event.target
 
-      let snippet = event.target.value
-      let input = event.target
+    this.setState({
+      currently: true,
+      currVal: snippet
+    })
 
-      clearTimeout()
+    clearTimeout()
 
-      setTimeout( () => {
-        this.handleAutoComplete(snippet, input)
-      }, 700)
+    setTimeout( () => {
+      this.setState({
+        currently: false
+      })
+      if (this.state.currVal.length > 0) {
+        this.handleAutoComplete(this.state.currVal, input)
+      } else {
+        this.setState({
+          dropdown: false
+        })
+      }
+    }, 850)
 
   }
 
-  // afterError() {
-
+  // typingCheck () {
   // }
 
   handleAutoComplete(snippet, input) {
+
+    console.log('handleAutoCom triggered')
 
     let thisCom = this
     let thisInput = input
@@ -51,62 +71,38 @@ class AirportInput extends Component {
         },
       })
         .then(function (response) {
+
+          let tempA = response.data.data.slice(0, 5).sort( (a,b) => 
+            b.analytics.travelers.score - a.analytics.travelers.score
+          )
+
+          console.log(tempA)
           
-          thisCom.setState({
-            airport: response.data.data[0]
-          }, () => {
-          thisCom.props.handleAirportChange(thisCom.props.name, thisCom.state.airport)
-          if (thisCom.props.name === "originPlace" && thisInput.dataset.country !== thisCom.props.country) {
-            thisCom.props.handleAirportChange("country", thisInput.dataset.country)
-            }
-          });
-
-          let dropdown;
-
-          if (!thisInput.nextSibling) {
-            let newPopup = document.createElement("DIV")
-            newPopup.className = "popup"
-            dropdown = newPopup
-            thisInput.addEventListener('keydown', event => {
-              if (event.code === "ArrowDown") {
-                dropdown.firstChild.focus()
-              } 
-            })
-            thisInput.parentNode.appendChild(newPopup);
-          } else {
-            dropdown = thisInput.nextSibling
-          }
-
-          while (dropdown.firstChild) {
-            dropdown.removeChild(dropdown.firstChild);
-          }
-
-          response.data.data.slice(0, 5).forEach(function (port) {
-            let portName = port.name.toLowerCase();
-            let option = document.createElement("OPTION");
-            option.value = port.iataCode;
-            option.ref = port.iataCode
-            option.dataset.country = port.address.countryCode;
-            option.innerHTML = option.name = portName;
-            option.onclick = thisCom.handleOptionClick;
-            option.addEventListener('keydown', e => {
-              if (e.key === 40) {
-                e.target.nextSibling.focus()
-              } else if (e.key === 38) {
-                e.target.previousSibling.focus()
-              } else if (e.key === 13) {
-                thisCom.handleOptionClick(e)
+          if (tempA.length > 0) {
+            thisCom.setState({
+              inputRes: tempA,
+              dropdown: true
+            }, () => {
+                thisCom.props.handleAirportChange(thisCom.props.name, thisCom.state.airport)
+                if (thisCom.props.name === "originPlace" && thisInput.dataset.country !== thisCom.props.country) {
+                  thisCom.props.handleAirportChange("country", thisInput.dataset.country)
+                }
               }
+            )
+          } else {
+            thisCom.setState({
+              dropdown: false
             })
-            dropdown.appendChild(option);
-          });
-
-          dropdown.style.display = "block";
+          };
 
         })
 
         .catch((err) => console.log(err));
 
+    } else {
+      this.setState({
+        dropdown: false
+      })
     }
   }
 
@@ -120,21 +116,22 @@ class AirportInput extends Component {
       if (this.props.name === "originPlace" && event.target.dataset.country !== this.props.country) {
         this.props.handleAirportChange("country", event.target.dataset.country)
       }
+      event.target.parentNode.childNodes.forEach( child => child.parentNode.removeChild(child))
     });
 
-    while (event.target.parentNode.firstChild) {
-      event.target.parentNode.removeChild(event.target.parentNode.firstChild);
-    }
-  }
+  } 
 
   render() {
     return (
-      <input
-        className={this.props.classes}
-        type="text"
-        autoComplete="off"
-        onChange={this.handleInput}
-      />
+      <div>
+      	<input
+      	  className={this.props.classes}
+      	  type="text"
+      	  autoComplete="off"
+      	  onChange={this.handleInput}
+      	/>
+        <AirportsDropdown {...this.props} {...this.state} />
+      </div>
     );
   }
 }
