@@ -25,33 +25,45 @@ class AirportInput extends Component {
 
   // For normal text input
   handleInput(event) {
+
+    let thisInput = this
     
     let snippet = event.target.value
     let input = event.target
+    var callTimer;
 
-    if (!this.state.typing) {
+    function cancelCall(timer) {
+      clearTimeout(timer);
+    }
+  
+    function callWait() {
+      callTimer = setTimeout( () => {
+        thisInput.setState({
+          currently: false
+        })
+        if (this.state.currVal.length > 0) {
+          thisInput.handleAutoComplete(thisInput.state.currVal, input)
+        } else {
+          thisInput.setState({
+            dropdown: false
+          })
+        }
+      }, 850)
+    }
+    
+    if (!thisInput.state.typing && !thisInput.state.currVal) {
       this.setState({
         currently: true,
         currVal: snippet
       })
+    } else if (thisInput.state.typing && thisInput.state.currVal) {
+      cancelCall(callTimer)
+    } else if (!thisInput.state.typing && thisInput.state.currVal) {
+      callWait(callTimer)
     }
 
-    clearTimeout(stopCall)
-
-    var stopCall = setTimeout( () => {
-      this.setState({
-        currently: false
-      })
-      if (this.state.currVal.length > 0) {
-        this.handleAutoComplete(this.state.currVal, input)
-      } else {
-        this.setState({
-          dropdown: false
-        })
-      }
-    }, 850)
-
   }
+
 
   // typingCheck () {
   // }
