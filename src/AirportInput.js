@@ -11,15 +11,27 @@ class AirportInput extends Component {
       inputRes: [],
       timer: -1,
       typing: false,
+      focused: true
     };
     this.handleInput = this.handleInput.bind(this);
-    this.handleOptionClick = this.handleOptionClick.bind(this)
     this.handleInput = this.handleInput.bind(this)
     this.handleAutoComplete = this.handleAutoComplete.bind(this)
+    this.giveFocus = this.giveFocus.bind(this)
+
+    this.sibDropdown = React.createRef()
   }
 
   componentDidMount() {
     // console.log("airportInput Mounted");
+  }
+
+  giveFocus(e) {
+    console.log(e)
+    if (e.key === "ArrowDown") {
+      this.setState({
+        focused: false
+      })
+    }
   }
 
   // For normal text input
@@ -129,8 +141,10 @@ class AirportInput extends Component {
       	  type="text"
       	  autoComplete="off"
       	  onChange={this.handleInput}
+          onKeyDown={this.giveFocus}
+          ref={this.sibDropdown}
       	/>
-        <AirportsDropdown {...this.props} {...this.state} />
+        <AirportsDropdown {...this.props} {...this.state} focusRef={this.sibDropdown} focused={this.props.focused}/>
       </div>
     );
   }

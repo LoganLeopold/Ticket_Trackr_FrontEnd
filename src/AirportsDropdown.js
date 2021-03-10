@@ -5,8 +5,14 @@ class AirportsDropdown extends Component {
     constructor (props) {
         super(props)
         this.state = {
-            shown: false
+            shown: false,
         }
+
+        this.componentDidUpdate = this.componentDidUpdate.bind(this)
+
+        this.props.inputRes.forEach( airport => {
+            this[`${airport.iataCode}`] = React.createRef()
+        })
     }
 
     // componentDidMount() {
@@ -25,6 +31,9 @@ class AirportsDropdown extends Component {
             })
         }
 
+        if (this.props.focused === false) {
+            this[`${this.inputRes[0].iataCode}`].current.focus()
+        }
     }
 
     // handleOptionClick(event) {
@@ -53,8 +62,8 @@ class AirportsDropdown extends Component {
                 {   
                     options.map( (port, i) => {       
                         return (
-                            <option value={port.iataCode} data-country={port.address.countryCode} key={i}>
-                                {port.name.toLowerCase()}
+                            <option value={port.iataCode} data-country={port.address.countryCode} key={i} ref={this[`${port.iataCode}`]}>
+                                {port.name.toLowerCase()} 
                             </option>
                         )
                     })
