@@ -7,7 +7,6 @@ class AirportInput extends Component {
     super(props);
     this.state = {
       airport: "",
-      currVal: "",
       dropdown: false,
       inputRes: [],
       timer: -1,
@@ -28,23 +27,18 @@ class AirportInput extends Component {
     
     let snippet = event.target.value
     let input = event.target
-    
-    if (this.state.timer !== -1) {
-      clearTimeout(this.state.timer)
-    }
-    
-
+  
     /*
     
     === CHANGE ===
 
     if snipp > 0
       - Clear any timeout 
+      - Typing Status True (if not)
       - Set Timeout
-        -> Typing Status True (if not)
-        -> Wait
+        -> Wait for completion
           -> Typing False
-          -> Send call if completes (not cleared)
+          -> Send call if completes (not cleared) - happens in next handler
             -> Await results
             If results.length > 0
               If Dropdown false
@@ -54,32 +48,30 @@ class AirportInput extends Component {
     */
 
     if (snippet) {
-      console.log('test')
-    }
-    
-    this.setState({
-      currVal: snippet,
-      typing: true
-    })
-
-
-    var stopCall = setTimeout( () => {
-      this.setState({
-        currently: false
-      })
-      if (this.state.currVal.length > 0) {
-        this.handleAutoComplete(this.state.currVal, input)
-      } else {
-        this.setState({
-          dropdown: false
-        })
+      if (this.state.timer !== -1) {
+        clearTimeout(this.state.timer)
       }
-    }, 850)
-    this.setState({
-      timer: stopCall
-    })
+      this.setState({
+        typing: true,
+      }, () => {
+        var stopCall = setTimeout( () => {
+          this.setState({
+            typing: false
+          })
+          this.handleAutoComplete(snippet, input)
+        }, 1000)
+        this.setState({
+          timer: stopCall
+        })
+      })
 
-
+      // Bottom of if (snippet)
+    } else {
+      this.setState({
+        dropdown: false
+      })
+    }
+  
   }
 
   // typingCheck () {
@@ -89,8 +81,8 @@ class AirportInput extends Component {
 
     console.log('handleAutoCom triggered')
 
-    let thisCom = this
-    let thisInput = input
+    let inputNode = input
+    let thisInput = this
 
     if (snippet.length > 0) {
       axios({
@@ -103,25 +95,25 @@ class AirportInput extends Component {
       })
         .then(function (response) {
 
-          let tempA = response.data.data.slice(0, 5).sort( (a,b) => 
+          let tempA = response.data.data.length > 0 ? response.data.data.slice(0, 5).sort( (a,b) => 
             b.analytics.travelers.score - a.analytics.travelers.score
-          )
+          ) : null
 
           console.log(tempA)
           
-          if (tempA.length > 0) {
-            thisCom.setState({
+          if (tempA) {
+            thisInput.setState({
               inputRes: tempA,
               dropdown: true
             }, () => {
-                thisCom.props.handleAirportChange(thisCom.props.name, thisCom.state.airport)
-                if (thisCom.props.name === "originPlace" && thisInput.dataset.country !== thisCom.props.country) {
-                  thisCom.props.handleAirportChange("country", thisInput.dataset.country)
+                thisInput.props.handleAirportChange(thisInput.props.name, tempA[0].iataCode)
+                if (thisInput.props.name === "originPlace" && inputNode.dataset.country !== thisInput.props.country) {
+                  thisInput.props.handleAirportChange("country", inputNode.dataset.country)
                 }
               }
             )
           } else {
-            thisCom.setState({
+            thisInput.setState({
               dropdown: false
             })
           };
