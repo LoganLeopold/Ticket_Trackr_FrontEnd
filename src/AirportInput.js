@@ -7,16 +7,16 @@ class AirportInput extends Component {
     super(props);
     this.state = {
       airport: "",
-      inputRes: [],
-      typing: true,
       currVal: "",
-      dropdown: false
+      dropdown: false,
+      inputRes: [],
+      timer: -1,
+      typing: false,
     };
     this.handleInput = this.handleInput.bind(this);
     this.handleOptionClick = this.handleOptionClick.bind(this)
     this.handleInput = this.handleInput.bind(this)
     this.handleAutoComplete = this.handleAutoComplete.bind(this)
-    // this.typingCheck = this.typingCheck.bind(this)
   }
 
   componentDidMount() {
@@ -28,22 +28,56 @@ class AirportInput extends Component {
     
     let snippet = event.target.value
     let input = event.target
+    
+    if (this.state.timer !== -1) {
+      clearTimeout(this.state.timer)
+    }
+    
 
-    if (this.state.typing && this.state.currVal) {
-      clearTimeout(stopCall)
-      var stopCall = setTimeout( () => {
+    /*
+    
+    === CHANGE ===
+
+    if snipp > 0
+      - Clear any timeout 
+      - Set Timeout
+        -> Typing Status True (if not)
+        -> Wait
+          -> Typing False
+          -> Send call if completes (not cleared)
+            -> Await results
+            If results.length > 0
+              If Dropdown false
+                -> Dropdown true
+    if snipp < 0 
+      -Dropdown false
+    */
+
+    if (snippet) {
+      console.log('test')
+    }
+    
+    this.setState({
+      currVal: snippet,
+      typing: true
+    })
+
+
+    var stopCall = setTimeout( () => {
+      this.setState({
+        currently: false
+      })
+      if (this.state.currVal.length > 0) {
+        this.handleAutoComplete(this.state.currVal, input)
+      } else {
         this.setState({
-          currently: false
+          dropdown: false
         })
-        if (this.state.currVal.length > 0) {
-          this.handleAutoComplete(this.state.currVal, input)
-        } else {
-          this.setState({
-            dropdown: false
-          })
-        }
-      }, 850)
-    } 
+      }
+    }, 850)
+    this.setState({
+      timer: stopCall
+    })
 
 
   }
