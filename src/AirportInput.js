@@ -8,7 +8,7 @@ class AirportInput extends Component {
     this.state = {
       airport: "",
       inputRes: [],
-      typing: false,
+      typing: true,
       currVal: "",
       dropdown: false
     };
@@ -25,45 +25,28 @@ class AirportInput extends Component {
 
   // For normal text input
   handleInput(event) {
-
-    let thisInput = this
     
     let snippet = event.target.value
     let input = event.target
-    var callTimer;
 
-    function cancelCall(timer) {
-      clearTimeout(timer);
-    }
-  
-    function callWait() {
-      callTimer = setTimeout( () => {
-        thisInput.setState({
+    if (this.state.typing && this.state.currVal) {
+      clearTimeout(stopCall)
+      var stopCall = setTimeout( () => {
+        this.setState({
           currently: false
         })
         if (this.state.currVal.length > 0) {
-          thisInput.handleAutoComplete(thisInput.state.currVal, input)
+          this.handleAutoComplete(this.state.currVal, input)
         } else {
-          thisInput.setState({
+          this.setState({
             dropdown: false
           })
         }
       }, 850)
-    }
-    
-    if (!thisInput.state.typing && !thisInput.state.currVal) {
-      this.setState({
-        currently: true,
-        currVal: snippet
-      })
-    } else if (thisInput.state.typing && thisInput.state.currVal) {
-      cancelCall(callTimer)
-    } else if (!thisInput.state.typing && thisInput.state.currVal) {
-      callWait(callTimer)
-    }
+    } 
+
 
   }
-
 
   // typingCheck () {
   // }
