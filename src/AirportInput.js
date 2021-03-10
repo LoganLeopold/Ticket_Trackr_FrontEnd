@@ -59,7 +59,7 @@ class AirportInput extends Component {
             typing: false
           })
           this.handleAutoComplete(snippet, input)
-        }, 1000)
+        }, 500)
         this.setState({
           timer: stopCall
         })
@@ -79,8 +79,6 @@ class AirportInput extends Component {
 
   handleAutoComplete(snippet, input) {
 
-    console.log('handleAutoCom triggered')
-
     let inputNode = input
     let thisInput = this
 
@@ -95,11 +93,28 @@ class AirportInput extends Component {
       })
         .then(function (response) {
 
-          let tempA = response.data.data.length > 0 ? response.data.data.slice(0, 5).sort( (a,b) => 
-            b.analytics.travelers.score - a.analytics.travelers.score
-          ) : null
+          let airports = response.data.data
+
+          let tempA; 
+          if (airports.length > 0) {
+            if (airports.length > 1) {
+              console.log(airports)
+              tempA = airports.slice(0, 5).sort( (a,b) => {
+                if (a.analytics && b.analytics) {
+                  return b.analytics.travelers.score - a.analytics.travelers.score
+                } else {
+                  return 1
+                }
+              })
+            } else {
+              tempA = airports
+            }
+          } else {
+            tempA = null
+          }
 
           console.log(tempA)
+
           
           if (tempA) {
             thisInput.setState({
