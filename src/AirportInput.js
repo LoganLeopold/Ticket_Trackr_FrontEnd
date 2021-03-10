@@ -32,9 +32,9 @@ class AirportInput extends Component {
 
   }
 
-  afterError() {
+  // afterError() {
 
-  }
+  // }
 
   handleAutoComplete(snippet, input) {
 
@@ -61,19 +61,20 @@ class AirportInput extends Component {
             }
           });
 
-          let newPopup;
-          
+          let dropdown;
+
           if (!thisInput.nextSibling) {
-            newPopup = document.createElement("DIV");
-            newPopup.className = "popup";
+            let newPopup = document.createElement("DIV")
             newPopup.addEventListener('keydown', event => {
               if (event.key === 40) {
                 newPopup.firstChild.focus()
               } 
             })
+            thisInput.parentNode.appendChild(newPopup);
+            dropdown = newPopup
+          } else {
+            dropdown = thisInput.nextSibling
           }
-
-          // thisInput.parentNode.removeChild(thisInput.nextSibling);
 
           response.data.data.slice(0, 5).forEach(function (port) {
             let portName = port.name.toLowerCase();
@@ -91,16 +92,14 @@ class AirportInput extends Component {
                 thisCom.handleOptionClick(e)
               }
             })
-            newPopup.appendChild(option);
+            dropdown.appendChild(option);
           });
 
-          newPopup.style.display = "block";
-
-          thisInput.parentNode.appendChild(newPopup);
+          dropdown.style.display = "block";
 
         })
-        
-        .catch((err) => console.log(err.response));
+
+        .catch((err) => console.log(err));
 
     }
   }
