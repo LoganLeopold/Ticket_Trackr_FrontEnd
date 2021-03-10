@@ -27,25 +27,6 @@ class AirportInput extends Component {
     
     let snippet = event.target.value
     let input = event.target
-  
-    /*
-    
-    === CHANGE ===
-
-    if snipp > 0
-      - Clear any timeout 
-      - Typing Status True (if not)
-      - Set Timeout
-        -> Wait for completion
-          -> Typing False
-          -> Send call if completes (not cleared) - happens in next handler
-            -> Await results
-            If results.length > 0
-              If Dropdown false
-                -> Dropdown true
-    if snipp < 0 
-      -Dropdown false
-    */
 
     if (snippet) {
       if (this.state.timer !== -1) {
@@ -64,7 +45,6 @@ class AirportInput extends Component {
           timer: stopCall
         })
       })
-
       // Bottom of if (snippet)
     } else {
       this.setState({
@@ -73,9 +53,6 @@ class AirportInput extends Component {
     }
   
   }
-
-  // typingCheck () {
-  // }
 
   handleAutoComplete(snippet, input) {
 
@@ -143,21 +120,6 @@ class AirportInput extends Component {
       })
     }
   }
-
-  handleOptionClick(event) {
-    event.target.parentNode.previousSibling.value = event.target.name;
-
-    this.setState({
-      airport: event.target.value
-    }, () => {
-      this.props.handleAirportChange(this.props.name, this.state.airport)
-      if (this.props.name === "originPlace" && event.target.dataset.country !== this.props.country) {
-        this.props.handleAirportChange("country", event.target.dataset.country)
-      }
-      event.target.parentNode.childNodes.forEach( child => child.parentNode.removeChild(child))
-    });
-
-  } 
 
   render() {
     return (
