@@ -96,6 +96,13 @@ class FlightForm extends Component {
     
     var alert = document.querySelectorAll('.formStatus')[0];
 
+    let ddate = document.querySelector('.ddate input.customInput').value
+    let rdate = document.querySelector('.rdate input.customInput').value 
+    let originPlace = document.querySelector('.dport input').dataset.iata
+    let destinationPlace = document.querySelector('.aport input').dataset.iata
+
+    console.log(ddate, rdate, originPlace, destinationPlace)
+
     if (Date.parse(this.state.inboundDate) < Date.parse(this.state.outboundDate)) {
       alert.innerHTML = "Sorry - your return date is before your departure. Adjust and try again."
       alert.style.display = "flex"

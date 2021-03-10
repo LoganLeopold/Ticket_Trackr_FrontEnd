@@ -5,7 +5,7 @@ class AirportInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      airport: "",
+      // airport: "",
       inputRes: {},
     };
     this.handleInput = this.handleInput.bind(this);
@@ -23,10 +23,10 @@ class AirportInput extends Component {
     let thisCom = this
     let thisInput = event.target
 
-    if (event.target.value.length > 0) {
+    if (thisInput.value.length > 0) {
       axios({
         method: "get",
-        url: `https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT&keyword=${event.target.value}`,
+        url: `https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT&keyword=${thisInput.value}`,
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           Authorization: `Bearer ${this.props.oAuth}`,
@@ -34,16 +34,9 @@ class AirportInput extends Component {
       })
         .then(function (response) {
           
-          thisCom.setState({
-            airport: response.data.data[0]
-          }, () => {
-          thisCom.props.handleAirportChange(thisCom.props.name, thisCom.state.airport)
           if (thisCom.props.name === "originPlace" && thisInput.dataset.country !== thisCom.props.country) {
             thisCom.props.handleAirportChange("country", thisInput.dataset.country)
-            }
-          });
-          
-          // console.log(response.data.data);
+          }
 
           while (thisInput.nextSibling) {
             thisInput.parentNode.removeChild(thisInput.nextSibling);
@@ -72,19 +65,14 @@ class AirportInput extends Component {
   }
 
   handleOptionClick(event) {
+    event.target.parentNode.previousSibling.dataset.iata = event.target.value;
     event.target.parentNode.previousSibling.value = event.target.name;
 
-    this.setState({
-      airport: event.target.value
-    }, () => {
-      this.props.handleAirportChange(this.props.name, this.state.airport)
-      if (this.props.name === "originPlace" && event.target.dataset.country !== this.props.country) {
-        this.props.handleAirportChange("country", event.target.dataset.country)
-      }
-    });
+    if (this.props.name === "originPlace" && event.target.dataset.country !== this.props.country) {
+      this.props.handleAirportChange("country", event.target.dataset.country)
+    }
 
-    event.target.parentNode.parentNode.removeChild(event.target.parentNode);
-
+    event.target.parentNode.style.display = 'none'
   }
 
   render() {
@@ -94,6 +82,7 @@ class AirportInput extends Component {
         type="text"
         autoComplete="off"
         onChange={this.handleInput}
+        defaultValue=""
       />
     );
   }
