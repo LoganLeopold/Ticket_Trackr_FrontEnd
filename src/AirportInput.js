@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, ReactDOM } from "react";
 import axios from "axios";
 
 class AirportInput extends Component {
@@ -65,21 +65,27 @@ class AirportInput extends Component {
 
           if (!thisInput.nextSibling) {
             let newPopup = document.createElement("DIV")
-            newPopup.addEventListener('keydown', event => {
-              if (event.key === 40) {
-                newPopup.firstChild.focus()
+            newPopup.className = "popup"
+            dropdown = newPopup
+            thisInput.addEventListener('keydown', event => {
+              if (event.code === "ArrowDown") {
+                dropdown.firstChild.focus()
               } 
             })
             thisInput.parentNode.appendChild(newPopup);
-            dropdown = newPopup
           } else {
             dropdown = thisInput.nextSibling
+          }
+
+          while (dropdown.firstChild) {
+            dropdown.removeChild(dropdown.firstChild);
           }
 
           response.data.data.slice(0, 5).forEach(function (port) {
             let portName = port.name.toLowerCase();
             let option = document.createElement("OPTION");
             option.value = port.iataCode;
+            option.ref = port.iataCode
             option.dataset.country = port.address.countryCode;
             option.innerHTML = option.name = portName;
             option.onclick = thisCom.handleOptionClick;
@@ -116,8 +122,9 @@ class AirportInput extends Component {
       }
     });
 
-    event.target.parentNode.parentNode.removeChild(event.target.parentNode);
-
+    while (event.target.parentNode.firstChild) {
+      event.target.parentNode.removeChild(event.target.parentNode.firstChild);
+    }
   }
 
   render() {
@@ -126,7 +133,7 @@ class AirportInput extends Component {
         className={this.props.classes}
         type="text"
         autoComplete="off"
-        onKeyUp={this.handleInput}
+        onChange={this.handleInput}
       />
     );
   }
