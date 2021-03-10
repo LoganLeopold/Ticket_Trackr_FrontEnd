@@ -29,14 +29,16 @@ class AirportInput extends Component {
     let snippet = event.target.value
     let input = event.target
 
-    this.setState({
-      currently: true,
-      currVal: snippet
-    })
+    if (!this.state.typing) {
+      this.setState({
+        currently: true,
+        currVal: snippet
+      })
+    }
 
-    clearTimeout()
+    clearTimeout(stopCall)
 
-    setTimeout( () => {
+    var stopCall = setTimeout( () => {
       this.setState({
         currently: false
       })
