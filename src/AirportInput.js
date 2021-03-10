@@ -33,7 +33,7 @@ class AirportInput extends Component {
   }
 
   afterError() {
-    
+
   }
 
   handleAutoComplete(snippet, input) {
@@ -60,20 +60,20 @@ class AirportInput extends Component {
             thisCom.props.handleAirportChange("country", thisInput.dataset.country)
             }
           });
-          
-          // console.log(response.data.data);
 
-          while (thisInput.nextSibling) {
-            thisInput.parentNode.removeChild(thisInput.nextSibling);
+          let newPopup;
+          
+          if (!thisInput.nextSibling) {
+            newPopup = document.createElement("DIV");
+            newPopup.className = "popup";
+            newPopup.addEventListener('keydown', event => {
+              if (event.key === 40) {
+                newPopup.firstChild.focus()
+              } 
+            })
           }
 
-          let newPopup = document.createElement("DIV");
-          newPopup.className = "popup";
-          newPopup.addEventListener('keydown', event => {
-            if (event.key === 40) {
-              newPopup.firstChild.focus()
-            }
-          })
+          // thisInput.parentNode.removeChild(thisInput.nextSibling);
 
           response.data.data.slice(0, 5).forEach(function (port) {
             let portName = port.name.toLowerCase();
@@ -97,7 +97,9 @@ class AirportInput extends Component {
           newPopup.style.display = "block";
 
           thisInput.parentNode.appendChild(newPopup);
+
         })
+        
         .catch((err) => console.log(err.response));
 
     }
@@ -125,7 +127,6 @@ class AirportInput extends Component {
         className={this.props.classes}
         type="text"
         autoComplete="off"
-        // onChange={this.handleInput}
         onKeyUp={this.handleInput}
       />
     );
