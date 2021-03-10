@@ -7,7 +7,7 @@ class DateP extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: new Date()
+      date: new Date()
     };
     this.handleChange = this.handleChange.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -15,63 +15,59 @@ class DateP extends React.Component {
 
   componentDidMount() {
 
-    console.log("DATE MOUNTED BRO")
+    // Establish two current local times and the day value of the Date objects
+    var today = new Date()
+    var todayDay = today.getDate()
 
-      // Establish two current local times and the day value of the Date objects
-      var today = new Date()
-      var todayDay = today.getDate()
-  
-      var todayBritain = new Date()
-      
-      // Find current UTC 00 time
-      var londonTime = new Date().toLocaleString("en-US", {timeZone: "Europe/London"});
-  
-      // Establish offset with DST functions and londonTime object
-      var offset;
-      //One time is in DST but the other isn't
-      if ((moment(today).isDST()) !== moment(londonTime).isDST()) {
-        offset = 5;
-      //We're both in the same setup so we're in the standard difference
-      } else {
-        offset = 4;
-      }
-      
-      // Apply offset to the Britain day 
-      todayBritain.setTime(todayBritain.getTime() + (offset*3600000))
-      var todayBritainDay = todayBritain.getDate()
+    var todayBritain = new Date()
+    
+    // Find current UTC 00 time
+    var londonTime = new Date().toLocaleString("en-US", {timeZone: "Europe/London"});
 
-      // If today + offset is next day, bump time up
-      if (todayDay < todayBritainDay) {
-        today = todayBritain
-      }
+    // Establish offset with DST functions and londonTime object
+    var offset;
+    //One time is in DST but the other isn't
+    if ((moment(today).isDST()) !== moment(londonTime).isDST()) {
+      offset = 5;
+    //We're both in the same setup so we're in the standard difference
+    } else {
+      offset = 4;
+    }
+    
+    // Apply offset to the Britain day 
+    todayBritain.setTime(todayBritain.getTime() + (offset*3600000))
+    var todayBritainDay = todayBritain.getDate()
 
-      this.setState(
-        {
-          startDate: today
-        },
-          () => {
-            this.props.handleDateChange(this.props.fieldName, this.state.startDate);
-          }
-      );
+    // If today + offset is next day, bump time up
+    if (todayDay < todayBritainDay) {
+      today = todayBritain
+    }
+
+    this.setState(
+      {
+        date: today
+      },
+        () => {
+          this.props.handleDateChange(this.props.fieldName, this.state.date);
+        }
+    );
 
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.fieldName === "inboundDate" && this.props.inboundDate !== prevProps.inboundDate) {
       this.setState({
-        startDate: this.props.inboundDate
+        date: this.props.inboundDate
       })
     }
   }
 
   handleChange = date => {
 
-    this.setState(
-      {
-        startDate: date
-      },
-      () => {
-        this.props.handleDateChange(this.props.fieldName, this.state.startDate);
+    this.setState({
+        date: date
+      }, () => {
+        this.props.handleDateChange(this.props.fieldName, this.state.date);
       }
     );
   };
@@ -83,8 +79,8 @@ class DateP extends React.Component {
         <DatePicker
           className="datepicker"
           customInput={<CustomInput handleChange={this.handleChange} />}
-          date={this.state.startDate}
-          selected={this.state.startDate}
+          date={this.state.date}
+          selected={this.state.date}
           onChange={this.handleChange}
           onClick={this.props.onClick}
         />
