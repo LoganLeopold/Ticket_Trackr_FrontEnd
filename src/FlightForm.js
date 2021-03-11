@@ -85,12 +85,12 @@ class FlightForm extends Component {
 
     event.preventDefault()
 
-    var params = {
-      OutboundDate: "Departure Date",
-      InboundDate: "Return Date",
-      OriginPlace: "Departure Airport Code",
-      DestinationPlace: "Arrival Airport Code",
-    }
+    // var params = {
+    //   OutboundDate: "Departure Date",
+    //   InboundDate: "Return Date",
+    //   OriginPlace: "Departure Airport Code",
+    //   DestinationPlace: "Arrival Airport Code",
+    // }
 
     document.querySelectorAll('.formSubmit')[0].style.display = "none"
     
@@ -103,36 +103,36 @@ class FlightForm extends Component {
     }
 
     if (this.state.originPlace.length > 0 && this.state.destinationPlace.length > 0) {
-      axios({
+
+      const options = {
         method: 'GET',
-        url: `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/${this.state.originPlace}/${this.state.destinationPlace}/${moment(this.state.outboundDate).format("YYYY-MM-DD")}`, 
-        headers: {
-          "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API,
-          "content-type":"application/octet-stream",
-          "x-rapidapi-host":"skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-          "useQueryString": true,
-        },
+        url: 'https://compare-flight-prices.p.rapidapi.com/GetPricesAPI/StartFlightSearch.aspx',
         params: {
-          // inboundpartialdate: moment(this.state.inboundDate).format("YYYY-MM-DD")
+          lapinfant: 0,
+          child: 0,
+          city2: 'NYC',
+          date1: '2021-01-01',
+          youth: 0,
+          flightType: 2,
+          adults: 1,
+          cabin: 1,
+          infant: 0,
+          city1: 'LAX',
+          seniors: 0,
+          date2: '2021-01-02',
+          islive: true
+        },
+        headers: {
+          'x-rapidapi-key': `${}`,
+          'x-rapidapi-host': 'compare-flight-prices.p.rapidapi.com'
         }
-      })
-      .then( function(response) {
-        var priceDisplay = document.querySelectorAll('.formSubmit')[0];
-        if (response.data.Quotes.length === 0) {
-          alert.innerHTML = "There are no results on this itinerary. Try pushing out your outbound date a bit further."
-          alert.style.display = "flex"
-        } else {
-          var price = response.data.Quotes[0].MinPrice; 
-          for (var i=0; i < response.data.Quotes.length; i++) {
-            if (response.data.Quotes[i].MinPrice < price) {
-              price = response.data.Quotes[i].MinPrice;
-            }
-          }
-          priceDisplay.innerHTML = 'Lowest price: $' + price;
-          alert.style.display = 'none';
-          priceDisplay.style.display = 'flex';
-        }
-      })
+      };
+
+      axios.request(options).then(function (response) {
+        console.log(response.data);
+      }).catch(function (error) {
+        console.error(error);
+      });
       .catch(function(err) {
         console.log(err.response)
       })
