@@ -104,6 +104,7 @@ class FlightForm extends Component {
           lapinfant: 0,
           child: 0,
           city2: 'NYC',
+          // ${this.state.originPlace}/${this.state.destinationPlace}/${moment(this.state.outboundDate).format("YYYY-MM-DD")}
           date1: '2021-01-01',
           youth: 0,
           flightType: 2,
