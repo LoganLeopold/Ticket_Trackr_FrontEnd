@@ -95,6 +95,8 @@ class FlightForm extends Component {
       return
     }
 
+
+    console.log( moment(this.state.outboundDate).format("YYYY-MM-DD"))
     // if (this.state.originPlace.length > 0 && this.state.destinationPlace.length > 0) {
 
       const options = {
@@ -111,7 +113,7 @@ class FlightForm extends Component {
           adults: 1,
           cabin: 1,
           infant: 0,
-          city1: 'LAX',
+          city1: 'SAN',
           seniors: 0,
           date2: moment(this.state.inboundDate).format("YYYY-MM-DD"),
           islive: true
@@ -127,7 +129,21 @@ class FlightForm extends Component {
       })
       .then( response => {
 
-        // Prices request
+        console.log(response)
+
+        const options = {
+          method: 'GET',
+          url: 'https://compare-flight-prices.p.rapidapi.com/GetPricesAPI/GetPrices.aspx',
+          params: {SearchID: response},
+          headers: {
+            'x-rapidapi-key': `${process.env.REACT_APP_RAPID_API}`,
+            'x-rapidapi-host': 'compare-flight-prices.p.rapidapi.com'
+          }
+        };
+        
+        axios.request(options).then(function (response) {
+          console.log(response);
+        })
 
       })
       .catch(function(err) {
