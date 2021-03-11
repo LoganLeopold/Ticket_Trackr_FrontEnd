@@ -105,7 +105,7 @@ class FlightForm extends Component {
           child: 0,
           city2: 'NYC',
           // ${this.state.originPlace}/${this.state.destinationPlace}/${moment(this.state.outboundDate).format("YYYY-MM-DD")}
-          date1: '2021-01-01',
+          date1: moment(this.state.outboundDate).format("YYYY-MM-DD"),
           youth: 0,
           flightType: 2,
           adults: 1,
@@ -113,7 +113,7 @@ class FlightForm extends Component {
           infant: 0,
           city1: 'LAX',
           seniors: 0,
-          date2: '2021-01-02',
+          date2: moment(this.state.inboundDate).format("YYYY-MM-DD"),
           islive: true
         },
         headers: {
@@ -123,7 +123,12 @@ class FlightForm extends Component {
       };
 
       axios.request(options).then(function (response) {
-        console.log(response.data);
+        return response.data.SearchID
+      })
+      .then( response => {
+
+        // Prices request
+
       })
       .catch(function(err) {
         console.log(err.response)
