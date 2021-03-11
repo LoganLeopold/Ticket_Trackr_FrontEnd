@@ -26,7 +26,6 @@ class AirportInput extends Component {
   }
 
   giveFocus(e) {
-    console.log(e)
     if (e.key === "ArrowDown") {
       this.setState({
         focused: false
@@ -87,7 +86,6 @@ class AirportInput extends Component {
           let tempA; 
           if (airports.length > 0) {
             if (airports.length > 1) {
-              console.log(airports)
               tempA = airports.slice(0, 5).sort( (a,b) => {
                 if (a.analytics && b.analytics) {
                   return b.analytics.travelers.score - a.analytics.travelers.score
@@ -101,9 +99,6 @@ class AirportInput extends Component {
           } else {
             tempA = null
           }
-
-          console.log(tempA)
-
           
           if (tempA) {
             thisInput.setState({
@@ -144,7 +139,7 @@ class AirportInput extends Component {
           onKeyDown={this.giveFocus}
           ref={this.sibDropdown}
       	/>
-        <AirportsDropdown {...this.props} {...this.state} focusRef={this.sibDropdown} focused={this.props.focused}/>
+        <AirportsDropdown {...this.props} {...this.state} focusRef={this.sibDropdown} focused={this.state.focused}/>
       </div>
     );
   }
