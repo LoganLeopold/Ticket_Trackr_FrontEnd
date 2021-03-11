@@ -85,13 +85,6 @@ class FlightForm extends Component {
 
     event.preventDefault()
 
-    // var params = {
-    //   OutboundDate: "Departure Date",
-    //   InboundDate: "Return Date",
-    //   OriginPlace: "Departure Airport Code",
-    //   DestinationPlace: "Arrival Airport Code",
-    // }
-
     document.querySelectorAll('.formSubmit')[0].style.display = "none"
     
     var alert = document.querySelectorAll('.formStatus')[0];
@@ -102,7 +95,7 @@ class FlightForm extends Component {
       return
     }
 
-    if (this.state.originPlace.length > 0 && this.state.destinationPlace.length > 0) {
+    // if (this.state.originPlace.length > 0 && this.state.destinationPlace.length > 0) {
 
       const options = {
         method: 'GET',
@@ -123,20 +116,18 @@ class FlightForm extends Component {
           islive: true
         },
         headers: {
-          'x-rapidapi-key': `${}`,
+          'x-rapidapi-key': `${process.env.REACT_APP_RAPID_API}`,
           'x-rapidapi-host': 'compare-flight-prices.p.rapidapi.com'
         }
       };
 
       axios.request(options).then(function (response) {
         console.log(response.data);
-      }).catch(function (error) {
-        console.error(error);
-      });
+      })
       .catch(function(err) {
         console.log(err.response)
       })
-    } else {
+    // } else {
       /* 
       This is if it's empty, but we need to assign option values no matter if the user has chosen an option, so I have several ideas:
 
@@ -146,8 +137,8 @@ class FlightForm extends Component {
       Also, I should maybe be treating this more like a traditional form and using all of the values/names from the inputs and controlling the values with state in components that are broken out to handle their own functions/value changes.
       */
       
-      alert.innerHTML = "Make sure you have airports chosen and then press Find Routes again!"
-    }
+      // alert.innerHTML = "Make sure you have airports chosen and then press Find Routes again!"
+    // }
 
   }
 
