@@ -14,11 +14,11 @@ Python/Django + Postgres(via Heroku) + Heroku
 
 ## Current Iteration
 
-Older versions of this project used the now deprecated Rapid API access for Skyscanner's live prices API. That was a very fun API to use and employ successfully. Now the project uses their cached quotes API to pull from their cache of pricing data.  
+Older versions of this project used the now deprecated Rapid API access for Skyscanner's live prices API. That was a very fun API to use and employ successfully. After it was deprecated, I put the Python work on hold to use this as a vector for more front-end-focused learning on concepts I did not get to work on in my day job: hooks, async/await, etc. An actual stretch goal I left notated below for posterity's sake was an autocomplete for some fields, which I did end up recently implementing through a third-party API portal I already had wired up.
 
 ## Further Development
 
--The user layer is the next goal. With the live pricing API, I was going to save search parameters for a search so the user could pull back up old searches and see how the prices have changed/monitor prices over time and pounce at the right moment (hypothetically - this was and remains an experimental project). That can still work with the cached quotes API I'm using now, but likely won't be as dynamic or thorough a data set. 
+-The user layer is the next goal, which I intend to pick back up soon. Whether that's with the original Python back end or I double-down with the Node work I've been doing remains to be seen! Either way, I will save queries so the user can recall old searches so they could hypothetically see how the prices have changed/monitor prices over time and pounce at the right moment. Now that live pricing is deprecated, this will be all of the same historical data until a replacement emerges. The proof of concept will work, but likely won't be as dynamic or thorough a data set. 
 
 -I'd love to dive deeper into suggestive search. I'd employ a from-scratch solution to populate airport names in the flight search form (drawing from a database generated and cached from another API somewhere).
 
