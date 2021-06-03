@@ -3,8 +3,6 @@ import {Route, Link} from "react-router-dom"
 import "./App.css";
 import FlightForm from "./FlightForm";
 import TestCall from './TestCall'
-// import Login from "./Login"
-// import CreateUser from "./CreateUser";
 import axios from "axios";
 
 
@@ -57,8 +55,8 @@ class App extends Component {
           </div>
         </header>
         <div>
-          <Route path="/tester" exact render={ (routerProps) => <TestCall {...routerProps} {...this.props} {...this.state} />} ></Route>
-          <Route path="/" exact render={ (routerProps) =>  <FlightForm {...routerProps}{...this.props}{...this.state}/> } ></Route>
+          <Route path="/tester" exact render={ (routerProps) => <TestCall {...routerProps} {...this.props} {...this.state}/> } > </Route>
+          <Route path="/" exact render={ (routerProps) =>  <FlightForm {...routerProps}{...this.props}{...this.state}/> } > </Route>
         </div>
       </div>
     );
