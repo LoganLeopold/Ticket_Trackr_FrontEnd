@@ -153,6 +153,7 @@ form {
 .inputBox > input {
   box-shadow: 5px 5px 9px rgba(0,0,0, 0.20);
   text-transform: capitalize;
+  cursor: pointer;
 }
 
 .inputBox .popup {
@@ -169,6 +170,10 @@ form {
   background: white;
   text-align: left;
   text-transform: capitalize;
+}
+
+.inputBox .popup option {
+  cursor: pointer;
 }
 
 
