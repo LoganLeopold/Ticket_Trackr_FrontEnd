@@ -33,7 +33,6 @@ class AirportInput extends Component {
         },
       })
         .then(function (response) {
-          
           thisCom.setState({
             airport: response.data.data[0]
           }, () => {
@@ -70,10 +69,9 @@ class AirportInput extends Component {
 
     }
   }
-
+  
   handleOptionClick(event) {
     event.target.parentNode.previousSibling.value = event.target.name;
-
     this.setState({
       airport: event.target.value
     }, () => {

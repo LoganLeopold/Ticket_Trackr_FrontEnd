@@ -18,7 +18,7 @@ class FlightForm extends Component {
       locale: "en-US",
       livePrice: "",
       status: "",
-      oAuth: '',
+      // oAuth: '',
     };
 
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -60,23 +60,23 @@ class FlightForm extends Component {
       outboundDate: today
     })
 
-    // Begin API Access - Retrieving Token
-    let body = `grant_type=client_credentials&client_id=${process.env.REACT_APP_AMADEUS_KEY}&client_secret=${process.env.REACT_APP_AMADEUS_SECRET}`;
-    let form = this
+    // // Begin API Access - Retrieving Token
+    // let body = `grant_type=client_credentials&client_id=${process.env.REACT_APP_AMADEUS_KEY}&client_secret=${process.env.REACT_APP_AMADEUS_SECRET}`;
+    // let form = this
 
-    axios({
-      method: 'post',
-      url: 'https://test.api.amadeus.com/v1/security/oauth2/token',
-      headers: {
-        "Content-Type":"application/x-www-form-urlencoded",
-      },
-      data: body
-    }).then( function(response) {
-      let token = response.data.access_token
-      form.setState({
-        oAuth: token
-      })
-    }).catch( err => console.log(err))
+    // axios({
+    //   method: 'post',
+    //   url: 'https://test.api.amadeus.com/v1/security/oauth2/token',
+    //   headers: {
+    //     "Content-Type":"application/x-www-form-urlencoded",
+    //   },
+    //   data: body
+    // }).then( function(response) {
+    //   let token = response.data.access_token
+    //   form.setState({
+    //     oAuth: token
+    //   })
+    // }).catch( err => console.log(err))
 
   }
 
@@ -187,6 +187,7 @@ class FlightForm extends Component {
                 <AirportInput 
                   name="originPlace"
                   className="inputBox dport"
+                  {...this.props}
                   {...this.state}
                   handleAirportChange={this.handleAirportChange}
                 />
@@ -196,6 +197,7 @@ class FlightForm extends Component {
                 <AirportInput 
                   name="destinationPlace"
                   className="inputBox aport"
+                  {...this.props}
                   {...this.state}
                   handleAirportChange={this.handleAirportChange}
                 />

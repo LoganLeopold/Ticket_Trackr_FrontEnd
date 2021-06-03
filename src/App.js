@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import {Route, Link} from "react-router-dom"
 import "./App.css";
 import FlightForm from "./FlightForm";
+import TestCall from './TestCall'
 // import Login from "./Login"
 // import CreateUser from "./CreateUser";
-// import axios from "axios";
+import axios from "axios";
 
 
 class App extends Component {
@@ -14,6 +15,30 @@ class App extends Component {
       airports: [],
       markets: []
     };
+    this.componentDidMount = this.componentDidMount.bind(this)
+  }
+
+  
+  componentDidMount() {
+    // Begin API Access - Retrieving Token
+    let body = `grant_type=client_credentials&client_id=${process.env.REACT_APP_AMADEUS_KEY}&client_secret=${process.env.REACT_APP_AMADEUS_SECRET}`;
+    // let form = this
+
+    let app = this
+    
+    axios({
+      method: 'post',
+      url: 'https://test.api.amadeus.com/v1/security/oauth2/token',
+      headers: {
+        "Content-Type":"application/x-www-form-urlencoded",
+      },
+      data: body
+    }).then( function(response) {
+      let token = response.data.access_token
+      app.setState({
+        oAuth: token
+      })
+    }).catch( err => console.log(err))
   }
 
   render() {
@@ -32,7 +57,8 @@ class App extends Component {
           </div>
         </header>
         <div>
-          <Route path="/" exact render={ (routerProps) =>  <FlightForm {...routerProps}{...this.props}{...this.state}/> }></Route>
+          <Route path="/tester" exact render={ (routerProps) => <TestCall {...routerProps} {...this.props} {...this.state} />} ></Route>
+          <Route path="/" exact render={ (routerProps) =>  <FlightForm {...routerProps}{...this.props}{...this.state}/> } ></Route>
         </div>
       </div>
     );
