@@ -17,7 +17,6 @@ const TestCall = (props) => {
 
         try {
     
-            console.log(props.oAuth, "OAUTH")
             let testFlights = await axios({
                 method: "GET",
                 url: `https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=SFO&destinationLocationCode=JFK&departureDate=2021-08-15&returnDate=2021-08-22&adults=1`,
@@ -25,6 +24,11 @@ const TestCall = (props) => {
                     "Content-Type": "application/x-www-form-urlencoded",
                     Authorization: `Bearer ${props.oAuth}`,
                 },
+            })
+
+            let currencies = await axios({
+                method: "GET",
+                url: "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eur/jpy.json",                
             })
 
             refreshFlights(testFlights)
