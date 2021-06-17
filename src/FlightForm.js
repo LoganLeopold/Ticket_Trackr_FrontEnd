@@ -62,20 +62,13 @@ class FlightForm extends Component {
   }
 
   // Find Routes Button
-  handleFindRoutes(event) {
+  async handleFindRoutes(event) {
 
     event.preventDefault()
 
-    // var params = {
-    //   OutboundDate: "Departure Date",
-    //   InboundDate: "Return Date",
-    //   OriginPlace: "Departure Airport Code",
-    //   DestinationPlace: "Arrival Airport Code",
-    // }
-
     var priceDisplay = document.querySelectorAll('.formSubmit')[0]
-    priceDisplay.style.display = "none"
     var alert = document.querySelectorAll('.formStatus')[0];
+    priceDisplay.style.display = "none"
 
     if (Date.parse(this.state.inboundDate) < Date.parse(this.state.outboundDate)) {
       alert.innerHTML = "Sorry - your return date is before your departure. Adjust and try again."
@@ -84,6 +77,18 @@ class FlightForm extends Component {
     }
 
     if (this.state.originPlace.length > 0 && this.state.destinationPlace.length > 0) {
+
+      let testFlights = await axios({
+        method: "GET",
+        url: `https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${this.state.originPlace}&destinationLocationCode=${this.state.destinationPlace}&departureDate=${moment(this.state.outboundDate).format("YYYY-MM-DD")}&returnDate=${moment(this.state.inboundDate).format("YYYY-MM-DD")}&adults=1`,
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Bearer ${this.props.oAuth}`,
+        },
+      })
+
+      console.log(testFlights)
+
       axios({
         method: 'GET',
         url: `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/${this.state.originPlace}/${this.state.destinationPlace}/${moment(this.state.outboundDate).format("YYYY-MM-DD")}`, 
@@ -93,9 +98,6 @@ class FlightForm extends Component {
           "x-rapidapi-host":"skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
           "useQueryString": true,
         },
-        params: {
-          // inboundpartialdate: moment(this.state.inboundDate).format("YYYY-MM-DD")
-        }
       })
       .then( function(response) {
         if (response.data.Quotes.length === 0) {
