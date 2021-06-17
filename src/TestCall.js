@@ -3,6 +3,14 @@ import axios from "axios"
 
 const TestCall = (props) => {
 
+    const [authState, changeAuthState] = useState(false)
+
+    useEffect( () => {
+        if (props.oAuth) {
+            changeAuthState(true)
+        }
+    })
+
     const [flights, refreshFlights] = useState()
 
     let grabFlights = async () => {
@@ -12,14 +20,15 @@ const TestCall = (props) => {
             console.log(props.oAuth, "OAUTH")
             let testFlights = await axios({
                 method: "GET",
-                url: `https://test.api.amadeus.com/v2/shopping/flight-offers/?originLocationCode="SFO"&destinationLocationCode="JFK"&departureDate="2021-08-15"&returnDate="2021-08-22"`,
+                url: `https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=SFO&destinationLocationCode=JFK&departureDate=2021-08-15&returnDate=2021-08-22&adults=1`,
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
                     Authorization: `Bearer ${props.oAuth}`,
                 },
             })
-    
+
             refreshFlights(testFlights)
+            return testFlights
     
         } catch (err) {
 
@@ -29,10 +38,17 @@ const TestCall = (props) => {
     
     }
 
-    grabFlights().then( result => console.log(result) )
+    useEffect( () => {
+        if (authState) {
+            grabFlights()
+        }
+    }, [authState])
+
+    useEffect( () => console.log(flights), [flights])
 
     return (
         <div>
+            {flights && <p>{JSON.stringify(flights.data.data[0])}</p>}
         </div>
     )
 

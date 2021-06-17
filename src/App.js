@@ -40,7 +40,6 @@ class App extends Component {
   }
 
   render() {
-    console.log("App rendered boi");
     return (
       <div className="App">
         <header>
