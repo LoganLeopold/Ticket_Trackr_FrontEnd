@@ -78,47 +78,33 @@ class FlightForm extends Component {
 
     if (this.state.originPlace.length > 0 && this.state.destinationPlace.length > 0) {
 
-      let testFlights = await axios({
-        method: "GET",
-        url: `https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${this.state.originPlace}&destinationLocationCode=${this.state.destinationPlace}&departureDate=${moment(this.state.outboundDate).format("YYYY-MM-DD")}&returnDate=${moment(this.state.inboundDate).format("YYYY-MM-DD")}&adults=1`,
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Bearer ${this.props.oAuth}`,
-        },
-      })
+      try {
 
-      console.log(testFlights)
-
-      axios({
-        method: 'GET',
-        url: `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/${this.state.originPlace}/${this.state.destinationPlace}/${moment(this.state.outboundDate).format("YYYY-MM-DD")}`, 
-        headers: {
-          "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API,
-          "content-type":"application/octet-stream",
-          "x-rapidapi-host":"skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-          "useQueryString": true,
-        },
-      })
-      .then( function(response) {
-        if (response.data.Quotes.length === 0) {
+        let { data: { data } } = await axios({
+          method: "GET",
+          url: `https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${this.state.originPlace}&destinationLocationCode=${this.state.destinationPlace}&departureDate=${moment(this.state.outboundDate).format("YYYY-MM-DD")}&returnDate=${moment(this.state.inboundDate).format("YYYY-MM-DD")}&adults=1`,
+          headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              Authorization: `Bearer ${this.props.oAuth}`,
+          },
+        })
+  
+        if (data.length === 0) {
           alert.innerHTML = "There are no results on this itinerary. Try pushing out your outbound date a bit further."
           alert.style.display = "flex"
         } else {
-          var price = response.data.Quotes[0].MinPrice; 
-          for (var i=0; i < response.data.Quotes.length; i++) {
-            if (response.data.Quotes[i].MinPrice < price) {
-              price = response.data.Quotes[i].MinPrice;
-            }
-          }
+          var price = data[0].price.total 
           priceDisplay.innerHTML = 'Lowest price: $' + price;
           alert.style.display = 'none';
           priceDisplay.style.display = 'flex';
         }
-      })
-      .catch(function(err) {
+
+      } catch (err) {
         console.log(err.response)
-      })
-    } else {
+      }
+
+    }
+    else {
       /* 
       This is if it's empty, but we need to assign option values no matter if the user has chosen an option, so I have several ideas:
 
