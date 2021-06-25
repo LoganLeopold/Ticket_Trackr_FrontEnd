@@ -159,7 +159,7 @@ form {
 .inputBox .popup {
   display: none;
   position: absolute;
-  width: 96.5%;
+  width: calc(100% - 20px);
   top: 96%;
   z-index: 10000;
   font-size: 18px;

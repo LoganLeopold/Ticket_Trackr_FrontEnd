@@ -33,6 +33,7 @@ class AirportInput extends Component {
         },
       })
         .then(function (response) {
+          console.log(response)
           thisCom.setState({
             airport: response.data.data[0]
           }, () => {

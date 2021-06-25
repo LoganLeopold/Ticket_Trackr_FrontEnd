@@ -18,6 +18,7 @@ class FlightForm extends Component {
       locale: "en-US",
       livePrice: "",
       status: "",
+      loading: false,
     };
 
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -64,6 +65,8 @@ class FlightForm extends Component {
   // Find Routes Button
   async handleFindRoutes(event) {
 
+    var component = this
+
     event.preventDefault()
 
     var priceDisplay = document.querySelectorAll('.formSubmit')[0]
@@ -88,7 +91,25 @@ class FlightForm extends Component {
               Authorization: `Bearer ${this.props.oAuth}`,
           },
         })
-  
+
+        function noResult() {
+          setTimeout(400, pollResult)
+          console.log("NO RESULT")
+        }
+        
+        function pollResult() {
+          console.log("POLL")
+          if (!data) {
+            noResult()
+          } else if (data) {
+            component.setState({
+              loading: false
+            })
+          }
+        }
+        
+        component.setState({loading: true}, () => pollResult(data))
+        
         if (data.length === 0) {
           alert.innerHTML = "There are no results on this itinerary. Try pushing out your outbound date a bit further."
           alert.style.display = "flex"
