@@ -3,6 +3,8 @@ import axios from "axios";
 import { Row, Container, Col } from "reactstrap";
 import DateP from "./Date";
 import AirportInput from "./AirportInput"
+import Loader from './Loader'
+// import { conditionallyUpdateScrollbar } from "reactstrap/lib/utils";
 var moment = require("moment");
 
 class FlightForm extends Component {
@@ -65,7 +67,9 @@ class FlightForm extends Component {
   // Find Routes Button
   async handleFindRoutes(event) {
 
-    var component = this
+    const component = this
+
+    this.setState({loading: true})
 
     event.preventDefault()
 
@@ -82,7 +86,7 @@ class FlightForm extends Component {
     if (this.state.originPlace.length > 0 && this.state.destinationPlace.length > 0) {
 
       try {
-
+      
         let { data: { data } } = await axios({
           method: "GET",
           url: `https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${this.state.originPlace}&destinationLocationCode=${this.state.destinationPlace}&departureDate=${moment(this.state.outboundDate).format("YYYY-MM-DD")}&returnDate=${moment(this.state.inboundDate).format("YYYY-MM-DD")}&adults=1`,
@@ -92,23 +96,11 @@ class FlightForm extends Component {
           },
         })
 
-        function noResult() {
-          setTimeout(400, pollResult)
-          console.log("NO RESULT")
+        if (data) {
+          component.setState({
+            loading: false
+          })
         }
-        
-        function pollResult() {
-          console.log("POLL")
-          if (!data) {
-            noResult()
-          } else if (data) {
-            component.setState({
-              loading: false
-            })
-          }
-        }
-        
-        component.setState({loading: true}, () => pollResult(data))
         
         if (data.length === 0) {
           alert.innerHTML = "There are no results on this itinerary. Try pushing out your outbound date a bit further."
@@ -169,7 +161,6 @@ class FlightForm extends Component {
       <div className="flightForm">
         <form action="">
           <Container>
-
             <Row>
               <Col sm={12} md={6} lg={6} xl={6} className="inputBox dport">
                 <label>Departure Airport</label>
@@ -224,6 +215,8 @@ class FlightForm extends Component {
               <Col sm={12} md={8} lg={8} xl={8} className="d-flex flex-column">
                 <h2 className="formStatus"> {this.state.status}</h2>
                 <h2 className="formSubmit">{this.state.livePrice}</h2>
+                {this.state.loading && <Loader loading={this.state.loading}/>}
+                
               </Col>
             </Row>
           </Container>
